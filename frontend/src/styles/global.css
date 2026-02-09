@@ -1,0 +1,27 @@
+/* Styles globaux du site */
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: var(--bs-primary); /* couleur globale texte + icônes */
+  background-color: var(--bs-light); /* couleur de fond générale du site */
+}
+
+/* Titres */
+h1 {
+  font-weight: 600; /* semi-bold */
+  color: var(--bs-dark);
+  font-size: 24px;
+}
+
+/* Sous-titres */
+h2 {
+  font-weight: 500; /* medium */
+  color: var(--bs-primary);
+  font-size: 20px;
+}
+
+/* Les liens et icônes héritent de la couleur du parent */
+a,
+i {
+  color: inherit;
+}

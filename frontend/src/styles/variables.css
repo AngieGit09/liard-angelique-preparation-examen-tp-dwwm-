@@ -1,0 +1,11 @@
+:root {
+  /* === BOOTSTRAP CORE === */
+  --bs-primary: #a2845e; /* texte + icônes */
+  --bs-secondary: #ffe8cc; /* header / footer / cartes */
+  --bs-light: #fffaf5; /* fond page */
+  --bs-dark: #704424; /* H1 */
+
+  /* === COMPOSANTS SPÉCIFIQUES === */
+  --color-button: #bb6c4e;
+  --color-shadow-card: rgba(112, 68, 36, 0.38);
+}
