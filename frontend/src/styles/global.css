@@ -10,7 +10,7 @@ body {
 h1 {
   font-weight: 600; /* semi-bold */
   color: var(--bs-dark);
-  font-size: 24px;
+  font-size: 26px;
 }
 
 /* Sous-titres */
@@ -20,8 +20,29 @@ h2 {
   font-size: 20px;
 }
 
+/* Boutons principaux du site */
+.btn-primary {
+  background-color: var(--color-button);
+  border-color: var(--color-button);
+  color: var(--bs-secondary); /* texte marron */
+  font-weight: 500;
+}
+
+/* Hover */
+.btn-primary:hover {
+  background-color: var(--color-button);
+  border-color: var(--color-button);
+  opacity: 0.85;
+  color: var(--bs-secondary);
+}
+
 /* Les liens et icônes héritent de la couleur du parent */
 a,
 i {
   color: inherit;
+}
+
+/* Image produit coup de cœur  */
+.product-highlight-img {
+  max-width: 400px;
 }
