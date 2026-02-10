@@ -8,6 +8,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "./styles/variables.css";
 import "./styles/global.css";
 import "./styles/header.css";
+import "./styles/footer.css";
+import "./styles/buttons.css";
+import "./styles/forms.css";
+import "./styles/admin.css";
 
 // App
 import App from "./App.jsx";

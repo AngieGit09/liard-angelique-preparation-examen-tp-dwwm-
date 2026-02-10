@@ -1,0 +1,14 @@
+/* CARTES ADMIN */
+.admin-action {
+  color: var(--bs-dark);
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.admin-action:hover {
+  opacity: 0.7;
+}
+
+.admin-card-title {
+  color: var(--bs-dark);
+}

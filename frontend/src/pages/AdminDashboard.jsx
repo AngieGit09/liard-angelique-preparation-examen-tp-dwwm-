@@ -41,7 +41,7 @@ function AdminDashboard() {
       <div className="d-flex flex-column align-items-center gap-4">
         {/* Accès gestion produits */}
         <Link
-          to="/admin/produits"
+          to="/admin/gestion"
           className="btn btn-primary rounded-pill px-5 py-3 w-100"
           style={{ maxWidth: "480px" }}
         >

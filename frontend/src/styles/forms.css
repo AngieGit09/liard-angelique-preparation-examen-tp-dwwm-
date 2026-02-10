@@ -1,0 +1,12 @@
+/* Styles des champs de formulaire (placeholder + focus) */
+.form-control::placeholder,
+textarea.form-control::placeholder {
+  color: var(--bs-primary);
+  opacity: 0.6;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem var(--color-shadow-card);
+}

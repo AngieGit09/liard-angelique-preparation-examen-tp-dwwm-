@@ -1,0 +1,17 @@
+/* Boutons principaux */
+.btn-primary {
+  background-color: var(--color-button) !important;
+  border-color: var(--color-button) !important;
+  color: var(--bs-secondary) !important;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+}
+
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:focus-visible {
+  box-shadow: 0 0 0 0.2rem var(--color-shadow-card);
+}

@@ -10,11 +10,12 @@ import Catalogue from "./pages/Catalogue";
 import Category from "./pages/Category";
 import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
-import AdminLogin from "./pages/AdminLogin";
-import AdminDashboard from "./pages/AdminDashboard";
-import NotFound from "./pages/NotFound";
 import MentionsLegales from "./pages/MentionsLegales";
 import CGU from "./pages/CGU";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminGestion from "./pages/AdminGestion";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -28,11 +29,12 @@ function App() {
           <Route path="/categorie/:slug" element={<Category />} />
           <Route path="/produit/:id" element={<ProductDetail />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/mentions" element={<MentionsLegales />} />
+          <Route path="/cgu" element={<CGU />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/mentions" element={<MentionsLegales />} />
-          <Route path="/cgu" element={<CGU />} />
+          <Route path="/admin/gestion" element={<AdminGestion />} />
         </Routes>
       </main>
       <Footer />
