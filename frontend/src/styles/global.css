@@ -37,6 +37,16 @@ h2 {
   color: var(--bs-secondary);
 }
 
+/* Boutons : focus / active (évite le bleu Bootstrap) */
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:focus-visible {
+  background-color: var(--color-button);
+  border-color: var(--color-button);
+  box-shadow: 0 0 0 0.2rem var(--color-shadow-card);
+  color: var(--bs-secondary);
+}
+
 /* Les liens et icônes héritent de la couleur du parent */
 a,
 i {
