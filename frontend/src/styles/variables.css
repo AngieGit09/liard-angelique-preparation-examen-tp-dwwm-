@@ -3,7 +3,7 @@
   --bs-primary: #a2845e; /* texte + icônes */
   --bs-secondary: #ffe8cc; /* header / footer / cartes */
   --bs-light: #fffaf5; /* fond page */
-  --bs-dark: #704424; /* H1 */
+  --bs-dark: #704424; /* H1 + titre cards*/
 
   /* === COMPOSANTS SPÉCIFIQUES === */
   --color-button: #bb6c4e;

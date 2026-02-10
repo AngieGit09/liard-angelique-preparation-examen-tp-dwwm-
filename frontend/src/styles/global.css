@@ -11,6 +11,7 @@ h1 {
   font-weight: 600; /* semi-bold */
   color: var(--bs-dark);
   font-size: 26px;
+  text-transform: uppercase;
 }
 
 /* Sous-titres */
@@ -43,6 +44,38 @@ i {
 }
 
 /* Image produit coup de cœur  */
+.product-highlight-img {
+  max-width: 400px;
+}
+
+/* BEST SELLER image page d'accueil */
+.bestseller-img-small {
+  max-height: 120px;
+  object-fit: contain;
+}
+
+.bestseller-img-large {
+  max-height: 220px;
+  object-fit: contain;
+}
+
+/* CATEGORY CARDS */
+.category-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px var(--color-shadow-card);
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px var(--color-shadow-card);
+}
+
+.category-card-img {
+  max-height: 170px;
+  object-fit: contain;
+}
+
+/* IMAGE PRODUIT COUP DE CŒUR page catalogue */
 .product-highlight-img {
   max-width: 400px;
 }
