@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Contact() {
   return (
     <section className="container py-5">
