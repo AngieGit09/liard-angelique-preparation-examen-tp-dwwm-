@@ -120,3 +120,18 @@ i {
 
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpolyline points='4,6 8,10 12,6' fill='none' stroke='%23a2845e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
+
+/* Formulaire page contact*/
+/* Placeholder inputs et textarea */
+.form-control::placeholder,
+textarea.form-control::placeholder {
+  color: var(--bs-primary); /* couleur marron du thème */
+  opacity: 0.6; /* placeholder plus léger */
+}
+
+/* Style au focus (clic dans input / select) */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--bs-primary); /* bordure marron */
+  box-shadow: 0 0 0 0.2rem var(--color-shadow-card); /* halo marron */
+}
