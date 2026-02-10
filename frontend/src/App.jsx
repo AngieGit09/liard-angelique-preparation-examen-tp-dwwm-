@@ -14,6 +14,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import MentionsLegales from "./pages/MentionsLegales";
+import CGU from "./pages/CGU";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/mentions" element={<MentionsLegales />} />
+          <Route path="/cgu" element={<CGU />} />
         </Routes>
       </main>
       <Footer />
