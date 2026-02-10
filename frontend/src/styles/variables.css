@@ -4,8 +4,12 @@
   --bs-secondary: #ffe8cc; /* header / footer / cartes */
   --bs-light: #fffaf5; /* fond page */
   --bs-dark: #704424; /* H1 + titre cards*/
+  --bs-dark-rgb: 112, 68, 36;
+
+  --bs-primary-rgb: 162, 132, 94;
 
   /* === COMPOSANTS SPÉCIFIQUES === */
   --color-button: #bb6c4e;
   --color-shadow-card: rgba(112, 68, 36, 0.38);
+  --select-arrow-color: %23a2845e; /* Flèche select */
 }

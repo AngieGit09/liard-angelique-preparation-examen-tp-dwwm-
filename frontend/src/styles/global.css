@@ -79,3 +79,44 @@ i {
 .product-highlight-img {
   max-width: 400px;
 }
+
+.product-card {
+  background-color: var(--bs-secondary);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px var(--color-shadow-card);
+}
+
+.product-title {
+  font-size: 1.1rem;
+  color: var(--bs-dark);
+}
+
+.product-price {
+  font-weight: bold;
+}
+
+.product-btn-more {
+  width: 90px;
+  height: 90px;
+  background-color: var(--color-button);
+  color: var(--bs-light);
+  font-size: 0.7rem;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.product-btn-more:hover {
+  color: var(--bs-light);
+}
+
+.product-image {
+  max-height: 120px;
+  object-fit: contain;
+}
+
+/* Flèche select */
+.form-select {
+  color: var(--bs-primary);
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpolyline points='4,6 8,10 12,6' fill='none' stroke='%23a2845e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
