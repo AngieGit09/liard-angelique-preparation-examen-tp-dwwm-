@@ -15,6 +15,7 @@ import CGU from "./pages/CGU";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminGestion from "./pages/AdminGestion";
+import "./styles/modal.css";
 import NotFound from "./pages/NotFound";
 
 function App() {

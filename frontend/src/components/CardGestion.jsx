@@ -1,16 +1,16 @@
-function CardGestion({ product }) {
+function CardGestion({ product, onDelete, onEdit }) {
   return (
-    /* Carte produit – interface administrateur */
     <div
       className="p-4 h-100"
       style={{ backgroundColor: "var(--bs-secondary)" }}
     >
-      {/* Titre du produit */}
-      <h2 className="h6 text-center mb-3 admin-card-title">{product.title}</h2>
+      {/* Titre */}
+      <h2 className="h6 fw-semibold text-center mb-3 admin-card-title">
+        {product.title}
+      </h2>
 
-      {/* Contenu principal de la carte */}
+      {/* Contenu */}
       <div className="row align-items-center">
-        {/* Informations produit */}
         <div className="col-7">
           <p className="mb-1">{product.category}</p>
           <p className="mb-1">{product.price}</p>
@@ -18,7 +18,6 @@ function CardGestion({ product }) {
           <p className="mb-0">{product.date}</p>
         </div>
 
-        {/* Image et infos complémentaires */}
         <div className="col-5 text-center">
           <img
             src={product.image}
@@ -29,12 +28,21 @@ function CardGestion({ product }) {
         </div>
       </div>
 
-      {/* Actions administrateur */}
+      {/* Actions */}
       <div className="d-flex justify-content-around mt-4">
-        <button className="btn btn-link text-decoration-none admin-action">
+        <button
+          type="button"
+          className="btn btn-link admin-action"
+          onClick={onEdit}
+        >
           Modifier
         </button>
-        <button className="btn btn-link text-decoration-none admin-action">
+
+        <button
+          type="button"
+          className="btn btn-link admin-action"
+          onClick={onDelete}
+        >
           Supprimer
         </button>
       </div>

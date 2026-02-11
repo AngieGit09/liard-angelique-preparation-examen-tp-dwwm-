@@ -1,14 +1,112 @@
 /* CARTES ADMIN */
+/* Actions admin (Modifier / Supprimer) */
 .admin-action {
   color: var(--bs-dark);
+  text-decoration: none;
+  background: transparent;
+  border: none;
   opacity: 1;
   transition: opacity 0.2s ease;
 }
 
+/* Hover */
 .admin-action:hover {
+  color: var(--bs-dark);
+  opacity: 0.7;
+}
+
+/* Click / focus / active — suppression du bleu Bootstrap */
+.admin-action:focus,
+.admin-action:active,
+.admin-action:focus-visible {
+  color: var(--bs-dark) !important;
+  outline: none;
+  box-shadow: none;
   opacity: 0.7;
 }
 
 .admin-card-title {
+  color: var(--bs-dark);
+}
+
+/* Fond sombre */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Boîte de la modale */
+.modal-box {
+  background-color: var(--bs-secondary);
+  padding: 24px;
+  width: 100%;
+  max-width: 420px;
+}
+
+/* === MODALES – IMAGES PRODUIT === */
+/* Miniatures images produit (modales admin) */
+.admin-product-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover; /* Évite les déformations */
+  border-radius: 4px;
+  border: 1px solid var(--bs-dark);
+}
+
+/* Wrapper pour positionner la croix */
+.admin-thumb-wrapper {
+  position: relative;
+}
+
+/* Bouton suppression image (croix) */
+.admin-thumb-remove {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--bs-dark);
+  color: var(--bs-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.admin-thumb-remove:hover {
+  opacity: 0.8;
+}
+
+/* === MODALES – BOUTONS & TITRES ==== */
+/* Bouton Fermer dans les modales */
+.admin-modal-close {
+  background: none;
+  border: none;
+  padding: 0;
+  font-weight: 500; /* semi-bold */
+  color: var(--bs-dark);
+  cursor: pointer;
+}
+
+.admin-modal-close:hover {
+  opacity: 0.7;
+}
+
+/* Supprime TOUT effet bleu au clic */
+.admin-modal-close:focus,
+.admin-modal-close:active {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Titres des modales admin */
+.admin-modal-title {
+  font-weight: 600; /* semi-bold */
   color: var(--bs-dark);
 }

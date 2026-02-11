@@ -1,0 +1,51 @@
+/* === MODALES – STRUCTURE === */
+
+/* Overlay (fond sombre) */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+/* Contenu principal */
+.modal-content {
+  background-color: var(--bs-secondary);
+  padding: 24px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 4px 20px var(--color-shadow-card);
+}
+
+/* === MODALES – TEXTE & ACTIONS === */
+
+.modal-title {
+  font-weight: 500;
+  color: var(--bs-dark);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  color: var(--bs-dark);
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  opacity: 0.7;
+}
+
+/* Liens actions (Confirmer / Annuler / Modifier / Supprimer) */
+.modal-action {
+  color: var(--bs-dark);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-action:hover {
+  opacity: 0.7;
+}
