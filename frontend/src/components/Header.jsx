@@ -3,25 +3,28 @@ import { useState } from "react";
 import "../styles/header.css";
 
 function Header() {
-  // état permettant d’ouvrir / fermer le menu déroulant du catalogue
+  // menu déroulant
   const [open, setOpen] = useState(false);
+
+  // recherche (front uniquement pour l’instant)
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <header className="header">
       <div className="header-inner container-fluid d-flex align-items-center justify-content-between">
-        {/* Logo + renvoie vers accueil*/}
+        {/* Logo */}
         <div className="header-logo">
           <Link to="/">
             <img src="/logo_renomeuble.png" alt="Logo RenoMeuble" />
           </Link>
         </div>
 
-        {/* Menu desktop */}
+        {/* Navigation desktop */}
         <nav className="header-nav d-none d-md-flex">
-          {/* Lien Accueil */}
           <Link to="/" className="text-uppercase">
             accueil
           </Link>
-          {/* Menu tous nos produits avec Dropdown */}
+
           <div
             className={`nav-item has-dropdown nav-hover ${open ? "open" : ""}`}
             onClick={() => setOpen(!open)}
@@ -41,16 +44,21 @@ function Header() {
               </div>
             )}
           </div>
-          {/*Lien Contact */}
+
           <Link to="/contact" className="text-uppercase">
             contact
           </Link>
         </nav>
 
-        {/* Search */}
+        {/* Recherche */}
         <div className="header-search">
-          <input type="text" placeholder="Rechercher" />
-          <i className="bi bi-search search-icon"></i> {/* Bootstrap Icons */}
+          <input
+            type="text"
+            placeholder="Rechercher"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <i className="bi bi-search search-icon"></i>
         </div>
 
         {/* Burger mobile */}
