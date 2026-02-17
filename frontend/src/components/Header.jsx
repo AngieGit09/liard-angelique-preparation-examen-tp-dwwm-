@@ -37,9 +37,9 @@ function Header() {
             {open && (
               <div className="dropdown-menu-custom">
                 <Link to="/catalogue">Catalogue complet</Link>
-                <Link to="/categorie/salon">Meubles de salon</Link>
-                <Link to="/categorie/chambre">Meubles de chambre</Link>
-                <Link to="/categorie/bureau">Meubles de bureau</Link>
+                <Link to="/categorie/meubles-salon">Meubles de salon</Link>
+                <Link to="/categorie/meubles-chambre">Meubles de chambre</Link>
+                <Link to="/categorie/meubles-bureau">Meubles de bureau</Link>
                 <Link to="/categorie/accessoires">Accessoires</Link>
               </div>
             )}

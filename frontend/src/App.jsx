@@ -23,7 +23,7 @@ function App() {
     <BrowserRouter>
       <Header />
 
-      <main className="container my-4">
+      <main className="my-4">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/catalogue" element={<Catalogue />} />
@@ -34,10 +34,13 @@ function App() {
           <Route path="/cgu" element={<CGU />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="*" element={<NotFound />} />
           <Route path="/admin/gestion" element={<AdminGestion />} />
+
+          {/* Toujours en dernier */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+
       <Footer />
     </BrowserRouter>
   );

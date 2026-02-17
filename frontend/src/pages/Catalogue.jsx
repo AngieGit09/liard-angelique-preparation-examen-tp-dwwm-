@@ -1,97 +1,83 @@
-// TODO : connecter la recherche au backend
-
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CategoryCard from "../components/CategoryCard";
 
 function Catalogue() {
+  // State pour stocker les catégories récupérées depuis l’API
+  const [categories, setCategories] = useState([]);
+
+  // State pour gérer l’affichage du loader
+  const [loading, setLoading] = useState(true);
+
+  // URL de l’API catégories
+  const API_URL =
+    "http://localhost/renomeuble/backend/api/categories/index.php";
+
+  // Récupération des catégories au chargement du composant
+  useEffect(() => {
+    fetch(API_URL)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Erreur API catégories");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setCategories(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
+
   return (
     <div className="catalogue">
-      {/* ==== TITRE ==== */}
+      {/* Titre principal */}
       <section className="container-fluid px-5 py-4 text-center">
         <h1 className="mb-4">Toutes nos catégories disponibles</h1>
       </section>
 
-      {/* ==== BEST SELLER ==== */}
-      <section className="container-fluid px-5 py-4 text-center">
-        <h2 className="h5 fw-semibold mb-4">Notre best-seller du moment</h2>
-
-        <div className="row align-items-center justify-content-center g-3">
-          {/* Petite image gauche */}
-          <div className="col-3 col-md-2">
-            <img
-              src="/images/table_basse.png"
-              className="img-fluid bestseller-img-small"
-              alt="Table basse - vue 1"
-            />
-          </div>
-
-          {/* Image principale */}
-          <div className="col-6 col-md-4">
-            <img
-              src="/images/table_basse.png"
-              className="img-fluid bestseller-img-large"
-              alt="Table basse - best seller"
-            />
-          </div>
-
-          {/* Petite image droite */}
-          <div className="col-3 col-md-2">
-            <img
-              src="/images/table_basse.png"
-              className="img-fluid bestseller-img-small"
-              alt="Table basse - vue 2"
-            />
-          </div>
-
-          {/* Bouton */}
-          <div className="col-12 col-md-3 d-flex align-items-center justify-content-center mt-3 mt-md-0">
-            <Link
-              to="/produit/1"
-              className="btn btn-primary rounded-pill px-4 text-uppercase text-nowrap"
-            >
-              voir le produit
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ==== CATÉGORIES ==== */}
+      {/* Liste des catégories */}
       <section className="container-fluid px-5 py-5">
         <h2 className="text-center h5 fw-semibold mb-5">
           Retrouvez nos produits
         </h2>
 
-        <div className="row g-4 align-items-stretch">
-          <CategoryCard
-            title="Tous nos meubles"
-            image="/images/house.png"
-            link="/categorie/tous"
-          />
+        {/* Skeleton loader pendant le chargement */}
+        {loading && (
+          <div className="row g-4">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="col-6 col-lg-4">
+                <div className="skeleton-card"></div>
+              </div>
+            ))}
+          </div>
+        )}
 
-          <CategoryCard
-            title="Meubles de salon"
-            image="/images/table.png"
-            link="/categorie/salon"
-          />
+        {/* Affichage des catégories une fois chargées */}
+        {!loading && (
+          <div className="row g-4 align-items-stretch">
+            {/* Carte spéciale : tous les produits */}
+            <CategoryCard
+              key="all"
+              title="Tous nos meubles"
+              image="/images/house.png"
+              link="/categorie/all"
+            />
 
-          <CategoryCard
-            title="Meubles de chambre"
-            image="/images/bed.png"
-            link="/categorie/chambre"
-          />
-
-          <CategoryCard
-            title="Meubles de bureau"
-            image="/images/bureau.png"
-            link="/categorie/bureau"
-          />
-
-          <CategoryCard
-            title="Accessoires"
-            image="/images/rocking-horse.png"
-            link="/categorie/accessoires"
-          />
-        </div>
+            {/* Mapping des catégories dynamiques */}
+            {categories.map((category) => (
+              <CategoryCard
+                key={category.id}
+                title={category.name}
+                image={`http://localhost/renomeuble/backend/${category.image_path}`}
+                link={`/categorie/${category.slug}`}
+              />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );
