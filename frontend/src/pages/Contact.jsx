@@ -1,14 +1,79 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function Contact() {
+  // ==== STATE FORMULAIRE ====
+  const [formData, setFormData] = useState({
+    name: "",
+    firstname: "",
+    email: "",
+    phone: "",
+    category: "J’ai un produit à vendre",
+    message: "",
+  });
+
+  // ==== STATE UI ====
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(null); // success | error
+
+  // ==== MISE A JOUR DES CHAMPS ====
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // ==== ENVOI FORMULAIRE ====
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
+
+    try {
+      const response = await fetch(
+        "http://localhost/renomeuble/backend/api/messages/store.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Erreur serveur");
+      }
+
+      // ==== SUCCES ====
+      setStatus("success");
+
+      // Reset formulaire
+      setFormData({
+        name: "",
+        firstname: "",
+        email: "",
+        phone: "",
+        category: "J’ai un produit à vendre",
+        message: "",
+      });
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+    }
+
+    setLoading(false);
+  };
+
   return (
     <section className="container py-5">
-      {/* H1 */}
+      {/* ==== TITRE ==== */}
       <h1 className="text-center mb-5">Les informations utiles</h1>
 
-      {/* ==== INFOS ==== */}
+      {/* ==== INFOS BOUTIQUE ==== */}
       <div className="row justify-content-between align-items-start text-center text-md-start g-4 mb-5">
-        {/* Adresse */}
         <div className="col-12 col-md-4">
           <h2 className="h4 fw-semibold mb-3">
             Pour venir nous rendre visite et nous contacter :
@@ -24,7 +89,6 @@ function Contact() {
           </p>
         </div>
 
-        {/* Map */}
         <div className="col-12 col-md-4">
           <div className="ratio ratio-4x3">
             <iframe
@@ -36,7 +100,6 @@ function Contact() {
           </div>
         </div>
 
-        {/* Horaires */}
         <div className="col-12 col-md-4 text-md-end">
           <h2 className="h4 fw-semibold mb-3">Horaires de notre boutique :</h2>
 
@@ -52,7 +115,7 @@ function Contact() {
         </div>
       </div>
 
-      {/* === CONTACT === */}
+      {/* ==== INTRO CONTACT ==== */}
       <div className="text-center mb-4">
         <h2 className="h4 fw-semibold mb-3">Nous contacter</h2>
 
@@ -63,76 +126,121 @@ function Contact() {
         </p>
       </div>
 
-      {/* ==== FORMULAIRE === */}
+      {/* ==== FORMULAIRE ==== */}
       <div
         className="mx-auto p-4 rounded"
         style={{ backgroundColor: "var(--bs-secondary)", maxWidth: "900px" }}
       >
         <h2 className="text-center h5 mb-4">Nous écrire</h2>
 
-        <form>
+        <form onSubmit={handleSubmit}>
+          {/* NOM */}
           <div className="mb-3">
             <label className="form-label">Nom</label>
             <input
               type="text"
+              name="name"
               className="form-control"
               placeholder="Votre nom"
+              value={formData.name}
+              onChange={handleChange}
               required
             />
           </div>
 
+          {/* PRENOM */}
           <div className="mb-3">
             <label className="form-label">Prénom</label>
             <input
               type="text"
+              name="firstname"
               className="form-control"
               placeholder="Votre prénom"
+              value={formData.firstname}
+              onChange={handleChange}
               required
             />
           </div>
 
+          {/* TELEPHONE */}
           <div className="mb-3">
             <label className="form-label">Téléphone</label>
             <input
               type="text"
+              name="phone"
               className="form-control"
               placeholder="Votre numéro de téléphone"
+              value={formData.phone}
+              onChange={handleChange}
             />
           </div>
 
+          {/* EMAIL */}
           <div className="mb-3">
             <label className="form-label">E-mail</label>
             <input
               type="email"
+              name="email"
               className="form-control"
               placeholder="Votre adresse mail"
+              value={formData.email}
+              onChange={handleChange}
               required
             />
           </div>
 
+          {/* CATEGORIE */}
           <div className="mb-3">
             <label className="form-label">Catégorie</label>
-            <select className="form-select">
+            <select
+              name="category"
+              className="form-select"
+              value={formData.category}
+              onChange={handleChange}
+            >
               <option>J’ai un produit à vendre</option>
               <option>Je souhaite acheter</option>
             </select>
           </div>
 
+          {/* MESSAGE */}
           <div className="mb-4">
             <label className="form-label">Message</label>
             <textarea
+              name="message"
               className="form-control"
               rows="4"
               placeholder="Votre message"
+              value={formData.message}
+              onChange={handleChange}
               required
             ></textarea>
           </div>
 
+          {/* BOUTON */}
           <div className="text-center">
-            <button className="btn btn-primary px-5 py-3 rounded-pill text-uppercase">
-              Envoyer
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-primary px-5 py-3 rounded-pill text-uppercase"
+            >
+              {loading ? "Envoi..." : "Envoyer"}
             </button>
           </div>
+
+          {/* MESSAGE SUCCESS */}
+          {status === "success" && (
+            <p className="text-success text-center mt-3">
+              Message envoyé avec succès !
+            </p>
+          )}
+
+          {/* MESSAGE ERROR */}
+          {status === "error" && (
+            <p className="text-danger text-center mt-3">
+              Une erreur est survenue.
+            </p>
+          )}
         </form>
       </div>
     </section>

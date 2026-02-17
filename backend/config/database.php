@@ -1,6 +1,6 @@
 <?php
 
-// Charger le fichier .env
+// ==== CHARGEMENT DU .env ====
 $envPath = __DIR__ . '/../../.env';
 
 if (file_exists($envPath)) {
@@ -9,13 +9,16 @@ if (file_exists($envPath)) {
     foreach ($lines as $line) {
         if (strpos(trim($line), '#') === 0) continue;
 
+        if (strpos($line, '=') === false) continue; // sécurité si ligne malformée
+
         list($name, $value) = explode('=', $line, 2);
         putenv(trim($name) . '=' . trim($value));
     }
 }
 
-$host = 'localhost';
-$dbname = 'renomeuble_db';
+// ==== CONNEXION PDO ====
+$host     = 'localhost';
+$dbname   = 'renomeuble_db';
 $username = 'renomeuble_user';
 $password = getenv('DB_PASS');
 
@@ -27,7 +30,10 @@ try {
     );
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
-    die("Erreur de connexion : " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(["error" => "Erreur de connexion : " . $e->getMessage()]);
+    exit;
 }

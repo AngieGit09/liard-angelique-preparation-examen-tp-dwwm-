@@ -70,13 +70,17 @@ CREATE TABLE product_images (
         ON DELETE CASCADE
 );
 
--- Table message Formulaire de contact
 CREATE TABLE messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(150) NOT NULL,
+
+    nom VARCHAR(150) NOT NULL,
+    prenom VARCHAR(150) NOT NULL,
     email VARCHAR(150) NOT NULL,
-    phone VARCHAR(50),
+    telephone VARCHAR(50),
+
+    categorie VARCHAR(100),
     message TEXT NOT NULL,
+
     is_read BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
