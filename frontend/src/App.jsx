@@ -16,6 +16,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminGestion from "./pages/AdminGestion";
 import "./styles/modal.css";
+import SearchResult from "./pages/SearchResult";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/gestion" element={<AdminGestion />} />
-
+          <Route path="/recherche" element={<SearchResult />} />
           {/* Toujours en dernier */}
           <Route path="*" element={<NotFound />} />
         </Routes>

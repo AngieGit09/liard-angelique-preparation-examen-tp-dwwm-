@@ -1,13 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../styles/header.css";
 
 function Header() {
-  // menu déroulant
   const [open, setOpen] = useState(false);
-
-  // recherche (front uniquement pour l’instant)
   const [searchTerm, setSearchTerm] = useState("");
+
+  const navigate = useNavigate();
+
+  // ==== Fonction recherche ====
+  const handleSearch = () => {
+    if (!searchTerm.trim()) return;
+    navigate(`/recherche?q=${searchTerm}`);
+    setSearchTerm(""); // optionnel : vide le champ après recherche
+  };
 
   return (
     <header className="header">
@@ -19,19 +25,19 @@ function Header() {
           </Link>
         </div>
 
-        {/* Navigation desktop */}
+        {/* Navigation */}
         <nav className="header-nav d-none d-md-flex">
           <Link to="/" className="text-uppercase">
             accueil
           </Link>
 
           <div
-            className={`nav-item has-dropdown nav-hover ${open ? "open" : ""}`}
+            className={`nav-item has-dropdown ${open ? "open" : ""}`}
             onClick={() => setOpen(!open)}
           >
-            <span className="nav-link text-uppercase dropdown-trigger">
+            <span className="nav-link text-uppercase">
               tous nos produits
-              <i className="bi bi-chevron-down dropdown-icon"></i>
+              <i className="bi bi-chevron-down"></i>
             </span>
 
             {open && (
@@ -50,15 +56,26 @@ function Header() {
           </Link>
         </nav>
 
-        {/* Recherche */}
+        {/* ==== Recherche ==== */}
         <div className="header-search">
           <input
             type="text"
             placeholder="Rechercher"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
           />
-          <i className="bi bi-search search-icon"></i>
+
+          {/* Loupe cliquable */}
+          <i
+            className="bi bi-search search-icon"
+            onClick={handleSearch}
+            style={{ cursor: "pointer" }}
+          ></i>
         </div>
 
         {/* Burger mobile */}

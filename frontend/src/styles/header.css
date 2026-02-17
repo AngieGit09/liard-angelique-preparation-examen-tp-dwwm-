@@ -88,7 +88,13 @@
   transform: translateY(-50%);
   font-size: 16px;
   color: var(--bs-primary);
-  pointer-events: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-icon:hover {
+  transform: translateY(-50%) scale(1.15);
+  color: var(--bs-dark);
 }
 
 /* BURGER MOBILE */
