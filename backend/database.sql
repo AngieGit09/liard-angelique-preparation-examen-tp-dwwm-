@@ -89,8 +89,8 @@ CREATE TABLE messages (
 -- Insertion Table admin
 INSERT INTO admins (username, password_hash)
 VALUES 
-('emma', 'HASH_GENERER'),
-('lucas', 'HASH8GENERER');
+('Emma', 'HASH_GENERER'),
+('Lucas', 'HASH8GENERER');
 
 -- Insertion table categories
 INSERT INTO categories (name, slug, image_path)

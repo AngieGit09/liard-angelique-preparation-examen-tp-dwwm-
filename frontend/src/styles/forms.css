@@ -7,6 +7,13 @@ textarea.form-control::placeholder {
 
 .form-control:focus,
 .form-select:focus {
+  color: var(--bs-primary);
   border-color: var(--bs-primary);
   box-shadow: 0 0 0 0.2rem var(--color-shadow-card);
+}
+
+.form-control,
+textarea.form-control,
+.form-select {
+  color: var(--bs-primary);
 }

@@ -1,25 +1,96 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import ModalProduct from "../components/ModalProduct";
 import ModalCategory from "../components/ModalCategory";
 
 function AdminDashboard() {
-  // données temporaires (plus tard : API / backend)
-  const adminName = "Nom Admin";
-  const totalProducts = 12;
-  const lastProduct = "Table en chêne";
+  const navigate = useNavigate();
 
-  // gestion des modales
+  // ====== STATES ======
+  const [adminName, setAdminName] = useState("");
+  const [totalProducts, setTotalProducts] = useState(0);
+  const [lastProduct, setLastProduct] = useState("");
   const [activeModal, setActiveModal] = useState(null);
-  // null | "product" | "category"
+
+  // ====== VERIFICATION SESSION + NOM ADMIN ======
+  useEffect(() => {
+    fetch("http://localhost/renomeuble/backend/authentification/me.php", {
+      credentials: "include",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Non autorisé");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setAdminName(data.username);
+      })
+      .catch(() => {
+        navigate("/admin/login");
+      });
+  }, [navigate]);
+
+  // ====== RECUPERATION DES STATS DASHBOARD ======
+  useEffect(() => {
+    fetch("http://localhost/renomeuble/backend/api/admin/stats.php", {
+      credentials: "include",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Erreur stats");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setTotalProducts(data.totalProducts);
+        setLastProduct(data.lastProduct);
+      })
+      .catch((err) => {
+        console.error("Erreur récupération stats :", err);
+      });
+  }, []);
+
+  // ====== LOGOUT ======
+  const handleLogout = async () => {
+    try {
+      await fetch(
+        "http://localhost/renomeuble/backend/authentification/logout.php",
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
+
+      navigate("/admin/login");
+    } catch (error) {
+      console.error("Erreur logout :", error);
+    }
+  };
 
   return (
     <section className="container py-5">
       {/* ==== HEADER DASHBOARD ==== */}
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 text-center text-md-start">
         <h1 className="mb-2 mb-md-0">Dashboard administrateur</h1>
-        <span className="fw-semibold">{adminName}</span>
+
+        <div className="d-flex align-items-center gap-3">
+          <span className="fw-semibold">
+            Bonjour{" "}
+            {adminName &&
+              adminName.charAt(0).toUpperCase() + adminName.slice(1)}{" "}
+            {/*<--- Version sécurisé & évite crash si vide */}
+          </span>
+
+          <button
+            onClick={handleLogout}
+            className="btn btn-primary text-uppercase px-4 py-2 rounded-pill"
+            style={{ fontSize: "0.8rem" }}
+          >
+            Déconnexion
+          </button>
+        </div>
       </div>
 
       {/* ==== STATS ==== */}
@@ -30,7 +101,7 @@ function AdminDashboard() {
             style={{ backgroundColor: "var(--bs-secondary)" }}
           >
             <p className="mb-1 fw-semibold">Nombre de produits disponibles :</p>
-            <p className="mb-0">{totalProducts}</p>
+            <p className="mb-0 fs-3 ">{totalProducts}</p>
           </div>
         </div>
 
@@ -40,14 +111,13 @@ function AdminDashboard() {
             style={{ backgroundColor: "var(--bs-secondary)" }}
           >
             <p className="mb-1 fw-semibold">Dernier article mis en ligne :</p>
-            <p className="mb-0">{lastProduct}</p>
+            <p className="mb-0  fs-3">{lastProduct || "Aucun produit"}</p>
           </div>
         </div>
       </div>
 
       {/* ==== ACTIONS ==== */}
       <div className="d-flex flex-column align-items-center gap-4">
-        {/* Accès gestion produits */}
         <Link
           to="/admin/gestion"
           className="btn btn-primary rounded-pill px-5 py-3 w-100"
@@ -56,7 +126,6 @@ function AdminDashboard() {
           Accéder à la gestion des produits
         </Link>
 
-        {/* Ajouter un produit */}
         <button
           type="button"
           className="btn btn-primary rounded-pill px-5 py-3 w-100"
@@ -66,7 +135,6 @@ function AdminDashboard() {
           Ajouter un produit
         </button>
 
-        {/* Ajouter une catégorie */}
         <button
           type="button"
           className="btn btn-primary rounded-pill px-5 py-3 w-100"
