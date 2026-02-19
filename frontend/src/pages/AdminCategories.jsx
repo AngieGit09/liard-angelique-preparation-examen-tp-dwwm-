@@ -1,30 +1,31 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import CardGestion from "../components/CardGestion";
-import ModalProduct from "../components/ModalProduct";
-import ModalDelete from "../components/ModalDelete";
+import CategoryCardAdmin from "../components/CategoryCardAdmin";
+import ModalCategory from "../components/ModalCategory";
 
-function AdminGestion() {
+function AdminCategories() {
   const navigate = useNavigate();
 
-  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [activeModal, setActiveModal] = useState(null);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(4);
+  const [visibleCount, setVisibleCount] = useState(6);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("date_desc");
 
-  // Vérification session + chargement produits
+  // Vérification session + chargement catégories
   useEffect(() => {
-    fetch("http://localhost/renomeuble/backend/api/admin/products/index.php", {
-      credentials: "include",
-    })
+    fetch(
+      "http://localhost/renomeuble/backend/api/admin/categories/index.php",
+      {
+        credentials: "include",
+      },
+    )
       .then((res) => {
         if (!res.ok) throw new Error("Non autorisé");
         return res.json();
       })
       .then((data) => {
-        setProducts(data);
+        setCategories(data);
       })
       .catch(() => {
         navigate("/admin/login");
@@ -32,10 +33,8 @@ function AdminGestion() {
   }, [navigate]);
 
   // Filtrage + tri
-  const filteredProducts = products
-    .filter((product) =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
+  const filteredCategories = categories
+    .filter((cat) => cat.name.toLowerCase().includes(searchTerm.toLowerCase()))
     .sort((a, b) => {
       switch (sortOption) {
         case "date_asc":
@@ -43,15 +42,14 @@ function AdminGestion() {
         case "date_desc":
           return new Date(b.created_at) - new Date(a.created_at);
         case "alpha_asc":
-          return a.title.localeCompare(b.title);
+          return a.name.localeCompare(b.name);
         case "alpha_desc":
-          return b.title.localeCompare(a.title);
+          return b.name.localeCompare(a.name);
         default:
           return 0;
       }
     });
 
-  // Déconnexion
   const handleLogout = async () => {
     await fetch(
       "http://localhost/renomeuble/backend/authentification/logout.php",
@@ -62,7 +60,7 @@ function AdminGestion() {
 
   return (
     <section className="container py-5">
-      {/* HEADER TOP */}
+      {/* HEADER */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <Link to="/admin" className="text-decoration-none">
           Retour vers le dashboard
@@ -76,7 +74,7 @@ function AdminGestion() {
         </button>
       </div>
 
-      <h1 className="text-center mb-5">Gestion des produits</h1>
+      <h1 className="text-center mb-5">Gestion des catégories</h1>
 
       {/* ACTIONS */}
       <div className="mb-5 text-center">
@@ -84,19 +82,16 @@ function AdminGestion() {
         <button
           className="btn btn-primary rounded-pill px-5 py-3 mb-4"
           style={{ minWidth: "320px" }}
-          onClick={() => {
-            setSelectedProduct(null);
-            setActiveModal("add");
-          }}
+          onClick={() => setActiveModal("add")}
         >
-          Ajouter un produit
+          Ajouter une catégorie
         </button>
 
         {/* RECHERCHE + TRI */}
         <div className="d-flex justify-content-center gap-3 flex-wrap">
           <input
             type="text"
-            placeholder="Rechercher un produit"
+            placeholder="Rechercher une catégorie"
             className="form-control"
             style={{ maxWidth: "300px" }}
             value={searchTerm}
@@ -109,66 +104,49 @@ function AdminGestion() {
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
           >
-            <option value="date_desc">Plus récent</option>
-            <option value="date_asc">Plus ancien</option>
+            <option value="date_desc">Plus récente</option>
+            <option value="date_asc">Plus ancienne</option>
             <option value="alpha_asc">A → Z</option>
             <option value="alpha_desc">Z → A</option>
           </select>
         </div>
       </div>
 
-      {/* LISTE PRODUITS */}
-      <div className="row g-4">
-        {filteredProducts.slice(0, visibleCount).map((product) => (
-          <div key={product.id} className="col-12 col-md-6">
-            <CardGestion
-              product={{
-                ...product,
-                price: `${parseFloat(product.price).toFixed(2)} €`,
-              }}
-              onEdit={() => {
-                setSelectedProduct(product);
-                setActiveModal("edit");
-              }}
-              onDelete={() => {
-                setSelectedProduct(product);
-                setActiveModal("delete");
-              }}
-            />
-          </div>
+      {/* LISTE */}
+      <div className="row g-4 align-items-stretch">
+        {filteredCategories.slice(0, visibleCount).map((category) => (
+          <CategoryCardAdmin
+            key={category.id}
+            category={category}
+            onEdit={(cat) => {
+              setActiveModal("edit");
+            }}
+            onDelete={(cat) => {
+              setActiveModal("delete");
+            }}
+          />
         ))}
       </div>
 
       {/* VOIR PLUS */}
-      {visibleCount < filteredProducts.length && (
+      {visibleCount < filteredCategories.length && (
         <div className="text-center mt-5">
           <button
             className="btn btn-primary rounded-pill px-5 py-2"
-            onClick={() => setVisibleCount((v) => v + 4)}
+            onClick={() => setVisibleCount((v) => v + 6)}
           >
             Voir +
           </button>
         </div>
       )}
 
-      {/* MODALES */}
-      <ModalProduct
-        isOpen={activeModal === "add" || activeModal === "edit"}
-        mode={activeModal}
-        product={selectedProduct}
-        onClose={() => {
-          setActiveModal(null);
-          setSelectedProduct(null);
-        }}
-      />
-
-      <ModalDelete
-        isOpen={activeModal === "delete"}
+      {/* MODALE */}
+      <ModalCategory
+        isOpen={activeModal === "add"}
         onClose={() => setActiveModal(null)}
-        onConfirm={() => setActiveModal(null)}
       />
     </section>
   );
 }
 
-export default AdminGestion;
+export default AdminCategories;

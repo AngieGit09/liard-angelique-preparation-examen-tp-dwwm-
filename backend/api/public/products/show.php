@@ -3,7 +3,7 @@
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 
-require_once '../../config/database.php';
+require_once '../../../config/database.php';
 
 if (!isset($_GET['id'])) {
     http_response_code(400);

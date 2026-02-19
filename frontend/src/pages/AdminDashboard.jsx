@@ -134,7 +134,13 @@ function AdminDashboard() {
         >
           Ajouter un produit
         </button>
-
+        <Link
+          to="/admin/categories"
+          className="btn btn-primary rounded-pill px-5 py-3 w-100"
+          style={{ maxWidth: "480px" }}
+        >
+          Accéder à la gestion des catégories
+        </Link>
         <button
           type="button"
           className="btn btn-primary rounded-pill px-5 py-3 w-100"

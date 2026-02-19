@@ -11,7 +11,7 @@ function Catalogue() {
 
   // URL de l’API catégories
   const API_URL =
-    "http://localhost/renomeuble/backend/api/categories/index.php";
+    "http://localhost/renomeuble/backend/api/public/categories/index.php";
 
   // Récupération des catégories au chargement du composant
   useEffect(() => {
@@ -23,6 +23,7 @@ function Catalogue() {
         return res.json();
       })
       .then((data) => {
+        console.log("DATA CATEGORIES :", data);
         setCategories(data);
         setLoading(false);
       })

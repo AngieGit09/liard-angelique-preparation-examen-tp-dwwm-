@@ -45,7 +45,9 @@ i {
 
 /* CARTES CATÉGORIES (CATALOGUE) */
 .category-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   box-shadow: 0 2px 8px var(--color-shadow-card);
 }
 
@@ -57,10 +59,34 @@ i {
 
 /* Image dans les cartes catégories */
 .category-card-img {
-  max-height: 170px;
+  height: 150px;
+  width: 100%;
+  object-fit: contain;
+}
+.category-card,
+.admin-card {
+  min-height: 320px;
+}
+
+/* Cartes catégories pages admin */
+.admin-card-img {
+  height: 150px;
+  width: 100%;
   object-fit: contain;
 }
 
+.admin-card-title {
+  color: var(--bs-dark);
+}
+.admin-card {
+  box-shadow: 0 2px 8px var(--color-shadow-card);
+  transition: none;
+}
+
+.admin-no-hover:hover {
+  transform: none !important;
+  box-shadow: 0 2px 8px var(--color-shadow-card) !important;
+}
 /* CARTES PRODUITS (PUBLIC) */
 .product-card {
   background-color: var(--bs-secondary);

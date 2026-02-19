@@ -12,7 +12,7 @@ function ProductDetail() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const API_URL = `http://localhost/renomeuble/backend/api/products/show.php?id=${id}`;
+    const API_URL = `http://localhost/renomeuble/backend/api/public/products/show.php?id=${id}`;
 
     fetch(API_URL)
       .then((res) => {

@@ -23,7 +23,7 @@ function Category() {
     setLoading(true);
     setVisibleCount(6); // Reset pagination quand on change de catégorie
 
-    const API_URL = `http://localhost/renomeuble/backend/api/products/by-category.php?slug=${slug}`;
+    const API_URL = `http://localhost/renomeuble/backend/api/public/products/index.php?slug=${slug}`;
 
     fetch(API_URL)
       .then((res) => {

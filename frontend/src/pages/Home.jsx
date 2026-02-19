@@ -6,7 +6,9 @@ function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost/renomeuble/backend/api/products/featured.php")
+    fetch(
+      "http://localhost/renomeuble/backend/api/public/products/featured.php",
+    )
       .then((res) => {
         if (!res.ok) {
           throw new Error("Erreur API");

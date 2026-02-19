@@ -18,7 +18,7 @@ function SearchResult() {
 
     setLoading(true);
 
-    const API_URL = `http://localhost/renomeuble/backend/api/products/search.php?q=${encodeURIComponent(query)}`;
+    const API_URL = `http://localhost/renomeuble/backend/api/public/products/search.php?q=${encodeURIComponent(query)}`;
 
     fetch(API_URL)
       .then((res) => {

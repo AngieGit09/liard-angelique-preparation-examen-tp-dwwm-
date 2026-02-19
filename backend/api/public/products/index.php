@@ -3,7 +3,7 @@
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 
-require_once '../../config/database.php';
+require_once '../../../config/database.php';
 
 if (!isset($_GET['slug'])) {
     http_response_code(400);
@@ -25,12 +25,12 @@ try {
                 ON p.id = pi.product_id 
                 AND pi.display_order = 1
             ORDER BY p.created_at DESC
-        ");
-
-        $stmt->execute();
+        ");  $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     } else {
 
+        // Produits d'une catégorie spécifique
         $stmt = $pdo->prepare("
             SELECT p.*, pi.image_path
             FROM products p
@@ -38,14 +38,13 @@ try {
             LEFT JOIN product_images pi 
                 ON p.id = pi.product_id 
                 AND pi.display_order = 1
-            WHERE c.slug = ?
+            WHERE c.slug = :slug
             ORDER BY p.created_at DESC
         ");
 
-        $stmt->execute([$slug]);
+        $stmt->execute(['slug' => $slug]);
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($products);
 

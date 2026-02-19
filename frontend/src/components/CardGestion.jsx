@@ -13,14 +13,18 @@ function CardGestion({ product, onDelete, onEdit }) {
       <div className="row align-items-center">
         <div className="col-7">
           <p className="mb-1">{product.category}</p>
-          <p className="mb-1">{product.price}</p>
+          <p className="mb-1">{Number(product.price).toFixed(2)} €</p>
           <p className="mb-1">{product.description}</p>
           <p className="mb-0">{product.date}</p>
         </div>
 
         <div className="col-5 text-center">
           <img
-            src={product.image}
+            src={
+              product.image
+                ? `http://localhost/renomeuble/backend/${product.image}`
+                : "/images/placeholder.png"
+            }
             alt={product.title}
             className="img-fluid mb-2"
           />
