@@ -35,13 +35,15 @@ try {
             p.title,
             p.price,
             p.description,
+            p.category_id,
+            p.is_featured,
             p.created_at,
 
             (
                 SELECT image_path
                 FROM product_images
                 WHERE product_id = p.id
-                ORDER BY id ASC
+                ORDER BY display_order ASC
                 LIMIT 1
             ) AS image,
 

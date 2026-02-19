@@ -8,6 +8,7 @@ function AdminGestion() {
   const navigate = useNavigate();
 
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]); // NOUVEAU
   const [activeModal, setActiveModal] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [visibleCount, setVisibleCount] = useState(4);
@@ -30,6 +31,26 @@ function AdminGestion() {
         navigate("/admin/login");
       });
   }, [navigate]);
+
+  // Chargement des catégories depuis ton API ADMIN
+  useEffect(() => {
+    fetch(
+      "http://localhost/renomeuble/backend/api/admin/categories/index.php",
+      {
+        credentials: "include",
+      },
+    )
+      .then((res) => {
+        if (!res.ok) throw new Error("Erreur catégories");
+        return res.json();
+      })
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch((err) => {
+        console.error("Erreur chargement catégories :", err);
+      });
+  }, []);
 
   // Filtrage + tri
   const filteredProducts = products
@@ -80,7 +101,6 @@ function AdminGestion() {
 
       {/* ACTIONS */}
       <div className="mb-5 text-center">
-        {/* BOUTON PRINCIPAL */}
         <button
           className="btn btn-primary rounded-pill px-5 py-3 mb-4"
           style={{ minWidth: "320px" }}
@@ -122,10 +142,7 @@ function AdminGestion() {
         {filteredProducts.slice(0, visibleCount).map((product) => (
           <div key={product.id} className="col-12 col-md-6">
             <CardGestion
-              product={{
-                ...product,
-                price: `${parseFloat(product.price).toFixed(2)} €`,
-              }}
+              product={product}
               onEdit={() => {
                 setSelectedProduct(product);
                 setActiveModal("edit");
@@ -156,6 +173,8 @@ function AdminGestion() {
         isOpen={activeModal === "add" || activeModal === "edit"}
         mode={activeModal}
         product={selectedProduct}
+        categories={categories} // AUTOMATIQUE
+        hasBestSeller={products.some((p) => p.isBestSeller)}
         onClose={() => {
           setActiveModal(null);
           setSelectedProduct(null);

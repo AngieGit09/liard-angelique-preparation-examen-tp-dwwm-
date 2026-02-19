@@ -7,13 +7,14 @@ import ModalCategory from "../components/ModalCategory";
 function AdminDashboard() {
   const navigate = useNavigate();
 
-  // ====== STATES ======
+  // ==== STATES ====
   const [adminName, setAdminName] = useState("");
   const [totalProducts, setTotalProducts] = useState(0);
   const [lastProduct, setLastProduct] = useState("");
   const [activeModal, setActiveModal] = useState(null);
+  const [categories, setCategories] = useState([]); // NOUVEAU
 
-  // ====== VERIFICATION SESSION + NOM ADMIN ======
+  // ==== VERIFICATION SESSION + NOM ADMIN ====
   useEffect(() => {
     fetch("http://localhost/renomeuble/backend/authentification/me.php", {
       credentials: "include",
@@ -32,7 +33,7 @@ function AdminDashboard() {
       });
   }, [navigate]);
 
-  // ====== RECUPERATION DES STATS DASHBOARD ======
+  // ==== RECUPERATION DES STATS DASHBOARD ====
   useEffect(() => {
     fetch("http://localhost/renomeuble/backend/api/admin/stats.php", {
       credentials: "include",
@@ -49,6 +50,28 @@ function AdminDashboard() {
       })
       .catch((err) => {
         console.error("Erreur récupération stats :", err);
+      });
+  }, []);
+
+  // ==== RECUPERATION DES CATEGORIES (API ADMIN) ====
+  useEffect(() => {
+    fetch(
+      "http://localhost/renomeuble/backend/api/admin/categories/index.php",
+      {
+        credentials: "include",
+      },
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Erreur catégories");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setCategories(data);
+      })
+      .catch((err) => {
+        console.error("Erreur récupération catégories :", err);
       });
   }, []);
 
@@ -79,8 +102,7 @@ function AdminDashboard() {
           <span className="fw-semibold">
             Bonjour{" "}
             {adminName &&
-              adminName.charAt(0).toUpperCase() + adminName.slice(1)}{" "}
-            {/*<--- Version sécurisé & évite crash si vide */}
+              adminName.charAt(0).toUpperCase() + adminName.slice(1)}
           </span>
 
           <button
@@ -134,6 +156,7 @@ function AdminDashboard() {
         >
           Ajouter un produit
         </button>
+
         <Link
           to="/admin/categories"
           className="btn btn-primary rounded-pill px-5 py-3 w-100"
@@ -141,6 +164,7 @@ function AdminDashboard() {
         >
           Accéder à la gestion des catégories
         </Link>
+
         <button
           type="button"
           className="btn btn-primary rounded-pill px-5 py-3 w-100"
@@ -154,7 +178,9 @@ function AdminDashboard() {
       {/* ==== MODALES ==== */}
       <ModalProduct
         isOpen={activeModal === "product"}
-        title="Ajouter un produit"
+        mode="add"
+        product={null}
+        categories={categories} // CATEGORIES DYNAMIQUES
         onClose={() => setActiveModal(null)}
       />
 
