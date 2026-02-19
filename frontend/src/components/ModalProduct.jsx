@@ -27,7 +27,19 @@ function ModalProduct({
       setPrice(product.price || "");
       setDescription(product.description || "");
       setIsBestSeller(product.is_featured === 1);
-      setImages([]);
+
+      // Charger les images existantes (BDD)
+      if (product.images && product.images.length > 0) {
+        const formatted = product.images.map((img) => ({
+          id: img.id,
+          preview: `http://localhost/renomeuble/backend/${img.image_path}`,
+          existing: true,
+        }));
+
+        setImages(formatted);
+      } else {
+        setImages([]);
+      }
     }
 
     if (mode === "add") {
@@ -61,9 +73,39 @@ function ModalProduct({
     setImages((prev) => [...prev, ...newImages]);
     e.target.value = null;
   }
+  async function handleRemoveImage(index) {
+    const imageToRemove = images[index];
 
-  function handleRemoveImage(index) {
-    setImages((prev) => prev.filter((_, i) => i !== index));
+    try {
+      // Image existante en BDD
+      if (imageToRemove.existing && imageToRemove.id) {
+        const formData = new FormData();
+        formData.append("image_id", imageToRemove.id);
+
+        const response = await fetch(
+          "http://localhost/renomeuble/backend/api/admin/products/delete-image.php",
+          {
+            method: "POST",
+            body: formData,
+            credentials: "include",
+          },
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          // 🔥 Message clair admin
+          alert(data.error || "Impossible de supprimer l'image.");
+          return;
+        }
+      }
+
+      // Suppression visuelle (si autorisée)
+      setImages((prev) => prev.filter((_, i) => i !== index));
+    } catch (error) {
+      console.error("Erreur suppression image :", error);
+      alert("Erreur serveur lors de la suppression.");
+    }
   }
 
   // FONCTION PRINCIPALE : ENVOI A L'API
@@ -228,6 +270,8 @@ function ModalProduct({
                 alt="aperçu"
                 className="admin-product-thumb"
               />
+
+              {/* Bouton supprimer (optionnel futur) */}
               <button
                 type="button"
                 className="admin-thumb-remove"

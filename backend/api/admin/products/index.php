@@ -29,6 +29,7 @@ require_once '../../../config/database.php';
 
 try {
 
+    // IMAGE PRINCIPALE + LE COUNT (pour les cartes)
     $stmt = $pdo->query("
         SELECT 
             p.id,
@@ -59,6 +60,18 @@ try {
 
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // AJOUT DES MINIATURES (POUR LA MODALE EDIT)
+    foreach ($products as &$product) {
+        $stmtImg = $pdo->prepare("
+            SELECT id, image_path, display_order
+            FROM product_images
+            WHERE product_id = ?
+            ORDER BY display_order ASC
+        ");
+        $stmtImg->execute([$product['id']]);
+        $product['images'] = $stmtImg->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     echo json_encode($products);
 
 } catch (PDOException $e) {
@@ -69,3 +82,4 @@ try {
         'message' => $e->getMessage()
     ]);
 }
+

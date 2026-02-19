@@ -183,8 +183,14 @@ function AdminGestion() {
 
       <ModalDelete
         isOpen={activeModal === "delete"}
-        onClose={() => setActiveModal(null)}
-        onConfirm={() => setActiveModal(null)}
+        productId={selectedProduct?.id}
+        onClose={() => {
+          setActiveModal(null);
+          setSelectedProduct(null);
+        }}
+        onDeleted={(deletedId) => {
+          setProducts((prev) => prev.filter((p) => p.id !== deletedId));
+        }}
       />
     </section>
   );
