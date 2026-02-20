@@ -264,106 +264,105 @@ INSERT INTO product_images (product_id, image_path, display_order)
 VALUES
 
 -- Produit 1 : Table basse en bois de hêtre
-(1, 'uploads/products/images/table-basse.png', 1),
-(1, 'uploads/products/images/table-basse2.png', 2),
-(1, 'uploads/products/images/table-basse3.png', 3),
-(1, 'uploads/products/images/table_basse.png', 4),
+(1, 'uploads/products/table-basse.png', 1),
+(1, 'uploads/products/table-basse2.png', 2),
+(1, 'uploads/products/table-basse3.png', 3),
+(1, 'uploads/products/table_basse.png', 4),
 
 -- Produit 2 : Table à manger
-(2, 'uploads/products/images/table.png', 1),
-(2, 'uploads/products/images/table1.png', 2),
-(2, 'uploads/products/images/table2.png', 3),
-(2, 'uploads/products/images/table.png', 4),
+(2, 'uploads/products/table.png', 1),
+(2, 'uploads/products/table1.png', 2),
+(2, 'uploads/products/table2.png', 3),
+(2, 'uploads/products/table.png', 4),
 
 -- Produit 3 : Bureau industriel
-(3, 'uploads/products/images/bureau4.jpg', 1),
-(3, 'uploads/products/images/bureau1.jpg', 2),
-(3, 'uploads/products/images/bureau6.jpg', 3),
-(3, 'uploads/products/images/bureau5.jpg', 4),
+(3, 'uploads/products/bureau4.jpg', 1),
+(3, 'uploads/products/bureau1.jpg', 2),
+(3, 'uploads/products/bureau6.jpg', 3),
+(3, 'uploads/products/bureau5.jpg', 4),
 
 -- Produit 4 : Cheval à bascule
-(4, 'uploads/products/images/rocking-horse.png', 1),
-(4, 'uploads/products/images/rocking-horse-1.jpg', 2),
-(4, 'uploads/products/images/rocking-horse.png', 3),
-(4, 'uploads/products/images/rocking-horse-1.jpg', 4),
+(4, 'uploads/products/rocking-horse.png', 1),
+(4, 'uploads/products/rocking-horse-1.jpg', 2),
+(4, 'uploads/products/rocking-horse.png', 3),
+(4, 'uploads/products/rocking-horse-1.jpg', 4),
 
 -- Produit 5 : Lit en bois
-(5, 'uploads/products/images/bed.png', 1),
-(5, 'uploads/products/images/lit2.jpg', 2),
-(5, 'uploads/products/images/lit3.jpg', 3),
-(5, 'uploads/products/images/lit4.jpg', 4),
-(5, 'uploads/products/images/lit5.jpg', 5),
+(5, 'uploads/products/bed.png', 1),
+(5, 'uploads/products/lit2.jpg', 2),
+(5, 'uploads/products/lit3.jpg', 3),
+(5, 'uploads/products/lit4.jpg', 4),
+(5, 'uploads/products/lit5.jpg', 5),
 
 -- Produit 6 : Table basse en chêne (BEST SELLER)
-(6, 'uploads/products/images/table_basse.png', 1),
-(6, 'uploads/products/images/table-basse1.png', 2),
-(6, 'uploads/products/images/table-basse2.png', 3),
-(6, 'uploads/products/images/table-basse3.png', 4),
+(6, 'uploads/products/table_basse.png', 1),
+(6, 'uploads/products/table-basse1.png', 2),
+(6, 'uploads/products/table-basse2.png', 3),
+(6, 'uploads/products/table-basse3.png', 4),
 
 -- Produit 7 : Table basse 
-(7, 'uploads/products/images/table_basse.png', 1),
-(7, 'uploads/products/images/table-basse3.png', 2),
-(7, 'uploads/products/images/table-basse2.png', 3),
-(7, 'uploads/products/images/table_basse.png', 4),
+(7, 'uploads/products/table_basse.png', 1),
+(7, 'uploads/products/table-basse3.png', 2),
+(7, 'uploads/products/table-basse2.png', 3),
+(7, 'uploads/products/table_basse.png', 4),
 
 -- Produit 8 : Table à manger
-(8, 'uploads/products/images/table1.png', 1),
-(8, 'uploads/products/images/table.png', 2),
-(8, 'uploads/products/images/table2.png', 3),
-(8, 'uploads/products/images/table1.png', 4),
+(8, 'uploads/products/table1.png', 1),
+(8, 'uploads/products/table.png', 2),
+(8, 'uploads/products/table2.png', 3),
+(8, 'uploads/products/table1.png', 4),
 
 -- Produit 9 : Table à manger
-(9, 'uploads/products/images/table2.png', 1),
-(9, 'uploads/products/images/table1.png', 2),
-(9, 'uploads/products/images/table.png', 3),
-(9, 'uploads/products/images/table2.png', 4),
+(9, 'uploads/products/table2.png', 1),
+(9, 'uploads/products/table1.png', 2),
+(9, 'uploads/products/table.png', 3),
+(9, 'uploads/products/table2.png', 4),
 
 -- Produit 10 : Table de chevet
-(10, 'uploads/products/images/night-table.png', 1),
-(10, 'uploads/products/images/table-de-chevet2.jpg', 2),
-(10, 'uploads/products/images/table-de-chevet3.jpg', 3),
-(10, 'uploads/products/images/table-de-chevet4.jpg', 4),
-(10, 'uploads/products/images/table-de-chevet5.jpg', 5),
+(10, 'uploads/products/night-table.png', 1),
+(10, 'uploads/products/table-de-chevet2.jpg', 2),
+(10, 'uploads/products/table-de-chevet3.jpg', 3),
+(10, 'uploads/products/table-de-chevet4.jpg', 4),
+(10, 'uploads/products/table-de-chevet5.jpg', 5),
 
 -- Produit 11 : Table de chevet
-(11, 'uploads/products/images/table-de-chevet5.jpg', 1),
-(11, 'uploads/products/images/table-de-chevet1.png', 2),
-(11, 'uploads/products/images/table-de-chevet3.jpg', 3),
-(11, 'uploads/products/images/table-de-chevet4.jpg', 4),
+(11, 'uploads/products/table-de-chevet5.jpg', 1),
+(11, 'uploads/products/table-de-chevet1.png', 2),
+(11, 'uploads/products/table-de-chevet3.jpg', 3),
+(11, 'uploads/products/table-de-chevet4.jpg', 4),
 
 -- Produit 12 : Bureau écolier
-(12, 'uploads/products/images/bureau.png', 1),
-(12, 'uploads/products/images/bureau7.jpg', 2),
-(12, 'uploads/products/images/bureau6.jpg', 3),
-(12, 'uploads/products/images/bureau5.jpg', 4),
+(12, 'uploads/products/bureau.png', 1),
+(12, 'uploads/products/bureau7.jpg', 2),
+(12, 'uploads/products/bureau6.jpg', 3),
+(12, 'uploads/products/bureau5.jpg', 4),
 
 -- Produit 13 : Bureau 
-(13, 'uploads/products/images/bureau5.jpg', 1),
-(13, 'uploads/products/images/bureau.png', 2),
-(13, 'uploads/products/images/bureau6.jpg', 3),
-(13, 'uploads/products/images/bureau7.jpg', 4),
+(13, 'uploads/products/bureau5.jpg', 1),
+(13, 'uploads/products/bureau.png', 2),
+(13, 'uploads/products/bureau6.jpg', 3),
+(13, 'uploads/products/bureau7.jpg', 4),
 
 -- Produit 14 : Bureau 
-(14, 'uploads/products/images/bureau6.jpg', 1),
-(14, 'uploads/products/images/bureau5.jpg', 2),
-(14, 'uploads/products/images/bureau4.jpg', 3),
-(14, 'uploads/products/images/bureau7.jpg', 4),
+(14, 'uploads/products/bureau6.jpg', 1),
+(14, 'uploads/products/bureau5.jpg', 2),
+(14, 'uploads/products/bureau4.jpg', 3),
+(14, 'uploads/products/bureau7.jpg', 4),
 
 -- Produit 15 : Banc
-(15, 'uploads/products/images/bench.png', 1),
-(15, 'uploads/products/images/banc1.png', 2),
-(15, 'uploads/products/images/banc2.png', 3),
-(15, 'uploads/products/images/banc3.png', 4),
-(15, 'uploads/products/images/banc4.png', 5),
+(15, 'uploads/products/bench.png', 1),
+(15, 'uploads/products/banc2.png', 3),
+(15, 'uploads/products/banc3.png', 4),
+(15, 'uploads/products/banc4.png', 5),
 
 -- Produit 16 : Tabouret
-(16, 'uploads/products/images/tabouret.png', 1),
-(16, 'uploads/products/images/tabouret1.png', 2),
-(16, 'uploads/products/images/tabouret.png', 3),
-(16, 'uploads/products/images/tabouret1.png', 4),
+(16, 'uploads/products/tabouret.png', 1),
+(16, 'uploads/products/tabouret1.png', 2),
+(16, 'uploads/products/tabouret.png', 3),
+(16, 'uploads/products/tabouret1.png', 4),
 
 -- Produit 17 : Malette
-(17, 'uploads/products/images/malette2.png', 1),
-(17, 'uploads/products/images/malette1.png', 2),
-(17, 'uploads/products/images/malette2.png', 3),
-(17, 'uploads/products/images/malette1.png', 4);
+(17, 'uploads/products/malette2.png', 1),
+(17, 'uploads/products/malette1.png', 2),
+(17, 'uploads/products/malette2.png', 3),
+(17, 'uploads/products/malette1.png', 4);

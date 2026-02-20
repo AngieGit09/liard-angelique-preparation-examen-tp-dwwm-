@@ -1,38 +1,46 @@
 <?php
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: http://localhost:5173');
+header('Access-Control-Allow-Credentials: true');
 
-header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
-
-require_once '../../../config/database.php';
+require_once __DIR__ . '/../../../config/database.php';
 
 try {
 
-    $stmt = $pdo->prepare("
-        SELECT p.*, pi.image_path
-        FROM products p
-        LEFT JOIN product_images pi 
-            ON p.id = pi.product_id 
-            AND pi.display_order = 1
-        WHERE p.is_featured = 1
+    // Produit best-seller
+    $stmt = $pdo->query("
+        SELECT id, title, description, price
+        FROM products
+        WHERE is_featured = 1
         LIMIT 1
     ");
 
-    $stmt->execute();
     $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$product) {
-        http_response_code(404);
-        echo json_encode(["message" => "Aucun produit coup de cœur trouvé"]);
+        echo json_encode(null);
         exit;
     }
+
+    // Récupérer TOUTES les images (ordre propre)
+    $stmtImages = $pdo->prepare("
+        SELECT id, image_path, display_order
+        FROM product_images
+        WHERE product_id = ?
+        ORDER BY display_order ASC, id ASC
+    ");
+    $stmtImages->execute([$product['id']]);
+    $images = $stmtImages->fetchAll(PDO::FETCH_ASSOC);
+
+    // Injecter les images dans le produit
+    $product['images'] = $images;
 
     echo json_encode($product);
 
 } catch (PDOException $e) {
-
     http_response_code(500);
     echo json_encode([
         "error" => "Erreur serveur",
-        "details" => $e->getMessage()
+        "message" => $e->getMessage()
     ]);
 }

@@ -1,3 +1,8 @@
+// ========= FOOTER =========
+// Pied de page du site.
+// Contient le plan du site, les liens légaux, les réseaux sociaux
+// ainsi qu’un accès rapide à l’accueil via le logo.
+
 import { Link } from "react-router-dom";
 import "../styles/footer.css";
 
@@ -5,13 +10,16 @@ function Footer() {
   return (
     <footer className="footer ">
       <div className="container footer-inner">
-        {/* Logo centré en haut */}
+        {/* ==== LOGO ==== */}
+        {/* Le logo renvoie vers la page d’accueil */}
         <div className="text-center mb-4">
-          <img
-            src="/logo_renomeuble.png"
-            alt="Logo RenoMeuble"
-            className="footer-logo"
-          />
+          <Link to="/">
+            <img
+              src="/logo_renomeuble.png"
+              alt="Logo RenoMeuble"
+              className="footer-logo"
+            />
+          </Link>
         </div>
 
         <div className="row g-4 justify-content-center justify-content-md-between">

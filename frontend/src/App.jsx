@@ -1,8 +1,29 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+// Styles
+import "./styles/variables.css";
+import "./styles/global.css";
+import "./styles/buttons.css";
+import "./styles/forms.css";
+import "./styles/modal.css";
+import "./styles/products.css";
+import "./styles/best_seller.css";
+import "./styles/cards.css";
+import "./styles/header.css";
+import "./styles/footer.css";
+import "./styles/admin.css";
+
 // Components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import CategoryCard from "./components/CategoryCard";
+import ProductCard from "./components/ProductCard";
+import CardGestion from "./components/CardGestion";
+import CategoryCardAdmin from "./components/CategoryCardAdmin";
+import Modal from "./components/Modal";
+import ModalCategory from "./components/ModalCategory";
+import ModalProduct from "./components/ModalProduct";
+import ModalDelete from "./components/ModalDelete";
 
 // Pages
 import Home from "./pages/Home";
@@ -16,7 +37,6 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminGestion from "./pages/AdminGestion";
 import AdminCategories from "./pages/AdminCategories";
-import "./styles/modal.css";
 import SearchResult from "./pages/SearchResult";
 import NotFound from "./pages/NotFound";
 

@@ -1,21 +1,26 @@
+// =========== CARTE CATEGORIE - FRONT PUBLIC ===========
+// Composant réutilisable affichant une catégorie dans la page Catalogue.
+// Permet la navigation vers la page correspondante via React Router.
+
 import { Link } from "react-router-dom";
 
 function CategoryCard({ title, image, link }) {
   return (
-    <div className="col-6 col-lg-4 d-flex">
+    // Colonne responsive (2 cartes par ligne mobile, 3 en desktop large)
+    <div className="col-6 col-lg-4 mb-4">
+      {/* Carte entièrement cliquable via Link */}
       <Link to={link} className="text-decoration-none w-100">
-        <div
-          className="card h-100 text-center border-0 p-4 d-flex flex-column category-card"
-          style={{ backgroundColor: "var(--bs-secondary)" }}
-        >
-          <h3 className="product-title fw-semibold mb-3">{title}</h3>
+        <div className="category-card text-center p-4">
+          {/* Titre de la catégorie */}
+          <h3 className="category-card-title mb-3">{title}</h3>
 
-          <div className="flex-grow-1 d-flex align-items-center justify-content-center">
+          {/* Image représentative de la catégorie */}
+          <div className="category-image-wrapper">
             <img
               src={image}
-              alt={title}
-              className="img-fluid category-card-img"
-              loading="lazy"
+              alt={title} // Accessibilité et SEO
+              className="category-card-img"
+              loading="lazy" // Optimisation des performances
             />
           </div>
         </div>

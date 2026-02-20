@@ -1,15 +1,36 @@
 :root {
-  /* === BOOTSTRAP CORE === */
-  --bs-primary: #a2845e; /* texte + icônes */
-  --bs-secondary: #ffe8cc; /* header / footer / cartes */
-  --bs-light: #fffaf5; /* fond page */
-  --bs-dark: #704424; /* H1 + titre cards*/
+  /* ================== PALETTE PRINCIPALE ================= */
+  /* Couleurs globales du site (charte graphique)           */
+  /* Thème : beige / bois / chaleureux                     */
+
+  /* Couleur principale (texte, icônes, accents) */
+  --bs-primary: #a2845e;
+
+  /* Fond secondaire (header, footer, cartes) */
+  --bs-secondary: #ffe8cc;
+
+  /* Fond global du site */
+  --bs-light: #fffaf5;
+
+  /* Couleur foncée (titres, contrastes) */
+  --bs-dark: #704424;
+
+  /* Versions RGB (utile pour ombres, rgba, effets) */
+  --bs-primary-rgb: 162, 132, 94;
   --bs-dark-rgb: 112, 68, 36;
 
-  --bs-primary-rgb: 162, 132, 94;
+  /* =============== COMPOSANTS PERSONNALISÉS ============= */
+  /* Variables spécifiques à ton design (non Bootstrap)    */
 
-  /* === COMPOSANTS SPÉCIFIQUES === */
+  /* Couleur des boutons principaux */
   --color-button: #bb6c4e;
+
+  /* Ombre douce des cartes (admin + catalogue) */
   --color-shadow-card: rgba(112, 68, 36, 0.38);
-  --select-arrow-color: %23a2845e; /* Flèche select */
+
+  /* ===================== FORMULAIRES ==================== */
+  /* Variables UI (inputs, select, etc.)                   */
+
+  /* Couleur de la flèche custom des select (SVG encodé) */
+  --select-arrow-color: #a2845e;
 }

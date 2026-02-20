@@ -1,3 +1,8 @@
+// ========== MODAL AJOUTER & MODIFIER UN PRODUIT ==========
+// Composant modale réutilisable pour la création et la modification de produits (CRUD).
+// Gère le formulaire, l’upload d’images, le statut best-seller et l’envoi
+// des données vers l’API admin avec authentification par session.
+
 import { useRef, useState, useEffect } from "react";
 import Modal from "./Modal";
 
@@ -9,75 +14,95 @@ function ModalProduct({
   hasBestSeller,
   categories = [],
 }) {
+  // Référence vers l’input file (upload d’images)
   const fileInputRef = useRef(null);
 
+  // ==== ETATS DU FORMULAIRE PRODUIT ====
   const [name, setName] = useState("");
-  const [category, setCategory] = useState(""); // = category_id (BDD)
+  const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [story, setStory] = useState("");
+
+  // Etat best-seller (produit mis en avant)
   const [isBestSeller, setIsBestSeller] = useState(false);
+
+  // Gestion des images (existantes + nouvelles)
   const [images, setImages] = useState([]);
+
+  // Etat de chargement lors de l’enregistrement
   const [loading, setLoading] = useState(false);
 
-  /* Pré-remplissage add / edit */
+  // ==== INITIALISATION DU FORMULAIRE (MODE ADD / EDIT) ====
   useEffect(() => {
+    // Mode édition : pré-remplissage des champs avec les données du produit
     if (mode === "edit" && product) {
       setName(product.title || "");
-      setCategory(product.category_id || "");
+      setCategory(product.category_id?.toString() || "");
       setPrice(product.price || "");
       setDescription(product.description || "");
+      setStory(product.story || "");
       setIsBestSeller(product.is_featured === 1);
 
-      // Charger les images existantes (BDD)
+      // Chargement des images existantes depuis la base de données
       if (product.images && product.images.length > 0) {
         const formatted = product.images.map((img) => ({
           id: img.id,
           preview: `http://localhost/renomeuble/backend/${img.image_path}`,
           existing: true,
         }));
-
         setImages(formatted);
       } else {
         setImages([]);
       }
     }
 
+    // Mode ajout : réinitialisation du formulaire
     if (mode === "add") {
       resetForm();
     }
   }, [mode, product]);
 
+  // ==== RESET COMPLET DU FORMULAIRE ====
   function resetForm() {
     setName("");
     setCategory("");
     setPrice("");
     setDescription("");
+    setStory("");
     setIsBestSeller(false);
     setImages([]);
   }
 
+  // Fermeture sécurisée de la modale (bloquée pendant le loading)
   function handleClose() {
     if (loading) return;
     resetForm();
     onClose();
   }
 
+  // ==== AJOUT D’IMAGES (UPLOAD MULTIPLE) ====
+  // Génère un aperçu local via URL.createObjectURL
   function handleAddImages(e) {
     const files = Array.from(e.target.files);
 
     const newImages = files.map((file) => ({
       file,
       preview: URL.createObjectURL(file),
+      existing: false,
     }));
 
     setImages((prev) => [...prev, ...newImages]);
-    e.target.value = null;
+    e.target.value = null; // Reset input file
   }
+
+  // ==== SUPPRESSION D’UNE IMAGE ====
+  // Si image existante → suppression via API
+  // Sinon suppression locale uniquement
   async function handleRemoveImage(index) {
     const imageToRemove = images[index];
 
     try {
-      // Image existante en BDD
       if (imageToRemove.existing && imageToRemove.id) {
         const formData = new FormData();
         formData.append("image_id", imageToRemove.id);
@@ -87,20 +112,19 @@ function ModalProduct({
           {
             method: "POST",
             body: formData,
-            credentials: "include",
+            credentials: "include", // Requête sécurisée (session admin)
           },
         );
 
         const data = await response.json();
 
         if (!response.ok) {
-          // 🔥 Message clair admin
           alert(data.error || "Impossible de supprimer l'image.");
           return;
         }
       }
 
-      // Suppression visuelle (si autorisée)
+      // Mise à jour de l’interface sans rechargement
       setImages((prev) => prev.filter((_, i) => i !== index));
     } catch (error) {
       console.error("Erreur suppression image :", error);
@@ -108,10 +132,11 @@ function ModalProduct({
     }
   }
 
-  // FONCTION PRINCIPALE : ENVOI A L'API
+  // ==== ENVOI DU FORMULAIRE (CREATE / UPDATE) ====
   async function handleSubmit() {
     try {
-      if (!name || !description || !price || !category) {
+      // Validation des champs obligatoires
+      if (!name || !description || !price || !category || !story) {
         alert("Veuillez remplir tous les champs obligatoires.");
         return;
       }
@@ -121,28 +146,33 @@ function ModalProduct({
       const formData = new FormData();
       formData.append("title", name);
       formData.append("description", description);
+      formData.append("story", story);
       formData.append("price", price);
       formData.append("category_id", category);
       formData.append("is_featured", isBestSeller ? 1 : 0);
 
-      // Images
+      // Envoi uniquement des nouvelles images (optimisation API)
       images.forEach((img) => {
-        formData.append("images[]", img.file);
+        if (!img.existing && img.file) {
+          formData.append("images[]", img.file);
+        }
       });
 
+      // Ajout de l’id en mode édition
+      if (mode === "edit" && product) {
+        formData.append("id", product.id);
+      }
+
+      // Sélection dynamique de l’endpoint (store ou update)
       const url =
         mode === "edit"
           ? "http://localhost/renomeuble/backend/api/admin/products/update.php"
           : "http://localhost/renomeuble/backend/api/admin/products/store.php";
 
-      if (mode === "edit" && product) {
-        formData.append("id", product.id);
-      }
-
       const response = await fetch(url, {
         method: "POST",
         body: formData,
-        credentials: "include",
+        credentials: "include", // Authentification par session admin
       });
 
       const data = await response.json();
@@ -151,10 +181,12 @@ function ModalProduct({
         throw new Error(data.error || "Erreur lors de l'enregistrement");
       }
 
-      // Succès
+      // Réinitialisation et fermeture après succès
       resetForm();
       onClose();
-      window.location.reload(); // recharge la liste produits (simple et efficace)
+
+      // Rechargement pour synchroniser l’interface admin
+      window.location.reload();
     } catch (error) {
       console.error("Erreur produit :", error);
       alert(error.message || "Une erreur est survenue.");
@@ -165,7 +197,7 @@ function ModalProduct({
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
-      {/* Header */}
+      {/* En-tête de la modale (mode dynamique : ajout / édition) */}
       <div className="d-flex justify-content-between mb-3">
         <h2 className="h6 admin-modal-title">
           {mode === "edit" ? "Modifier le produit" : "Ajouter un produit"}
@@ -181,7 +213,7 @@ function ModalProduct({
         </button>
       </div>
 
-      {/* Nom */}
+      {/* Champ nom du produit */}
       <div className="mb-3">
         <label className="form-label">Nom du produit</label>
         <input
@@ -191,7 +223,7 @@ function ModalProduct({
         />
       </div>
 
-      {/* Catégorie (DYNAMIQUE API + category_id BDD) */}
+      {/* Sélection dynamique de la catégorie (données API admin) */}
       <div className="mb-3">
         <label className="form-label">Catégorie</label>
         <select
@@ -200,7 +232,6 @@ function ModalProduct({
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">Sélectionner une catégorie</option>
-
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.name}
@@ -209,21 +240,20 @@ function ModalProduct({
         </select>
       </div>
 
-      {/* Prix (sans flèches via CSS) */}
+      {/* Champ prix */}
       <div className="mb-3">
         <label className="form-label">Prix (€)</label>
         <input
           type="number"
           min="0"
           step="0.01"
-          className="form-control no-spinner"
+          className="form-control"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
-          placeholder="Ex : 199.99"
         />
       </div>
 
-      {/* Description */}
+      {/* Description du produit */}
       <div className="mb-4">
         <label className="form-label">Description</label>
         <textarea
@@ -234,31 +264,40 @@ function ModalProduct({
         />
       </div>
 
-      {/* Best-seller */}
+      {/* Histoire du meuble (contenu éditorial) */}
       <div className="mb-4">
-        <div className="form-check">
+        <label className="form-label">Histoire du meuble</label>
+        <textarea
+          className="form-control"
+          rows={4}
+          value={story}
+          onChange={(e) => setStory(e.target.value)}
+          placeholder="Racontez l’histoire du meuble (origine, restauration, époque...)"
+        />
+      </div>
+
+      {/* Option best-seller (produit mis en avant sur le site) */}
+      <div className="mb-3">
+        <div className="form-check d-flex align-items-center gap-2">
           <input
-            className="form-check-input"
             type="checkbox"
-            id="bestSellerCheck"
+            id="bestSeller"
+            className="form-check-input"
             checked={isBestSeller}
-            disabled={hasBestSeller && !product?.is_featured}
             onChange={(e) => setIsBestSeller(e.target.checked)}
           />
-          <label className="form-check-label" htmlFor="bestSellerCheck">
+          <label htmlFor="bestSeller" className="form-check-label fw-semibold">
             Définir comme article best-seller
           </label>
         </div>
 
-        {hasBestSeller && !product?.is_featured && (
-          <small className="text-danger d-block mt-1">
-            Un produit est déjà en best-seller. Retirez-le avant d’en définir un
-            nouveau.
-          </small>
-        )}
+        <small className="admin-bestseller-info d-block mt-1">
+          Un seul produit peut être best-seller. Si vous cochez cette case,
+          l’ancien sera automatiquement remplacé !
+        </small>
       </div>
 
-      {/* Images */}
+      {/* Gestion des images produit (preview + suppression) */}
       <div className="mb-4">
         <label className="form-label">Images</label>
 
@@ -270,8 +309,6 @@ function ModalProduct({
                 alt="aperçu"
                 className="admin-product-thumb"
               />
-
-              {/* Bouton supprimer (optionnel futur) */}
               <button
                 type="button"
                 className="admin-thumb-remove"
@@ -282,6 +319,7 @@ function ModalProduct({
             </div>
           ))}
 
+          {/* Bouton d’ouverture de l’input file caché */}
           <button
             type="button"
             className="admin-image-add"
@@ -300,7 +338,7 @@ function ModalProduct({
         />
       </div>
 
-      {/* Bouton Action (MAINTENANT FONCTIONNEL) */}
+      {/* Bouton de soumission (mode dynamique) */}
       <button
         className="btn btn-primary w-100"
         onClick={handleSubmit}

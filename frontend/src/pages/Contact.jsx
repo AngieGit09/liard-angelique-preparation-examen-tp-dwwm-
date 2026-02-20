@@ -1,7 +1,12 @@
+// ========= PAGE CONTACT =========
+// Page de contact permettant à l'utilisateur d'envoyer un message via un formulaire.
+// Les données sont envoyées à l'API backend et un retour visuel (succès/erreur)
+// est affiché selon le résultat de la requête.
+
 import { useState } from "react";
 
 function Contact() {
-  // ==== STATE FORMULAIRE ====
+  // Etat du formulaire (inputs contrôlés)
   const [formData, setFormData] = useState({
     name: "",
     firstname: "",
@@ -11,11 +16,12 @@ function Contact() {
     message: "",
   });
 
-  // ==== STATE UI ====
+  // Etats d'interface pour la gestion de l'envoi
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null); // success | error
 
-  // ==== MISE A JOUR DES CHAMPS ====
+  // Mise à jour générique des champs du formulaire
+  // Permet de gérer tous les inputs via une seule fonction
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,7 +29,7 @@ function Contact() {
     });
   };
 
-  // ==== ENVOI FORMULAIRE ====
+  // Soumission du formulaire avec envoi des données à l'API (POST)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -37,20 +43,20 @@ function Contact() {
           headers: {
             "Content-Type": "application/json",
           },
+          // Envoi des données du formulaire au format JSON
           body: JSON.stringify(formData),
         },
       );
 
       const data = await response.json();
 
+      // Gestion des erreurs serveur
       if (!response.ok) {
         throw new Error(data.error || "Erreur serveur");
       }
 
-      // ==== SUCCES ====
+      // Affichage du message de succès et réinitialisation du formulaire
       setStatus("success");
-
-      // Reset formulaire
       setFormData({
         name: "",
         firstname: "",
@@ -61,6 +67,7 @@ function Contact() {
       });
     } catch (error) {
       console.error(error);
+      // Etat d'erreur en cas d'échec de l'envoi
       setStatus("error");
     }
 
@@ -69,10 +76,11 @@ function Contact() {
 
   return (
     <section className="container py-5">
-      {/* ==== TITRE ==== */}
+      {/* Titre principal de la page d'informations et de contact */}
       <h1 className="text-center mb-5">Les informations utiles</h1>
 
-      {/* ==== INFOS BOUTIQUE ==== */}
+      {/* ==== SECTION INFORMATIONS BOUTIQUE ==== */}
+      {/* Coordonnées, localisation et horaires pour contact direct */}
       <div className="row justify-content-between align-items-start text-center text-md-start g-4 mb-5">
         <div className="col-12 col-md-4">
           <h2 className="h4 fw-semibold mb-3">
@@ -89,6 +97,7 @@ function Contact() {
           </p>
         </div>
 
+        {/* Carte Google Maps intégrée (responsive) */}
         <div className="col-12 col-md-4">
           <div className="ratio ratio-4x3">
             <iframe
@@ -100,6 +109,7 @@ function Contact() {
           </div>
         </div>
 
+        {/* Horaires d'ouverture de la boutique */}
         <div className="col-12 col-md-4 text-md-end">
           <h2 className="h4 fw-semibold mb-3">Horaires de notre boutique :</h2>
 
@@ -115,7 +125,7 @@ function Contact() {
         </div>
       </div>
 
-      {/* ==== INTRO CONTACT ==== */}
+      {/* Introduction au formulaire de contact */}
       <div className="text-center mb-4">
         <h2 className="h4 fw-semibold mb-3">Nous contacter</h2>
 
@@ -126,7 +136,8 @@ function Contact() {
         </p>
       </div>
 
-      {/* ==== FORMULAIRE ==== */}
+      {/* ==== FORMULAIRE DE CONTACT ==== */}
+      {/* Formulaire contrôlé avec envoi asynchrone vers le backend */}
       <div
         className="mx-auto p-4 rounded"
         style={{ backgroundColor: "var(--bs-secondary)", maxWidth: "900px" }}
@@ -134,7 +145,7 @@ function Contact() {
         <h2 className="text-center h5 mb-4">Nous écrire</h2>
 
         <form onSubmit={handleSubmit}>
-          {/* NOM */}
+          {/* Champ nom (obligatoire) */}
           <div className="mb-3">
             <label className="form-label">Nom</label>
             <input
@@ -148,7 +159,7 @@ function Contact() {
             />
           </div>
 
-          {/* PRENOM */}
+          {/* Champ prénom (obligatoire) */}
           <div className="mb-3">
             <label className="form-label">Prénom</label>
             <input
@@ -162,7 +173,7 @@ function Contact() {
             />
           </div>
 
-          {/* TELEPHONE */}
+          {/* Champ téléphone (optionnel) */}
           <div className="mb-3">
             <label className="form-label">Téléphone</label>
             <input
@@ -175,7 +186,7 @@ function Contact() {
             />
           </div>
 
-          {/* EMAIL */}
+          {/* Champ email avec validation HTML5 */}
           <div className="mb-3">
             <label className="form-label">E-mail</label>
             <input
@@ -189,7 +200,7 @@ function Contact() {
             />
           </div>
 
-          {/* CATEGORIE */}
+          {/* Sélection du type de demande */}
           <div className="mb-3">
             <label className="form-label">Catégorie</label>
             <select
@@ -203,7 +214,7 @@ function Contact() {
             </select>
           </div>
 
-          {/* MESSAGE */}
+          {/* Champ message principal */}
           <div className="mb-4">
             <label className="form-label">Message</label>
             <textarea
@@ -217,7 +228,7 @@ function Contact() {
             ></textarea>
           </div>
 
-          {/* BOUTON */}
+          {/* Bouton d'envoi avec état de chargement */}
           <div className="text-center">
             <button
               type="submit"
@@ -228,14 +239,14 @@ function Contact() {
             </button>
           </div>
 
-          {/* MESSAGE SUCCESS */}
+          {/* Message de confirmation en cas de succès */}
           {status === "success" && (
             <p className="text-success text-center mt-3">
               Message envoyé avec succès !
             </p>
           )}
 
-          {/* MESSAGE ERROR */}
+          {/* Message d'erreur en cas d'échec de la requête */}
           {status === "error" && (
             <p className="text-danger text-center mt-3">
               Une erreur est survenue.

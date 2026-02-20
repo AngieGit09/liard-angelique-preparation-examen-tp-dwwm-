@@ -1,19 +1,33 @@
-/* Styles des champs de formulaire (placeholder + focus) */
-.form-control::placeholder,
-textarea.form-control::placeholder {
+/* ==================== FORMULAIRES ===================== */
+/* Styles globaux des inputs, textarea et select         */
+/* Harmonisés avec la charte graphique du site           */
+
+/* 1. COULEUR DU TEXTE DANS LES CHAMPS                   */
+/* Applique la couleur principale du site                */
+.form-control,
+.form-select {
   color: var(--bs-primary);
-  opacity: 0.6;
 }
 
+/* 2. PLACEHOLDER (texte grisé dans les inputs)          */
+/* Plus doux et cohérent avec le design beige            */
+.form-control::placeholder {
+  color: var(--bs-primary);
+  opacity: 0.6; /* rend le placeholder moins agressif */
+}
+
+/* 3. FOCUS (quand on clique dans un champ)              */
+/* Supprime le bleu Bootstrap et applique ton thème      */
 .form-control:focus,
 .form-select:focus {
   color: var(--bs-primary);
   border-color: var(--bs-primary);
-  box-shadow: 0 0 0 0.2rem var(--color-shadow-card);
+  box-shadow: 0 0 0 0.2rem var(--color-shadow-card); /* halo doux */
+  outline: none;
 }
 
-.form-control,
-textarea.form-control,
+/* 4. SELECT PERSONNALISÉ (flèche custom)                */
+/* Remplace la flèche native Bootstrap                  */
 .form-select {
-  color: var(--bs-primary);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpolyline points='4,6 8,10 12,6' fill='none' stroke='%23a2845e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }

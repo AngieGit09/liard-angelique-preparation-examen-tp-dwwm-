@@ -1,36 +1,48 @@
+// ========= HEADER PRINCIPAL =========
+// Composant de navigation principal du site.
+// Gère la navigation, le menu déroulant catégories
+// ainsi que la recherche dynamique via routing.
+
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../styles/header.css";
 
 function Header() {
+  // Etat d’ouverture du menu déroulant
   const [open, setOpen] = useState(false);
+
+  // Etat du champ de recherche
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Navigation programmatique
   const navigate = useNavigate();
 
-  // ==== Fonction recherche ====
+  // ==== GESTION DE LA RECHERCHE ====
+  // Redirection vers la page de résultats avec query string
   const handleSearch = () => {
     if (!searchTerm.trim()) return;
+
     navigate(`/recherche?q=${searchTerm}`);
-    setSearchTerm(""); // optionnel : vide le champ après recherche
+    setSearchTerm(""); // Réinitialisation du champ après recherche
   };
 
   return (
     <header className="header">
       <div className="header-inner container-fluid d-flex align-items-center justify-content-between">
-        {/* Logo */}
+        {/* ==== LOGO ==== */}
         <div className="header-logo">
           <Link to="/">
             <img src="/logo_renomeuble.png" alt="Logo RenoMeuble" />
           </Link>
         </div>
 
-        {/* Navigation */}
+        {/* ==== NAVIGATION DESKTOP ==== */}
         <nav className="header-nav d-none d-md-flex">
           <Link to="/" className="text-uppercase">
             accueil
           </Link>
 
+          {/* Menu déroulant catégories */}
           <div
             className={`nav-item has-dropdown ${open ? "open" : ""}`}
             onClick={() => setOpen(!open)}
@@ -40,6 +52,7 @@ function Header() {
               <i className="bi bi-chevron-down"></i>
             </span>
 
+            {/* Sous-menu conditionnel */}
             {open && (
               <div className="dropdown-menu-custom">
                 <Link to="/catalogue">Catalogue complet</Link>
@@ -56,7 +69,7 @@ function Header() {
           </Link>
         </nav>
 
-        {/* ==== Recherche ==== */}
+        {/* ==== BARRE DE RECHERCHE ==== */}
         <div className="header-search">
           <input
             type="text"
@@ -64,13 +77,14 @@ function Header() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={(e) => {
+              // Déclenchement de la recherche avec la touche Entrée
               if (e.key === "Enter") {
                 handleSearch();
               }
             }}
           />
 
-          {/* Loupe cliquable */}
+          {/* Icône loupe cliquable */}
           <i
             className="bi bi-search search-icon"
             onClick={handleSearch}
@@ -78,7 +92,7 @@ function Header() {
           ></i>
         </div>
 
-        {/* Burger mobile */}
+        {/* ==== MENU BURGER (RESPONSIVE MOBILE) ==== */}
         <div className="header-burger d-md-none">
           <span></span>
           <span></span>

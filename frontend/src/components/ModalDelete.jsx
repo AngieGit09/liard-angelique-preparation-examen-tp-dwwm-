@@ -1,68 +1,35 @@
-import { useState } from "react";
+// =========== MODAL DE CONFIRMATION DE SUPPRESSION ===========
+// Modale générique utilisée pour confirmer la suppression
+// d’un élément (produit, catégorie, etc.) dans l’interface admin.
+// Composant réutilisable basé sur une modale parent (Modal).
+
 import Modal from "./Modal";
 
-function ModalDelete({ isOpen, onClose, productId, onDeleted }) {
-  const [loading, setLoading] = useState(false);
-
-  async function handleConfirmDelete() {
-    if (!productId) return;
-
-    try {
-      setLoading(true);
-
-      const formData = new FormData();
-      formData.append("id", productId);
-
-      const response = await fetch(
-        "http://localhost/renomeuble/backend/api/admin/products/delete.php",
-        {
-          method: "POST",
-          body: formData,
-          credentials: "include",
-        },
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Erreur lors de la suppression");
-      }
-
-      // Mise à jour de la liste côté parent
-      if (onDeleted) {
-        onDeleted(productId);
-      }
-
-      onClose();
-    } catch (error) {
-      console.error("Erreur suppression :", error);
-      alert(error.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
+function ModalDelete({ isOpen, onClose, onConfirm }) {
   return (
+    // Affichage conditionnel via le composant Modal réutilisable
     <Modal isOpen={isOpen} onClose={onClose}>
+      {/* Message de confirmation pour sécuriser l’action de suppression */}
       <p className="text-center mb-4">
-        Êtes-vous sûr de vouloir supprimer cet article ?
+        Êtes-vous sûr de vouloir supprimer cet élément ?
       </p>
 
+      {/* Actions utilisateur : confirmer ou annuler */}
       <div className="d-flex justify-content-around">
+        {/* Bouton de confirmation (déclenche la suppression côté parent) */}
         <button
           type="button"
-          className="btn btn-link admin-action"
-          onClick={handleConfirmDelete}
-          disabled={loading}
+          className="btn btn-link admin-action text-danger"
+          onClick={onConfirm}
         >
-          {loading ? "Suppression..." : "Confirmer"}
+          Confirmer
         </button>
 
+        {/* Fermeture de la modale sans action (annulation) */}
         <button
           type="button"
           className="btn btn-link admin-action"
           onClick={onClose}
-          disabled={loading}
         >
           Annuler
         </button>

@@ -1,3 +1,5 @@
+// ========= PAGE MENTIONS LEGALES =========
+
 function MentionsLegales() {
   return (
     <section className="container py-5">

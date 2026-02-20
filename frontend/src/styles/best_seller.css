@@ -1,0 +1,52 @@
+/* ===== BEST-SELLER GLOBAL (HOME + CATALOGUE) ===== */
+
+/* Grande image centrale */
+.bestseller-main {
+  width: 100%;
+  max-height: 300px; /* grande mais élégante */
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Petites images latérales */
+.bestseller-small {
+  width: 100%;
+  max-height: 140px;
+  object-fit: contain;
+  opacity: 0.95;
+  transition: transform 0.2s ease;
+}
+
+/* Petit effet premium au survol */
+.bestseller-small:hover {
+  transform: scale(1.05);
+}
+
+/* ===== BEST-SELLER CATALOGUE (CORRECTION TAILLE) ===== */
+
+/* Conteneur image principale */
+.catalogue-bestseller-main {
+  width: 100%;
+  max-width: 420px; /* LIMITE LARGEUR (clé du bug) */
+  max-height: 260px; /* hauteur élégante */
+  object-fit: contain;
+  display: block;
+  margin: 0 auto; /* centre proprement */
+}
+
+/* Images petites côté */
+.catalogue-bestseller-small {
+  width: 100%;
+  max-width: 140px; /* empêche les images géantes */
+  max-height: 120px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.admin-bestseller-info {
+  color: var(--color-button); /* couleur du bouton */
+  font-size: 0.9rem;
+  font-weight: 500;
+}

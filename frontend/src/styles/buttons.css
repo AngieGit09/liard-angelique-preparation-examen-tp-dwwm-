@@ -1,11 +1,51 @@
-/* Boutons principaux */
+/* ====================== BOUTONS ======================= */
+/* Couleur principale : --color-button (#BB6C4E)         */
+/* Supprime définitivement le bleu Bootstrap             */
+
+/* 1. BOUTON PRINCIPAL BOOTSTRAP (.btn-primary)          */
+/* Tous les boutons principaux du site                   */
 .btn-primary {
   background-color: var(--color-button) !important;
   border-color: var(--color-button) !important;
-  color: var(--bs-secondary) !important;
+  color: var(--bs-light);
   font-weight: 500;
+  transition:
+    opacity 0.2s ease,
+    transform 0.15s ease;
 }
 
+/* 2. HOVER – OPACITÉ DOUCE (PAS DE BLEU)                */
 .btn-primary:hover {
-  opacity: 0.85;
+  background-color: var(--color-button) !important;
+  border-color: var(--color-button) !important;
+  color: var(--bs-light) !important;
+  opacity: 0.7; /* effet doux dans la même teinte */
+}
+
+/* 3. CLICK / FOCUS – SUPPRESSION TOTALE DU BLEU         */
+/* Bootstrap ajoute un halo bleu par défaut              */
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:focus-visible {
+  background-color: var(--color-button) !important;
+  border-color: var(--color-button) !important;
+  color: var(--bs-light) !important;
+  box-shadow: none !important; /* supprime le halo bleu */
+  outline: none !important;
+}
+
+/* 4. BOUTONS GÉNÉRIQUES (.btn) – SÉCURITÉ GLOBALE       */
+/* Évite le bleu sur TOUS les boutons Bootstrap          */
+.btn:focus,
+.btn:active,
+.btn:focus-visible {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* 5. BOUTONS LIENS (ex: <Link class="btn ...">)         */
+/* React Router + Bootstrap                             */
+a.btn:hover {
+  opacity: 0.9;
+  text-decoration: none;
 }

@@ -1,10 +1,18 @@
+// ========= PAGE D'ACCUEIL =========
+// Page principale du site présentant le concept de l'entreprise,
+// les informations pratiques et un produit "coup de cœur" récupéré via l'API.
+
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function Home() {
+  // Etat du produit mis en avant (coup de cœur)
   const [featured, setFeatured] = useState(null);
+
+  // Etat de chargement pour gérer l'affichage conditionnel
   const [loading, setLoading] = useState(true);
 
+  // Récupération du produit coup de cœur depuis l'API au montage du composant
   useEffect(() => {
     fetch(
       "http://localhost/renomeuble/backend/api/public/products/featured.php",
@@ -16,18 +24,21 @@ function Home() {
         return res.json();
       })
       .then((data) => {
+        // Stockage du produit mis en avant
         setFeatured(data);
         setLoading(false);
       })
       .catch((err) => {
+        // Gestion simple des erreurs côté interface
         console.error(err);
         setLoading(false);
       });
-  }, []);
+  }, []); // Exécuté une seule fois au chargement de la page
 
   return (
     <div className="home">
-      {/* ==== PRESENTATION ==== */}
+      {/* ==== SECTION PRESENTATION DE L'ENTREPRISE ==== */}
+      {/* Introduction au concept et à la démarche écoresponsable */}
       <section className="container-fluid px-5 py-3">
         <h1 className="text-center mb-4">
           RénoMeuble : La seconde main dans votre intérieur
@@ -59,9 +70,11 @@ function Home() {
         </div>
       </section>
 
-      {/* ==== ADRESSE + MAP + HORAIRES ==== */}
+      {/* ==== SECTION INFORMATIONS PRATIQUES (ADRESSE, CARTE, HORAIRES) ==== */}
+      {/* Mise en avant de la localisation physique et des horaires de la boutique */}
       <section className="container-fluid px-5 py-3">
         <div className="row justify-content-between align-items-start text-center text-md-start g-4">
+          {/* Bloc adresse et lien vers la page contact */}
           <div className="col-12 col-md-4">
             <h2 className="h5 fw-semibold mb-3">
               Vous recherchez un meuble ou souhaitez en céder un ?
@@ -81,6 +94,7 @@ function Home() {
             </p>
           </div>
 
+          {/* Intégration d'une carte Google Maps responsive */}
           <div className="col-12 col-md-4">
             <div className="ratio ratio-4x3">
               <iframe
@@ -92,6 +106,7 @@ function Home() {
             </div>
           </div>
 
+          {/* Bloc horaires d'ouverture */}
           <div className="col-12 col-md-4 text-md-end">
             <h2 className="h5 fw-semibold mb-3">
               Horaires de notre boutique :
@@ -109,7 +124,8 @@ function Home() {
         </div>
       </section>
 
-      {/* ==== CTA ==== */}
+      {/* ==== SECTION CALL TO ACTION ==== */}
+      {/* Bouton principal orientant l'utilisateur vers le catalogue */}
       <section className="text-center my-5 py-4">
         <Link
           to="/catalogue"
@@ -119,23 +135,55 @@ function Home() {
         </Link>
       </section>
 
-      {/* ==== PRODUIT COUP DE COEUR ==== */}
+      {/* ==== SECTION PRODUIT COUP DE COEUR ==== */}
+      {/* Affichage dynamique d'un produit mis en avant récupéré via l'API */}
       <section className="container py-3 text-center my-5">
         <h2 className="h5 fw-semibold mb-4">Notre article coup de cœur</h2>
 
+        {/* Etat de chargement pendant l'appel API */}
         {loading && <p>Chargement...</p>}
 
+        {/* Affichage du produit si disponible */}
         {!loading && featured && (
-          <div className="row align-items-center">
-            <div className="col-12 col-md-8">
-              <img
-                src={`http://localhost/renomeuble/backend/${featured.image_path}`}
-                alt={featured.title}
-                className="img-fluid mx-auto d-block product-highlight-img"
-              />
+          <div className="row align-items-center justify-content-center g-4">
+            {/* Image secondaire gauche */}
+            <div className="col-4 col-md-2">
+              {featured.images?.[1] && (
+                <img
+                  src={`http://localhost/renomeuble/backend/${featured.images[1].image_path}`}
+                  alt={featured.title}
+                  className="bestseller-small"
+                  loading="lazy"
+                />
+              )}
             </div>
 
-            <div className="col-12 col-md-4 d-flex align-items-center justify-content-md-start justify-content-center">
+            {/* Image principale mise en avant */}
+            <div className="col-6 col-md-4">
+              {featured.images?.[0] && (
+                <img
+                  src={`http://localhost/renomeuble/backend/${featured.images[0].image_path}`}
+                  alt={featured.title}
+                  className="bestseller-main"
+                  loading="lazy"
+                />
+              )}
+            </div>
+
+            {/* Image secondaire droite */}
+            <div className="col-4 col-md-2">
+              {featured.images?.[2] && (
+                <img
+                  src={`http://localhost/renomeuble/backend/${featured.images[2].image_path}`}
+                  alt={featured.title}
+                  className="bestseller-small"
+                  loading="lazy"
+                />
+              )}
+            </div>
+
+            {/* Lien vers la page détail du produit */}
+            <div className="col-12 col-md-2 d-flex justify-content-center justify-content-md-start">
               <Link
                 to={`/produit/${featured.id}`}
                 className="btn btn-primary rounded-pill px-4"
@@ -146,6 +194,7 @@ function Home() {
           </div>
         )}
 
+        {/* Message de fallback si aucun produit n'est retourné par l'API */}
         {!loading && !featured && <p>Aucun produit coup de cœur disponible.</p>}
       </section>
     </div>

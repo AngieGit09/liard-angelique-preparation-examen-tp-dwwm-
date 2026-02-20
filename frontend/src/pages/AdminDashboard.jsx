@@ -1,3 +1,8 @@
+// ========= PAGE DASHBOARD ADMIN =========
+// Tableau de bord de l’espace administrateur.
+// Permet la vérification de session, l’affichage de statistiques,
+// l’accès aux modules de gestion et l’ouverture de modales (produits / catégories).
+
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -7,17 +12,20 @@ import ModalCategory from "../components/ModalCategory";
 function AdminDashboard() {
   const navigate = useNavigate();
 
-  // ==== STATES ====
+  // ==== ETATS PRINCIPAUX DU DASHBOARD ====
   const [adminName, setAdminName] = useState("");
   const [totalProducts, setTotalProducts] = useState(0);
   const [lastProduct, setLastProduct] = useState("");
   const [activeModal, setActiveModal] = useState(null);
-  const [categories, setCategories] = useState([]); // NOUVEAU
 
-  // ==== VERIFICATION SESSION + NOM ADMIN ====
+  // Liste des catégories (utilisée dans la modale d’ajout produit)
+  const [categories, setCategories] = useState([]);
+
+  // ==== VERIFICATION DE SESSION ADMIN + RECUPERATION DU NOM ====
+  // Protection de la route : redirection vers login si non authentifié
   useEffect(() => {
     fetch("http://localhost/renomeuble/backend/authentification/me.php", {
-      credentials: "include",
+      credentials: "include", // Conservation de la session PHP
     })
       .then((res) => {
         if (!res.ok) {
@@ -33,7 +41,8 @@ function AdminDashboard() {
       });
   }, [navigate]);
 
-  // ==== RECUPERATION DES STATS DASHBOARD ====
+  // ==== RECUPERATION DES STATISTIQUES DU DASHBOARD ====
+  // Données synthétiques pour l’interface d’administration
   useEffect(() => {
     fetch("http://localhost/renomeuble/backend/api/admin/stats.php", {
       credentials: "include",
@@ -54,6 +63,7 @@ function AdminDashboard() {
   }, []);
 
   // ==== RECUPERATION DES CATEGORIES (API ADMIN) ====
+  // Utilisées pour les formulaires d’ajout/édition de produits
   useEffect(() => {
     fetch(
       "http://localhost/renomeuble/backend/api/admin/categories/index.php",
@@ -75,7 +85,8 @@ function AdminDashboard() {
       });
   }, []);
 
-  // ====== LOGOUT ======
+  // ==== DECONNEXION ADMIN ====
+  // Suppression de la session côté backend puis redirection vers la page de connexion
   const handleLogout = async () => {
     try {
       await fetch(
@@ -94,10 +105,11 @@ function AdminDashboard() {
 
   return (
     <section className="container py-5">
-      {/* ==== HEADER DASHBOARD ==== */}
+      {/* ==== HEADER DASHBOARD (TITRE + UTILISATEUR + LOGOUT) ==== */}
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 text-center text-md-start">
         <h1 className="mb-2 mb-md-0">Dashboard administrateur</h1>
 
+        {/* Affichage du nom de l’administrateur connecté */}
         <div className="d-flex align-items-center gap-3">
           <span className="fw-semibold">
             Bonjour{" "}
@@ -115,7 +127,8 @@ function AdminDashboard() {
         </div>
       </div>
 
-      {/* ==== STATS ==== */}
+      {/* ==== BLOCS STATISTIQUES ==== */}
+      {/* Indicateurs clés pour le suivi du catalogue */}
       <div className="row justify-content-center mb-5 g-4">
         <div className="col-12 col-md-4">
           <div
@@ -138,8 +151,10 @@ function AdminDashboard() {
         </div>
       </div>
 
-      {/* ==== ACTIONS ==== */}
+      {/* ==== ACTIONS PRINCIPALES DE L’ADMIN ==== */}
+      {/* Accès rapide aux modules de gestion et création */}
       <div className="d-flex flex-column align-items-center gap-4">
+        {/* Accès à la gestion complète des produits */}
         <Link
           to="/admin/gestion"
           className="btn btn-primary rounded-pill px-5 py-3 w-100"
@@ -148,6 +163,7 @@ function AdminDashboard() {
           Accéder à la gestion des produits
         </Link>
 
+        {/* Ouverture modale d’ajout de produit */}
         <button
           type="button"
           className="btn btn-primary rounded-pill px-5 py-3 w-100"
@@ -157,6 +173,7 @@ function AdminDashboard() {
           Ajouter un produit
         </button>
 
+        {/* Accès à la gestion des catégories */}
         <Link
           to="/admin/categories"
           className="btn btn-primary rounded-pill px-5 py-3 w-100"
@@ -165,6 +182,7 @@ function AdminDashboard() {
           Accéder à la gestion des catégories
         </Link>
 
+        {/* Ouverture modale d’ajout de catégorie */}
         <button
           type="button"
           className="btn btn-primary rounded-pill px-5 py-3 w-100"
@@ -175,15 +193,17 @@ function AdminDashboard() {
         </button>
       </div>
 
-      {/* ==== MODALES ==== */}
+      {/* ==== MODALES ADMIN ==== */}
+      {/* Modale d’ajout de produit avec catégories dynamiques */}
       <ModalProduct
         isOpen={activeModal === "product"}
         mode="add"
         product={null}
-        categories={categories} // CATEGORIES DYNAMIQUES
+        categories={categories}
         onClose={() => setActiveModal(null)}
       />
 
+      {/* Modale d’ajout de catégorie */}
       <ModalCategory
         isOpen={activeModal === "category"}
         onClose={() => setActiveModal(null)}

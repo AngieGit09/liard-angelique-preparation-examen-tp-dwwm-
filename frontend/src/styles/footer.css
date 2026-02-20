@@ -1,57 +1,68 @@
-/* FOOTER GLOBAL */
+/* Footer global du site (toutes les pages)              */
+
+/* Conteneur principal du footer */
 .footer {
-  background-color: var(--bs-secondary);
+  background-color: var(--bs-secondary); /* fond beige du site */
   padding: 40px 0;
   font-size: 14px;
+  line-height: 1.6; /* meilleure lisibilité du texte */
 }
 
-/* LOGO */
+/* LOGO DU FOOTER                                       */
 .footer-logo {
-  height: 80px;
+  height: 80px; /* taille fixe pour cohérence visuelle */
+  object-fit: contain; /* évite toute déformation */
 }
 
-/* TITRE */
+/* TITRES DES COLONNES (Contact, Infos, etc.)           */
 .footer-title {
   font-weight: 600;
   margin-bottom: 8px;
+  color: var(--bs-dark);
 }
 
-/* LISTES */
+/* LISTES (liens du footer)                             */
 .footer ul {
-  list-style: none;
+  list-style: none; /* supprime les puces */
   padding: 0;
   margin: 0;
 }
 
 .footer ul li {
-  margin-bottom: 6px;
+  margin-bottom: 6px; /* espacement vertical entre liens */
 }
 
-/* LIENS */
+/* LIENS DU FOOTER                                      */
 .footer a {
-  color: inherit;
+  color: inherit; /* hérite de la couleur du texte */
   text-decoration: none;
+  transition: opacity 0.2s ease;
 }
 
 .footer a:hover {
   text-decoration: underline;
+  opacity: 0.85; /* effet hover doux */
 }
 
-/* RÉSEAUX SOCIAUX */
+/* RÉSEAUX SOCIAUX                                      */
+/* Icônes réseaux (Facebook, Insta, etc.)               */
+
+/* Base commune (desktop + mobile) */
 .footer-social,
 .footer-social-desktop {
   display: flex;
-  font-size: 22px;
+  font-size: 22px; /* taille icônes */
   gap: 10px;
 }
 
-/* Mobile : horizontal */
+/* Version mobile : icônes en ligne (horizontal) */
 .footer-social {
   flex-direction: row;
   gap: 15px;
+  justify-content: center;
 }
 
-/* Desktop : vertical */
+/* Version desktop : icônes en colonne (vertical) */
 .footer-social-desktop {
   flex-direction: column;
   align-items: center;

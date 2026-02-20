@@ -1,0 +1,46 @@
+/* ===================================================== */
+/* ============ CARTES CATÉGORIES – CATALOGUE =========== */
+/* Reproduction fidèle de ton ancien design              */
+/* ===================================================== */
+
+/* Carte */
+.category-card {
+  background-color: var(--bs-secondary);
+  border-radius: 10px;
+  min-height: 220px; /* taille stable des cartes */
+  box-shadow: 0 2px 10px rgba(112, 68, 36, 0.25);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Effet hover (comme ton ancien visuel) */
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 22px rgba(112, 68, 36, 0.35);
+}
+
+/* Titre catégorie (marron foncé comme avant) */
+.category-card-title {
+  color: var(--bs-dark);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Wrapper image (EMPÊCHE l'image d'exploser la carte) */
+.category-image-wrapper {
+  height: 120px; /* 🔥 HAUTEUR FIXE = solution au bug */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Image catégorie (taille contrôlée proprement) */
+.category-card-img {
+  max-height: 100%;
+  max-width: 140px; /* 🔥 taille proche de ton ancien design */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}

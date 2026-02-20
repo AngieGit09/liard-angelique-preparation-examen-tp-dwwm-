@@ -1,3 +1,7 @@
+// ========= PAGE RECHERCHE PRODUIT =========
+
+// useState : pour gérer l'état (résultats, loading)
+// useEffect : pour exécuter du code quand la recherche change
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";

@@ -1,10 +1,15 @@
+// ========= PAGE CONDITIONS GENERALES D'UTILISATION (CGU) =========
+// Page statique présentant les conditions générales d’utilisation du site.
+// Contenu informatif et légal structuré en sections pour une meilleure lisibilité.
+
 function CGU() {
   return (
+    // Conteneur centré avec largeur limitée pour améliorer le confort de lecture
     <section className="container py-5" style={{ maxWidth: "900px" }}>
-      {/* H1 */}
+      {/* Titre principal de la page légale */}
       <h1 className="text-center mb-5">Conditions générales d’utilisation</h1>
 
-      {/* Introduction */}
+      {/* Introduction des CGU et cadre d’acceptation par l’utilisateur */}
       <h2 className="h6 fw-semibold text-start mb-2">
         À quoi servent les CGU ?
       </h2>
@@ -15,6 +20,7 @@ function CGU() {
         et entière des présentes conditions par l’utilisateur.
       </p>
 
+      {/* Section accès au site */}
       <h2 className="h6 fw-semibold text-start mb-2">Accès au site</h2>
       <p className="mb-4">
         Le site est accessible gratuitement à tout utilisateur disposant d’un
@@ -23,6 +29,7 @@ function CGU() {
         l’utilisateur.
       </p>
 
+      {/* Présentation des services proposés par le site */}
       <h2 className="h6 fw-semibold text-start mb-2">
         Présentation des services
       </h2>
@@ -32,6 +39,7 @@ function CGU() {
         titre indicatif et peuvent être modifiées à tout moment sans préavis.
       </p>
 
+      {/* Limitation de responsabilité de l’éditeur */}
       <h2 className="h6 fw-semibold text-start mb-2">Responsabilités</h2>
       <p className="mb-4">
         L’éditeur du site s’efforce de fournir des informations aussi précises
@@ -40,6 +48,7 @@ function CGU() {
         informations.
       </p>
 
+      {/* Protection des contenus du site */}
       <h2 className="h6 fw-semibold text-start mb-2">
         Propriété intellectuelle
       </h2>
@@ -49,6 +58,7 @@ function CGU() {
         reproduction ou utilisation sans autorisation préalable est interdite.
       </p>
 
+      {/* Information sur la gestion des données personnelles */}
       <h2 className="h6 fw-semibold text-start mb-2">Données personnelles</h2>
       <p className="mb-4">
         Les informations personnelles collectées via le site sont utilisées
@@ -56,6 +66,7 @@ function CGU() {
         à des tiers sans consentement préalable.
       </p>
 
+      {/* Information sur l'utilisation éventuelle des cookies */}
       <h2 className="h6 fw-semibold text-start mb-2">Cookies</h2>
       <p className="mb-4">
         Le site peut utiliser des cookies afin d’améliorer l’expérience
@@ -63,6 +74,7 @@ function CGU() {
         configurer son navigateur pour refuser l’enregistrement des cookies.
       </p>
 
+      {/* Clause de modification des conditions d’utilisation */}
       <h2 className="h6 fw-semibold text-start mb-2">Modification des CGU</h2>
       <p className="mb-4">
         L’éditeur se réserve le droit de modifier les présentes conditions
@@ -70,6 +82,7 @@ function CGU() {
         consulter régulièrement.
       </p>
 
+      {/* Droit applicable en cas de litige */}
       <h2 className="h6 fw-semibold text-start mb-2">Droit applicable</h2>
       <p>
         Les présentes conditions sont régies par le droit français. En cas de

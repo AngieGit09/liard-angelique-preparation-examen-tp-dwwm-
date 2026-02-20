@@ -1,0 +1,115 @@
+/* ============== CARTES PRODUITS (PUBLIC) ============== */
+/* Cartes affichées dans le catalogue / boutique         */
+
+/* 1. CARTE PRODUIT (conteneur principal)                */
+.product-card {
+  background-color: var(--bs-secondary);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px var(--color-shadow-card);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Effet hover doux (léger lift visuel) */
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px var(--color-shadow-card);
+}
+
+/* 2. TITRE DU PRODUIT                                  */
+.product-title {
+  font-size: 1.1rem;
+  color: var(--bs-dark);
+  font-weight: 500;
+}
+
+/* 3. PRIX DU PRODUIT                                   */
+.product-price {
+  font-weight: bold;
+  color: var(--bs-primary);
+}
+
+/* 4. IMAGE PRODUIT (dans la carte)                     */
+/* Empêche les images trop grandes ou déformées         */
+.product-image {
+  max-height: 120px;
+  width: 100%;
+  object-fit: contain; /* garde les proportions du meuble */
+}
+
+/* 5. BOUTON "VOIR PLUS" (CTA produit)                  */
+/* Bouton carré stylisé du catalogue                    */
+.product-btn-more {
+  width: 90px;
+  height: 90px;
+  background-color: var(--color-button);
+  color: var(--bs-light);
+  font-size: 0.7rem;
+  text-decoration: none;
+  padding: 10px;
+
+  /* Centrage du contenu */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  border-radius: 8px;
+  transition:
+    transform 0.15s ease,
+    opacity 0.2s ease;
+}
+
+.product-btn-more:hover {
+  color: var(--bs-light);
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+
+/* ========================================= */
+/* CARTES CATEGORIES – CATALOGUE (CLIENT)    */
+/* Reproduction du design d’origine propre   */
+/* ========================================= */
+
+/* Carte */
+.category-card {
+  background-color: var(--bs-secondary);
+  border-radius: 10px;
+  min-height: 240px; /* taille stable des cartes */
+  box-shadow: 0 2px 12px var(--color-shadow-card);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Effet surélévation (hover lift) */
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 24px var(--color-shadow-card);
+}
+
+/* Titre catégorie (marron comme ton H1) */
+.category-card-title {
+  color: var(--bs-dark);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* CONTENEUR IMAGE (FIX CRITIQUE CONTRE LES IMAGES GÉANTES) */
+.category-image-wrapper {
+  height: 130px; /* 🔥 empêche l’image d’exploser la carte */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Image catégorie (propre et uniforme) */
+.category-card-img {
+  max-height: 100%;
+  max-width: 150px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
