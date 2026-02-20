@@ -1,5 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+// Police Roboto
+import "@fontsource/roboto";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
 // Styles
 import "./styles/variables.css";
 import "./styles/global.css";

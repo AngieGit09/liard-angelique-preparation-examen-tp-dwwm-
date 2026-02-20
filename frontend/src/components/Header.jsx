@@ -7,6 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../styles/header.css";
 
+//LOGO
+import logo from "../assets/logo_renomeuble.png";
+
 function Header() {
   // Etat d’ouverture du menu déroulant
   const [open, setOpen] = useState(false);
@@ -32,7 +35,7 @@ function Header() {
         {/* ==== LOGO ==== */}
         <div className="header-logo">
           <Link to="/">
-            <img src="/logo_renomeuble.png" alt="Logo RenoMeuble" />
+            <img src={logo} alt="Logo RenoMeuble" />
           </Link>
         </div>
 

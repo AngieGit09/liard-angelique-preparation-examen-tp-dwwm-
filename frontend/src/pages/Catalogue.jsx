@@ -143,7 +143,7 @@ function Catalogue() {
             <CategoryCard
               key="all"
               title="Tous nos meubles"
-              image="/images/house.png"
+              image="/src/assets/house.png"
               link="/categorie/all"
             />
 

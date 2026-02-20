@@ -4,6 +4,8 @@
 
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+//LOGO
+import logo from "../assets/logo_renomeuble.png";
 
 function Home() {
   // Etat du produit mis en avant (coup de cœur)
@@ -93,17 +95,14 @@ function Home() {
               </Link>
             </p>
           </div>
-
-          {/* Intégration d'une carte Google Maps responsive */}
-          <div className="col-12 col-md-4">
-            <div className="ratio ratio-4x3">
-              <iframe
-                src="https://www.google.com/maps?q=5+Avenue+du+Mont-Blanc+Lyon&output=embed"
-                loading="lazy"
-                style={{ border: 0 }}
-                title="Carte localisation"
-              ></iframe>
-            </div>
+          {/* LOGO */}
+          <div className="col-12 col-md-4 text-center">
+            <img
+              src={logo}
+              alt="Logo RénoMeuble"
+              className="img-fluid shadow rounded"
+              style={{ maxHeight: "250px" }}
+            />
           </div>
 
           {/* Bloc horaires d'ouverture */}

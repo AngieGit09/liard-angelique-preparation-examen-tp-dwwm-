@@ -6,6 +6,9 @@
 import { Link } from "react-router-dom";
 import "../styles/footer.css";
 
+//LOGO
+import logo from "../assets/logo_renomeuble.png";
+
 function Footer() {
   return (
     <footer className="footer ">
@@ -14,11 +17,7 @@ function Footer() {
         {/* Le logo renvoie vers la page d’accueil */}
         <div className="text-center mb-4">
           <Link to="/">
-            <img
-              src="/logo_renomeuble.png"
-              alt="Logo RenoMeuble"
-              className="footer-logo"
-            />
+            <img src={logo} alt="Logo RenoMeuble" className="footer-logo" />
           </Link>
         </div>
 
