@@ -76,12 +76,12 @@ try {
 
     $stmt->execute([
         // Nettoyage basique des données (protection XSS côté affichage futur)
-        ":nom"       => htmlspecialchars($data["name"]),
-        ":prenom"    => htmlspecialchars($data["firstname"]),
-        ":email"     => htmlspecialchars($data["email"]),
-        ":telephone" => htmlspecialchars($data["phone"] ?? ""),
-        ":categorie" => htmlspecialchars($data["category"] ?? ""),
-        ":message"   => htmlspecialchars($data["message"]),
+        ":nom"       => ($data["name"]),
+        ":prenom"    => ($data["firstname"]),
+        ":email"     => ($data["email"]),
+        ":telephone" => ($data["phone"] ?? ""),
+        ":categorie" => ($data["category"] ?? ""),
+        ":message"   => ($data["message"]),
     ]);
 
     // Code HTTP 201 : ressource créée avec succès

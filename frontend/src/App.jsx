@@ -44,6 +44,7 @@ import AdminGestion from "./pages/AdminGestion";
 import AdminCategories from "./pages/AdminCategories";
 import SearchResult from "./pages/SearchResult";
 import NotFound from "./pages/NotFound";
+import AdminMessages from "./pages/AdminMessages";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path="/admin/gestion" element={<AdminGestion />} />
           <Route path="/admin/categories" element={<AdminCategories />} />
           <Route path="/recherche" element={<SearchResult />} />
+          <Route path="/admin/messages" element={<AdminMessages />} />
           {/* Toujours en dernier */}
           <Route path="*" element={<NotFound />} />
         </Routes>

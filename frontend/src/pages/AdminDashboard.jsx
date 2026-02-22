@@ -127,6 +127,18 @@ function AdminDashboard() {
         </div>
       </div>
 
+      {/* Accès aux messages */}
+      {/* Bouton au centre */}
+      <div className="d-flex justify-content-center mb-5">
+        <Link
+          to="/admin/messages"
+          className="btn btn-primary rounded-pill px-5 py-3 w-100"
+          style={{ maxWidth: "480px" }}
+        >
+          Voir les messages
+        </Link>
+      </div>
+
       {/* ==== BLOCS STATISTIQUES ==== */}
       {/* Indicateurs clés pour le suivi du catalogue */}
       <div className="row justify-content-center mb-5 g-4">

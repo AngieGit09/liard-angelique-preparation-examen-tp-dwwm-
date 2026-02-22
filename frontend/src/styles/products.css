@@ -98,7 +98,7 @@
 
 /* CONTENEUR IMAGE (FIX CRITIQUE CONTRE LES IMAGES GÉANTES) */
 .category-image-wrapper {
-  height: 130px; /* 🔥 empêche l’image d’exploser la carte */
+  height: 130px; /* empêche l’image d’exploser la carte */
   display: flex;
   align-items: center;
   justify-content: center;

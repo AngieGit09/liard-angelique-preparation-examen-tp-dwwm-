@@ -37,7 +37,7 @@ function Contact() {
 
     try {
       const response = await fetch(
-        "http://localhost/renomeuble/backend/api/messages/store.php",
+        "http://localhost/renomeuble/backend/api/public/messages/store.php",
         {
           method: "POST",
           headers: {
@@ -241,9 +241,7 @@ function Contact() {
 
           {/* Message de confirmation en cas de succès */}
           {status === "success" && (
-            <p className="text-success text-center mt-3">
-              Message envoyé avec succès !
-            </p>
+            <p className="text-center mt-3">Message envoyé avec succès !</p>
           )}
 
           {/* Message d'erreur en cas d'échec de la requête */}

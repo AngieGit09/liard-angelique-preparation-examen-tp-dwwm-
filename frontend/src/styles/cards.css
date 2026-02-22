@@ -29,7 +29,7 @@
 
 /* Wrapper image (EMPÊCHE l'image d'exploser la carte) */
 .category-image-wrapper {
-  height: 120px; /* 🔥 HAUTEUR FIXE = solution au bug */
+  height: 120px; /* AUTEUR FIXE */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,7 +39,7 @@
 /* Image catégorie (taille contrôlée proprement) */
 .category-card-img {
   max-height: 100%;
-  max-width: 140px; /* 🔥 taille proche de ton ancien design */
+  max-width: 140px;
   width: auto;
   height: auto;
   object-fit: contain;

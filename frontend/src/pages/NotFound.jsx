@@ -15,7 +15,7 @@ function NotFound() {
 
         {/* Illustration visuelle de l'erreur (optimisée responsive) */}
         <img
-          src="/images/error.png"
+          src="/src/assets/error.png"
           alt="Erreur 404"
           className="img-fluid my-4 my-md-5"
           style={{ maxWidth: "260px" }}
