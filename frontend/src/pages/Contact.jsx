@@ -14,6 +14,7 @@ function Contact() {
     phone: "",
     category: "J’ai un produit à vendre",
     message: "",
+    consent: false,
   });
 
   // Etats d'interface pour la gestion de l'envoi
@@ -23,9 +24,11 @@ function Contact() {
   // Mise à jour générique des champs du formulaire
   // Permet de gérer tous les inputs via une seule fonction
   const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -226,6 +229,30 @@ function Contact() {
               onChange={handleChange}
               required
             ></textarea>
+          </div>
+
+          {/* ==== CONSENTEMENT RGPD ==== */}
+          <div className="form-check mb-4">
+            <input
+              type="checkbox"
+              name="consent"
+              className="form-check-input"
+              checked={formData.consent}
+              onChange={handleChange}
+              required
+              id="consent"
+            />
+
+            <label className="form-check-label" htmlFor="consent">
+              J’accepte la{" "}
+              <a
+                href="/politique-confidentialite"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                politique de confidentialité
+              </a>
+            </label>
           </div>
 
           {/* Bouton d'envoi avec état de chargement */}

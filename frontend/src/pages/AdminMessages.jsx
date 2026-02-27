@@ -2,6 +2,7 @@
 // Version simple avec modale suppression
 
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import ModalDelete from "../components/ModalDelete";
 
 function AdminMessages() {
@@ -48,6 +49,13 @@ function AdminMessages() {
 
   return (
     <section className="container py-5">
+      {/* ==== HEADER ADMIN ==== */}
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <Link to="/admin" className="text-decoration-none">
+          Retour vers le dashboard
+        </Link>
+      </div>
+
       <h1 className="mb-5 text-center">Messages reçus</h1>
 
       {/* Liste des messages */}

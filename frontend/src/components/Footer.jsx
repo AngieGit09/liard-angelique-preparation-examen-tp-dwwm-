@@ -2,16 +2,33 @@
 // Pied de page du site.
 // Contient le plan du site, les liens légaux, les réseaux sociaux
 // ainsi qu’un accès rapide à l’accueil via le logo.
+// Les catégories sont récupérées dynamiquement depuis l’API.
 
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "../styles/footer.css";
 
-//LOGO
+// LOGO
 import logo from "../assets/logo_renomeuble.png";
 
 function Footer() {
+  // ==== ETAT DES CATEGORIES DYNAMIQUES ====
+  const [categories, setCategories] = useState([]);
+
+  // ==== RECUPERATION DES CATEGORIES ====
+  // Permet d'afficher automatiquement les nouvelles catégories
+  // ajoutées depuis le back-office admin
+  useEffect(() => {
+    fetch("http://localhost/renomeuble/backend/api/public/categories/index.php")
+      .then((res) => res.json())
+      .then((data) => setCategories(data))
+      .catch((err) =>
+        console.error("Erreur chargement catégories footer :", err),
+      );
+  }, []);
+
   return (
-    <footer className="footer ">
+    <footer className="footer">
       <div className="container footer-inner">
         {/* ==== LOGO ==== */}
         {/* Le logo renvoie vers la page d’accueil */}
@@ -22,8 +39,9 @@ function Footer() {
         </div>
 
         <div className="row g-4 justify-content-center justify-content-md-between">
-          {/* === VERSION MOBILE (2 colonnes) === */}
-          {/* COLONNE 1 : Plan du site - VISIBLE UNIQUEMENT SUR MOBILE */}
+          {/* ================= MOBILE ================= */}
+
+          {/* Plan du site */}
           <div className="col-auto d-md-none">
             <p className="footer-title">Plan du site</p>
             <ul>
@@ -33,22 +51,19 @@ function Footer() {
               <li>
                 <Link to="/catalogue">Tous nos produits</Link>
               </li>
-              <li>
-                <Link to="/categorie/salon">Meubles de salon</Link>
-              </li>
-              <li>
-                <Link to="/categorie/chambre">Meubles de chambre</Link>
-              </li>
-              <li>
-                <Link to="/categorie/bureau">Meubles de bureau</Link>
-              </li>
-              <li>
-                <Link to="/categorie/accessoires">Accessoires</Link>
-              </li>
+
+              {/* Catégories dynamiques */}
+              {categories.map((category) => (
+                <li key={category.id}>
+                  <Link to={`/categorie/${category.slug}`}>
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* COLONNE 2 : Contact + Réseaux - VISIBLE UNIQUEMENT SUR MOBILE */}
+          {/* Contact + Légal MOBILE */}
           <div className="col-auto d-md-none">
             <ul>
               <li>
@@ -60,12 +75,20 @@ function Footer() {
               <li>
                 <Link to="/cgu">CGU</Link>
               </li>
+
+              {/* RGPD */}
+              <li>
+                <Link to="/politique-confidentialite">
+                  Politique de confidentialité
+                </Link>
+              </li>
+
               <li>
                 <Link to="/admin/login">Connexion admin</Link>
               </li>
             </ul>
 
-            {/* Réseaux sociaux horizontaux (mobile) */}
+            {/* Réseaux sociaux mobile */}
             <div className="footer-social mt-3">
               <a
                 href="https://www.facebook.com/"
@@ -84,7 +107,8 @@ function Footer() {
             </div>
           </div>
 
-          {/* ==== VERSION DESKTOP (horizontal) === */}
+          {/* ================= DESKTOP ================= */}
+
           {/* Plan du site */}
           <div className="col-md-auto d-none d-md-block">
             <p className="footer-title">Plan du site</p>
@@ -98,31 +122,21 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Meubles de salon / chambre */}
+          {/* Catégories dynamiques */}
           <div className="col-md-auto d-none d-md-block">
+            <p className="footer-title">Catégories</p>
             <ul>
-              <li>
-                <Link to="/categorie/salon">Meubles de salon</Link>
-              </li>
-              <li>
-                <Link to="/categorie/chambre">Meubles de chambre</Link>
-              </li>
+              {categories.map((category) => (
+                <li key={category.id}>
+                  <Link to={`/categorie/${category.slug}`}>
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Meubles de bureau / accessoires */}
-          <div className="col-md-auto d-none d-md-block">
-            <ul>
-              <li>
-                <Link to="/categorie/bureau">Meubles de bureau</Link>
-              </li>
-              <li>
-                <Link to="/categorie/accessoires">Accessoires</Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Nous contacter */}
+          {/* Contact */}
           <div className="col-md-auto d-none d-md-block">
             <ul>
               <li>
@@ -131,7 +145,7 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Mentions légales / CGU */}
+          {/* Mentions légales */}
           <div className="col-md-auto d-none d-md-block">
             <ul>
               <li>
@@ -140,10 +154,17 @@ function Footer() {
               <li>
                 <Link to="/cgu">CGU</Link>
               </li>
+
+              {/* RGPD */}
+              <li>
+                <Link to="/politique-confidentialite">
+                  Politique de confidentialité
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Réseaux sociaux (en colonne verticale desktop) */}
+          {/* Réseaux sociaux desktop */}
           <div className="col-md-auto d-none d-md-flex flex-column align-items-center">
             <div className="footer-social-desktop">
               <a

@@ -4,21 +4,71 @@
 // ainsi que la recherche dynamique via routing.
 
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import MobileMenu from "../components/MobileMenu";
 import "../styles/header.css";
 
-//LOGO
+// LOGO
 import logo from "../assets/logo_renomeuble.png";
 
 function Header() {
-  // Etat d’ouverture du menu déroulant
+  // Etat d’ouverture du menu déroulant desktop
   const [open, setOpen] = useState(false);
+
+  // Etat d’ouverture du menu burger mobile
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   // Etat du champ de recherche
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Etat des catégories récupérées dynamiquement depuis l’API
+  const [categories, setCategories] = useState([]);
+
   // Navigation programmatique
   const navigate = useNavigate();
+
+  // Référence du dropdown pour détecter les clics extérieurs
+  const dropdownRef = useRef(null);
+
+  // ==== RECUPERATION DES CATEGORIES ====
+  // Chargement automatique au montage du composant
+  useEffect(() => {
+    fetch("http://localhost/renomeuble/backend/api/public/categories/index.php")
+      .then((res) => res.json())
+      .then((data) => setCategories(data))
+      .catch((err) => console.error("Erreur chargement catégories :", err));
+  }, []);
+
+  // ==== FERMETURE AUTOMATIQUE DU DROPDOWN ====
+  // Ferme le menu si clic en dehors
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  // ==== FERME MENU MOBILE SI PASSAGE EN DESKTOP ====
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setMobileOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   // ==== GESTION DE LA RECHERCHE ====
   // Redirection vers la page de résultats avec query string
@@ -27,82 +77,100 @@ function Header() {
 
     navigate(`/recherche?q=${searchTerm}`);
     setSearchTerm(""); // Réinitialisation du champ après recherche
+    setMobileOpen(false); // fermeture menu mobile après recherche
   };
 
   return (
-    <header className="header">
-      <div className="header-inner container-fluid d-flex align-items-center justify-content-between">
-        {/* ==== LOGO ==== */}
-        <div className="header-logo">
-          <Link to="/">
-            <img src={logo} alt="Logo RenoMeuble" />
-          </Link>
-        </div>
-
-        {/* ==== NAVIGATION DESKTOP ==== */}
-        <nav className="header-nav d-none d-md-flex">
-          <Link to="/" className="text-uppercase">
-            accueil
-          </Link>
-
-          {/* Menu déroulant catégories */}
-          <div
-            className={`nav-item has-dropdown ${open ? "open" : ""}`}
-            onClick={() => setOpen(!open)}
-          >
-            <span className="nav-link text-uppercase">
-              tous nos produits
-              <i className="bi bi-chevron-down"></i>
-            </span>
-
-            {/* Sous-menu conditionnel */}
-            {open && (
-              <div className="dropdown-menu-custom">
-                <Link to="/catalogue">Catalogue complet</Link>
-                <Link to="/categorie/meubles-salon">Meubles de salon</Link>
-                <Link to="/categorie/meubles-chambre">Meubles de chambre</Link>
-                <Link to="/categorie/meubles-bureau">Meubles de bureau</Link>
-                <Link to="/categorie/accessoires">Accessoires</Link>
-              </div>
-            )}
+    <>
+      <header className="header">
+        <div className="header-inner container-fluid d-flex align-items-center justify-content-between">
+          {/* ==== LOGO ==== */}
+          <div className="header-logo">
+            <Link to="/">
+              <img src={logo} alt="Logo RenoMeuble" />
+            </Link>
           </div>
 
-          <Link to="/contact" className="text-uppercase">
-            contact
-          </Link>
-        </nav>
+          {/* ==== NAVIGATION DESKTOP ==== */}
+          <nav className="header-nav d-none d-md-flex">
+            <Link to="/" className="text-uppercase">
+              accueil
+            </Link>
 
-        {/* ==== BARRE DE RECHERCHE ==== */}
-        <div className="header-search">
-          <input
-            type="text"
-            placeholder="Rechercher"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={(e) => {
-              // Déclenchement de la recherche avec la touche Entrée
-              if (e.key === "Enter") {
-                handleSearch();
-              }
-            }}
-          />
+            {/* Menu déroulant catégories */}
+            <div
+              ref={dropdownRef}
+              className={`nav-item has-dropdown ${open ? "open" : ""}`}
+              onClick={() => setOpen(!open)}
+            >
+              <span className="nav-link text-uppercase">
+                tous nos produits
+                <i className="bi bi-chevron-down"></i>
+              </span>
 
-          {/* Icône loupe cliquable */}
-          <i
-            className="bi bi-search search-icon"
-            onClick={handleSearch}
-            style={{ cursor: "pointer" }}
-          ></i>
+              {/* Sous-menu dynamique */}
+              {open && (
+                <div className="dropdown-menu-custom">
+                  <Link to="/catalogue">Catalogue complet</Link>
+
+                  {/* Catégories récupérées depuis la base */}
+                  {categories.map((category) => (
+                    <Link key={category.id} to={`/categorie/${category.slug}`}>
+                      {category.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link to="/contact" className="text-uppercase">
+              contact
+            </Link>
+          </nav>
+
+          {/* ==== BARRE DE RECHERCHE (DESKTOP) ==== */}
+          <div className="header-search d-none d-md-flex">
+            <input
+              type="text"
+              placeholder="Rechercher"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => {
+                // Déclenchement de la recherche avec la touche Entrée
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
+            />
+
+            {/* Icône loupe cliquable */}
+            <i
+              className="bi bi-search search-icon"
+              onClick={handleSearch}
+              style={{ cursor: "pointer" }}
+            ></i>
+          </div>
+
+          {/* ==== MENU BURGER (RESPONSIVE MOBILE) ==== */}
+          <div
+            className="header-burger d-md-none"
+            onClick={() => setMobileOpen(true)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
+      </header>
 
-        {/* ==== MENU BURGER (RESPONSIVE MOBILE) ==== */}
-        <div className="header-burger d-md-none">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-    </header>
+      {/* ==== MENU MOBILE (COMPOSANT SEPARE) ==== */}
+      {/* Overlay plein écran affiché sur mobile */}
+      <MobileMenu
+        isOpen={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        categories={categories}
+      />
+    </>
   );
 }
 

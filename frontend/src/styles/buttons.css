@@ -1,9 +1,8 @@
-/* ====================== BOUTONS ======================= */
-/* Couleur principale : --color-button (#BB6C4E)         */
-/* Supprime définitivement le bleu Bootstrap             */
+/* ===================== BOUTONS ======================== */
+/* Remplace le bleu Bootstrap par la couleur du thème   */
+/* Conserve un indicateur de focus visible (accessibilité) */
 
-/* 1. BOUTON PRINCIPAL BOOTSTRAP (.btn-primary)          */
-/* Tous les boutons principaux du site                   */
+/* 1. BOUTON PRINCIPAL (.btn-primary) */
 .btn-primary {
   background-color: var(--color-button) !important;
   border-color: var(--color-button) !important;
@@ -14,38 +13,69 @@
     transform 0.15s ease;
 }
 
-/* 2. HOVER – OPACITÉ DOUCE (PAS DE BLEU)                */
+/* 2. HOVER */
 .btn-primary:hover {
   background-color: var(--color-button) !important;
   border-color: var(--color-button) !important;
   color: var(--bs-light) !important;
-  opacity: 0.7; /* effet doux dans la même teinte */
+  opacity: 0.85;
 }
 
-/* 3. CLICK / FOCUS – SUPPRESSION TOTALE DU BLEU         */
-/* Bootstrap ajoute un halo bleu par défaut              */
+/* 3. FOCUS — halo dans la couleur du thème (accessibilité clavier) */
+/* On ne supprime PAS l'outline, on le remplace par notre couleur   */
 .btn-primary:focus,
-.btn-primary:active,
 .btn-primary:focus-visible {
   background-color: var(--color-button) !important;
   border-color: var(--color-button) !important;
   color: var(--bs-light) !important;
-  box-shadow: none !important; /* supprime le halo bleu */
+  /* Halo terracotta au lieu du bleu Bootstrap */
+  box-shadow: 0 0 0 0.2rem rgba(187, 108, 78, 0.45) !important;
   outline: none !important;
 }
 
-/* 4. BOUTONS GÉNÉRIQUES (.btn) – SÉCURITÉ GLOBALE       */
-/* Évite le bleu sur TOUS les boutons Bootstrap          */
-.btn:focus,
-.btn:active,
-.btn:focus-visible {
+/* 4. ACTIVE (clic) */
+.btn-primary:active {
+  background-color: var(--color-button) !important;
+  border-color: var(--color-button) !important;
+  color: var(--bs-light) !important;
+  opacity: 0.9;
   box-shadow: none !important;
+}
+
+/* 5. BOUTONS OUTLINE — focus avec couleur du thème */
+/* Pour les btn-outline-secondary et btn-outline-danger utilisés dans l'admin */
+.btn:focus,
+.btn:focus-visible {
+  /* Halo terracotta par défaut sur tous les boutons */
+  box-shadow: 0 0 0 0.2rem rgba(187, 108, 78, 0.3) !important;
   outline: none !important;
 }
 
-/* 5. BOUTONS LIENS (ex: <Link class="btn ...">)         */
-/* React Router + Bootstrap                             */
+/* btn-outline-danger garde son rouge mais sans le bleu */
+.btn-outline-danger:focus,
+.btn-outline-danger:focus-visible {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.3) !important;
+}
+
+/* 6. LIENS BOOTSTRAP (Link + className="btn") */
 a.btn:hover {
   opacity: 0.9;
   text-decoration: none;
+}
+
+/* 7. INPUT-GROUP BUTTON (ex: œil dans AdminLogin) */
+.input-group .btn-outline-secondary {
+  border-color: var(--bs-primary);
+  color: var(--bs-primary);
+}
+
+.input-group .btn-outline-secondary:hover {
+  background-color: var(--bs-secondary);
+  border-color: var(--bs-primary);
+  color: var(--bs-dark);
+}
+
+.input-group .btn-outline-secondary:focus,
+.input-group .btn-outline-secondary:focus-visible {
+  box-shadow: 0 0 0 0.2rem rgba(187, 108, 78, 0.3) !important;
 }

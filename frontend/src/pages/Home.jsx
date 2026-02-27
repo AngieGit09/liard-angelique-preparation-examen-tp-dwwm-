@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 //LOGO
 import logo from "../assets/logo_renomeuble.png";
 
+// Best-seller
+import FeaturedProduct from "../components/FeaturedProduct";
+
 function Home() {
   // Etat du produit mis en avant (coup de cœur)
   const [featured, setFeatured] = useState(null);
@@ -26,12 +29,10 @@ function Home() {
         return res.json();
       })
       .then((data) => {
-        // Stockage du produit mis en avant
         setFeatured(data);
         setLoading(false);
       })
       .catch((err) => {
-        // Gestion simple des erreurs côté interface
         console.error(err);
         setLoading(false);
       });
@@ -134,68 +135,12 @@ function Home() {
         </Link>
       </section>
 
-      {/* ==== SECTION PRODUIT COUP DE COEUR ==== */}
-      {/* Affichage dynamique d'un produit mis en avant récupéré via l'API */}
-      <section className="container py-3 text-center my-5">
-        <h2 className="h5 fw-semibold mb-4">Notre article coup de cœur</h2>
-
-        {/* Etat de chargement pendant l'appel API */}
-        {loading && <p>Chargement...</p>}
-
-        {/* Affichage du produit si disponible */}
-        {!loading && featured && (
-          <div className="row align-items-center justify-content-center g-4">
-            {/* Image secondaire gauche */}
-            <div className="col-4 col-md-2">
-              {featured.images?.[1] && (
-                <img
-                  src={`http://localhost/renomeuble/backend/${featured.images[1].image_path}`}
-                  alt={featured.title}
-                  className="bestseller-small"
-                  loading="lazy"
-                />
-              )}
-            </div>
-
-            {/* Image principale mise en avant */}
-            <div className="col-6 col-md-4">
-              {featured.images?.[0] && (
-                <img
-                  src={`http://localhost/renomeuble/backend/${featured.images[0].image_path}`}
-                  alt={featured.title}
-                  className="bestseller-main"
-                  loading="lazy"
-                />
-              )}
-            </div>
-
-            {/* Image secondaire droite */}
-            <div className="col-4 col-md-2">
-              {featured.images?.[2] && (
-                <img
-                  src={`http://localhost/renomeuble/backend/${featured.images[2].image_path}`}
-                  alt={featured.title}
-                  className="bestseller-small"
-                  loading="lazy"
-                />
-              )}
-            </div>
-
-            {/* Lien vers la page détail du produit */}
-            <div className="col-12 col-md-2 d-flex justify-content-center justify-content-md-start">
-              <Link
-                to={`/produit/${featured.id}`}
-                className="btn btn-primary rounded-pill px-4"
-              >
-                VOIR LE PRODUIT
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {/* Message de fallback si aucun produit n'est retourné par l'API */}
-        {!loading && !featured && <p>Aucun produit coup de cœur disponible.</p>}
-      </section>
+      {/* ==== PRODUIT MIS EN AVANT ==== */}
+      <FeaturedProduct
+        product={featured}
+        loading={loading}
+        label="Notre article coup de cœur"
+      />
     </div>
   );
 }

@@ -29,6 +29,7 @@ import Modal from "./components/Modal";
 import ModalCategory from "./components/ModalCategory";
 import ModalProduct from "./components/ModalProduct";
 import ModalDelete from "./components/ModalDelete";
+import FeaturedProduct from "./components/FeaturedProduct";
 
 // Pages
 import Home from "./pages/Home";
@@ -36,6 +37,7 @@ import Catalogue from "./pages/Catalogue";
 import Category from "./pages/Category";
 import ProductDetail from "./pages/ProductDetail";
 import Contact from "./pages/Contact";
+import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
 import MentionsLegales from "./pages/MentionsLegales";
 import CGU from "./pages/CGU";
 import AdminLogin from "./pages/AdminLogin";
@@ -58,6 +60,10 @@ function App() {
           <Route path="/categorie/:slug" element={<Category />} />
           <Route path="/produit/:id" element={<ProductDetail />} />
           <Route path="/contact" element={<Contact />} />
+          <Route
+            path="/politique-confidentialite"
+            element={<PolitiqueConfidentialite />}
+          />
           <Route path="/mentions" element={<MentionsLegales />} />
           <Route path="/cgu" element={<CGU />} />
           <Route path="/admin/login" element={<AdminLogin />} />

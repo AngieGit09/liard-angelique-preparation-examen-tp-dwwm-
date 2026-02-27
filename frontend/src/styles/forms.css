@@ -1,33 +1,68 @@
 /* ==================== FORMULAIRES ===================== */
-/* Styles globaux des inputs, textarea et select         */
-/* Harmonisés avec la charte graphique du site           */
+/* Inputs, textarea et select harmonisés avec la charte  */
 
-/* 1. COULEUR DU TEXTE DANS LES CHAMPS                   */
-/* Applique la couleur principale du site                */
+/* 1. COULEUR DU TEXTE */
 .form-control,
 .form-select {
   color: var(--bs-primary);
+  border-color: rgba(162, 132, 94, 0.4); /* bordure douce thématisée */
 }
 
-/* 2. PLACEHOLDER (texte grisé dans les inputs)          */
-/* Plus doux et cohérent avec le design beige            */
+/* 2. PLACEHOLDER */
 .form-control::placeholder {
   color: var(--bs-primary);
-  opacity: 0.6; /* rend le placeholder moins agressif */
+  opacity: 0.55;
 }
 
-/* 3. FOCUS (quand on clique dans un champ)              */
-/* Supprime le bleu Bootstrap et applique ton thème      */
+/* 3. FOCUS — halo terracotta (cohérent avec les boutons) */
 .form-control:focus,
 .form-select:focus {
   color: var(--bs-primary);
-  border-color: var(--bs-primary);
-  box-shadow: 0 0 0 0.2rem var(--color-shadow-card); /* halo doux */
+  border-color: var(--color-button);
+  /* Halo dans la même couleur que les boutons */
+  box-shadow: 0 0 0 0.2rem rgba(187, 108, 78, 0.25);
   outline: none;
 }
 
-/* 4. SELECT PERSONNALISÉ (flèche custom)                */
-/* Remplace la flèche native Bootstrap                  */
+/* 4. FLÈCHE DU SELECT (SVG encodé) */
 .form-select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpolyline points='4,6 8,10 12,6' fill='none' stroke='%23a2845e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* 5. INPUT-GROUP (barre de recherche admin) */
+.input-group-text {
+  background-color: var(--bs-secondary);
+  border-color: rgba(162, 132, 94, 0.4);
+  color: var(--bs-primary);
+}
+
+/* 6. LABELS */
+.form-label {
+  font-weight: 500;
+  color: var(--bs-dark);
+}
+
+/* 7. FEEDBACK BOOTSTRAP (valid / invalid) */
+.was-validated .form-control:valid,
+.form-control.is-valid {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.2);
+}
+
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.2);
+}
+
+/* ===== CHECKBOX PERSONNALISÉE ===== */
+
+.form-check-input:checked {
+  background-color: #8b5e3c; /* marron */
+  border-color: #8b5e3c;
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem rgba(139, 94, 60, 0.25);
+  border-color: #8b5e3c;
 }
