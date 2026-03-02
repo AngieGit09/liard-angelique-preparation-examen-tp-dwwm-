@@ -47,6 +47,8 @@ import AdminCategories from "./pages/AdminCategories";
 import SearchResult from "./pages/SearchResult";
 import NotFound from "./pages/NotFound";
 import AdminMessages from "./pages/AdminMessages";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -72,6 +74,8 @@ function App() {
           <Route path="/admin/categories" element={<AdminCategories />} />
           <Route path="/recherche" element={<SearchResult />} />
           <Route path="/admin/messages" element={<AdminMessages />} />
+          <Route path="/admin/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           {/* Toujours en dernier */}
           <Route path="*" element={<NotFound />} />
         </Routes>

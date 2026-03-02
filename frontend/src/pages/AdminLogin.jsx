@@ -4,7 +4,7 @@
 // Redirection vers le tableau de bord en cas de succès.
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function AdminLogin() {
   // Etats des champs du formulaire
@@ -106,9 +106,7 @@ function AdminLogin() {
 
           {/* Lien mot de passe oublié (placeholder UX) */}
           <div className="text-end mb-4">
-            <span role="button" style={{ cursor: "pointer" }}>
-              Mot de passe oublié
-            </span>
+            <Link to="/admin/forgot-password">Mot de passe oublié ?</Link>
           </div>
 
           {/* Bouton de connexion avec état de chargement */}

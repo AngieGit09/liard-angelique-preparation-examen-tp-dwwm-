@@ -25,9 +25,21 @@ USE renomeuble_db;
 CREATE TABLE admins (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(150) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
+    reset_token VARCHAR(255) NULL,
+    reset_expires DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Ajout e-mail des administrateur
+UPDATE admins
+SET email = 'emma@renomeuble.fr'
+WHERE username = 'emma';
+
+UPDATE admins
+SET email = 'lucas@renomeuble.fr'
+WHERE username = 'lucas';
 
 
 -- Table categories
