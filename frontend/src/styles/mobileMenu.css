@@ -79,3 +79,43 @@
 .mobile-nav a:hover {
   background: #d8bea1;
 }
+
+/* ================= RECHERCHE MENU MOBILE ================= */
+
+.mobile-search {
+  position: relative;
+  margin: 20px 0;
+}
+
+/* champ recherche */
+.mobile-search input {
+  width: 100%;
+  background-color: #fffbeb;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 44px 12px 20px;
+  color: var(--bs-primary);
+  outline: none; /* supprime le contour bleu au focus */
+}
+
+/* placeholder identique au header */
+.mobile-search input::placeholder {
+  color: var(--bs-primary);
+  opacity: 0.7;
+}
+
+/* icône loupe */
+.mobile-search i {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: var(--bs-primary);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.mobile-search i:hover {
+  transform: translateY(-50%) scale(1.1);
+}

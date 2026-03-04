@@ -5,6 +5,7 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
+import { getCategories } from "../services/categories.service";
 import MobileMenu from "../components/MobileMenu";
 import "../styles/header.css";
 
@@ -33,10 +34,17 @@ function Header() {
   // ==== RECUPERATION DES CATEGORIES ====
   // Chargement automatique au montage du composant
   useEffect(() => {
-    fetch("http://localhost/renomeuble/backend/api/public/categories/index.php")
-      .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((err) => console.error("Erreur chargement catégories :", err));
+    const loadCategories = async () => {
+      try {
+        const data = await getCategories();
+
+        setCategories(data);
+      } catch (error) {
+        console.error("Erreur chargement catégories :", error);
+      }
+    };
+
+    loadCategories();
   }, []);
 
   // ==== FERMETURE AUTOMATIQUE DU DROPDOWN ====
@@ -101,7 +109,10 @@ function Header() {
             <div
               ref={dropdownRef}
               className={`nav-item has-dropdown ${open ? "open" : ""}`}
-              onClick={() => setOpen(!open)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpen(!open);
+              }}
             >
               <span className="nav-link text-uppercase">
                 tous nos produits

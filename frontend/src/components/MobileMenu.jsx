@@ -1,11 +1,19 @@
 // ========= MENU BURGER MOBILE =========
 // Menu plein écran affiché sur mobile.
 // Les catégories sont récupérées dynamiquement.
+// Inclut une barre de recherche.
 
 import { Link } from "react-router-dom";
 import "../styles/mobileMenu.css";
 
-function MobileMenu({ isOpen, onClose, categories }) {
+function MobileMenu({
+  isOpen,
+  onClose,
+  categories,
+  searchTerm,
+  setSearchTerm,
+  handleSearch,
+}) {
   // Si fermé → rien n'est affiché
   if (!isOpen) return null;
 
@@ -28,7 +36,26 @@ function MobileMenu({ isOpen, onClose, categories }) {
           </button>
         </div>
 
+        {/* ===== RECHERCHE ===== */}
+
+        <div className="mobile-search">
+          <input
+            type="text"
+            placeholder="Rechercher un produit"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
+          />
+
+          <i className="bi bi-search" onClick={handleSearch}></i>
+        </div>
+
         {/* ===== NAVIGATION ===== */}
+
         <nav className="mobile-nav">
           <Link to="/" onClick={onClose}>
             Accueil
@@ -38,7 +65,8 @@ function MobileMenu({ isOpen, onClose, categories }) {
             Tous nos produits
           </Link>
 
-          {/* Catégories dynamiques */}
+          {/* ===== CATEGORIES ===== */}
+
           {categories.map((cat) => (
             <Link key={cat.id} to={`/categorie/${cat.slug}`} onClick={onClose}>
               {cat.name}
