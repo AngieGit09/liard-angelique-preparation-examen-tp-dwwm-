@@ -180,6 +180,9 @@ function Header() {
         isOpen={mobileOpen}
         onClose={() => setMobileOpen(false)}
         categories={categories}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        handleSearch={handleSearch}
       />
     </>
   );

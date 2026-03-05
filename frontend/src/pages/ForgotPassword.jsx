@@ -1,19 +1,13 @@
-// ========= PAGE MOT DE PASSE OUBLIE =========
-// Permet à l'administrateur de demander une réinitialisation
-// de son mot de passe via son adresse email.
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { forgotPassword } from "../services/auth.service";
+
 function ForgotPassword() {
-  // ==== STATE EMAIL ====
   const [email, setEmail] = useState("");
-
-  // ==== ETATS INTERFACE ====
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState(null); // success | error
+  const [status, setStatus] = useState(null);
 
-  // ==== ENVOI DEMANDE RESET ====
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -21,22 +15,7 @@ function ForgotPassword() {
     setStatus(null);
 
     try {
-      const response = await fetch(
-        "http://localhost/renomeuble/backend/authentification/forgot-password.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        },
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Erreur serveur");
-      }
+      await forgotPassword(email);
 
       setStatus("success");
       setEmail("");
@@ -50,15 +29,12 @@ function ForgotPassword() {
 
   return (
     <section className="container py-5">
-      {/* ==== TITRE ==== */}
       <h1 className="text-center mb-4">Mot de passe oublié</h1>
 
       <p className="text-center mb-5">
-        Entrez votre adresse email pour recevoir un lien de réinitialisation de
-        votre mot de passe.
+        Entrez votre adresse email pour recevoir un lien de réinitialisation.
       </p>
 
-      {/* ==== FORMULAIRE ==== */}
       <div
         className="mx-auto p-4 rounded"
         style={{
@@ -67,9 +43,9 @@ function ForgotPassword() {
         }}
       >
         <form onSubmit={handleSubmit}>
-          {/* EMAIL */}
           <div className="mb-4">
             <label className="form-label">Adresse email</label>
+
             <input
               type="email"
               className="form-control"
@@ -80,7 +56,6 @@ function ForgotPassword() {
             />
           </div>
 
-          {/* BOUTON */}
           <div className="text-center">
             <button
               type="submit"
@@ -91,14 +66,12 @@ function ForgotPassword() {
             </button>
           </div>
 
-          {/* MESSAGE SUCCES */}
           {status === "success" && (
             <p className="text-success text-center mt-3">
-              Si cette adresse existe, un lien de réinitialisation a été envoyé.
+              Si cette adresse existe, un email a été envoyé.
             </p>
           )}
 
-          {/* MESSAGE ERREUR */}
           {status === "error" && (
             <p className="text-danger text-center mt-3">
               Une erreur est survenue.
@@ -106,9 +79,8 @@ function ForgotPassword() {
           )}
         </form>
 
-        {/* RETOUR LOGIN */}
         <div className="text-center mt-4">
-          <Link to="/admin/login">Retour à la connexion</Link>
+          <Link to="/admin/login">Retour connexion</Link>
         </div>
       </div>
     </section>

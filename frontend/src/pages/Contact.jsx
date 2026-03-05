@@ -4,6 +4,7 @@
 // est affiché selon le résultat de la requête.
 
 import { useState } from "react";
+import { sendMessage } from "../services/messages.service";
 
 function Contact() {
   // Etat du formulaire (inputs contrôlés)
@@ -22,7 +23,6 @@ function Contact() {
   const [status, setStatus] = useState(null); // success | error
 
   // Mise à jour générique des champs du formulaire
-  // Permet de gérer tous les inputs via une seule fonction
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -32,34 +32,17 @@ function Contact() {
     });
   };
 
-  // Soumission du formulaire avec envoi des données à l'API (POST)
+  // Soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setStatus(null);
 
     try {
-      const response = await fetch(
-        "http://localhost/renomeuble/backend/api/public/messages/store.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          // Envoi des données du formulaire au format JSON
-          body: JSON.stringify(formData),
-        },
-      );
+      await sendMessage(formData);
 
-      const data = await response.json();
-
-      // Gestion des erreurs serveur
-      if (!response.ok) {
-        throw new Error(data.error || "Erreur serveur");
-      }
-
-      // Affichage du message de succès et réinitialisation du formulaire
       setStatus("success");
+
       setFormData({
         name: "",
         firstname: "",
@@ -67,10 +50,10 @@ function Contact() {
         phone: "",
         category: "J’ai un produit à vendre",
         message: "",
+        consent: false,
       });
     } catch (error) {
       console.error(error);
-      // Etat d'erreur en cas d'échec de l'envoi
       setStatus("error");
     }
 
@@ -79,11 +62,10 @@ function Contact() {
 
   return (
     <section className="container py-5">
-      {/* Titre principal de la page d'informations et de contact */}
+      {/* Titre principal */}
       <h1 className="text-center mb-5">Les informations utiles</h1>
 
-      {/* ==== SECTION INFORMATIONS BOUTIQUE ==== */}
-      {/* Coordonnées, localisation et horaires pour contact direct */}
+      {/* ==== INFORMATIONS BOUTIQUE ==== */}
       <div className="row justify-content-between align-items-start text-center text-md-start g-4 mb-5">
         <div className="col-12 col-md-4">
           <h2 className="h4 fw-semibold mb-3">
@@ -100,7 +82,7 @@ function Contact() {
           </p>
         </div>
 
-        {/* Carte Google Maps intégrée (responsive) */}
+        {/* Google Maps */}
         <div className="col-12 col-md-4">
           <div className="ratio ratio-4x3">
             <iframe
@@ -112,7 +94,7 @@ function Contact() {
           </div>
         </div>
 
-        {/* Horaires d'ouverture de la boutique */}
+        {/* Horaires */}
         <div className="col-12 col-md-4 text-md-end">
           <h2 className="h4 fw-semibold mb-3">Horaires de notre boutique :</h2>
 
@@ -128,7 +110,7 @@ function Contact() {
         </div>
       </div>
 
-      {/* Introduction au formulaire de contact */}
+      {/* Introduction */}
       <div className="text-center mb-4">
         <h2 className="h4 fw-semibold mb-3">Nous contacter</h2>
 
@@ -139,8 +121,7 @@ function Contact() {
         </p>
       </div>
 
-      {/* ==== FORMULAIRE DE CONTACT ==== */}
-      {/* Formulaire contrôlé avec envoi asynchrone vers le backend */}
+      {/* ==== FORMULAIRE ==== */}
       <div
         className="mx-auto p-4 rounded"
         style={{ backgroundColor: "var(--bs-secondary)", maxWidth: "900px" }}
@@ -148,7 +129,7 @@ function Contact() {
         <h2 className="text-center h5 mb-4">Nous écrire</h2>
 
         <form onSubmit={handleSubmit}>
-          {/* Champ nom (obligatoire) */}
+          {/* Nom */}
           <div className="mb-3">
             <label className="form-label">Nom</label>
             <input
@@ -162,7 +143,7 @@ function Contact() {
             />
           </div>
 
-          {/* Champ prénom (obligatoire) */}
+          {/* Prénom */}
           <div className="mb-3">
             <label className="form-label">Prénom</label>
             <input
@@ -176,7 +157,7 @@ function Contact() {
             />
           </div>
 
-          {/* Champ téléphone (optionnel) */}
+          {/* Téléphone */}
           <div className="mb-3">
             <label className="form-label">Téléphone</label>
             <input
@@ -189,7 +170,7 @@ function Contact() {
             />
           </div>
 
-          {/* Champ email avec validation HTML5 */}
+          {/* Email */}
           <div className="mb-3">
             <label className="form-label">E-mail</label>
             <input
@@ -203,7 +184,7 @@ function Contact() {
             />
           </div>
 
-          {/* Sélection du type de demande */}
+          {/* Catégorie */}
           <div className="mb-3">
             <label className="form-label">Catégorie</label>
             <select
@@ -217,7 +198,7 @@ function Contact() {
             </select>
           </div>
 
-          {/* Champ message principal */}
+          {/* Message */}
           <div className="mb-4">
             <label className="form-label">Message</label>
             <textarea
@@ -231,7 +212,7 @@ function Contact() {
             ></textarea>
           </div>
 
-          {/* ==== CONSENTEMENT RGPD ==== */}
+          {/* RGPD */}
           <div className="form-check mb-4">
             <input
               type="checkbox"
@@ -255,7 +236,7 @@ function Contact() {
             </label>
           </div>
 
-          {/* Bouton d'envoi avec état de chargement */}
+          {/* Bouton */}
           <div className="text-center">
             <button
               type="submit"
@@ -266,12 +247,11 @@ function Contact() {
             </button>
           </div>
 
-          {/* Message de confirmation en cas de succès */}
+          {/* Messages */}
           {status === "success" && (
             <p className="text-center mt-3">Message envoyé avec succès !</p>
           )}
 
-          {/* Message d'erreur en cas d'échec de la requête */}
           {status === "error" && (
             <p className="text-danger text-center mt-3">
               Une erreur est survenue.

@@ -2,16 +2,17 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-// Styles globaux
+// Fonts
+import "@fontsource/roboto";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
+// Librairies
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "./styles/variables.css";
-import "./styles/global.css";
-import "./styles/header.css";
-import "./styles/footer.css";
-import "./styles/buttons.css";
-import "./styles/forms.css";
-import "./styles/admin.css";
+
+// Styles du projet (centralisés)
+import "./styles/index.css";
 
 // App
 import App from "./App.jsx";
@@ -19,5 +20,5 @@ import App from "./App.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <App />
-  </StrictMode>
+  </StrictMode>,
 );

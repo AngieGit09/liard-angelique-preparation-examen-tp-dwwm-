@@ -4,11 +4,15 @@
 
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-//LOGO
+
+// LOGO
 import logo from "../assets/logo_renomeuble.png";
 
-// Best-seller
+// Composant produit mis en avant
 import FeaturedProduct from "../components/FeaturedProduct";
+
+// Service API produits
+import { getFeaturedProduct } from "../services/products.service";
 
 function Home() {
   // Etat du produit mis en avant (coup de cœur)
@@ -17,26 +21,19 @@ function Home() {
   // Etat de chargement pour gérer l'affichage conditionnel
   const [loading, setLoading] = useState(true);
 
-  // Récupération du produit coup de cœur depuis l'API au montage du composant
+  // ==== RECUPERATION DU PRODUIT MIS EN AVANT ====
+  // Appel au service API lors du montage du composant
   useEffect(() => {
-    fetch(
-      "http://localhost/renomeuble/backend/api/public/products/featured.php",
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Erreur API");
-        }
-        return res.json();
-      })
+    getFeaturedProduct()
       .then((data) => {
         setFeatured(data);
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        console.error("Erreur chargement produit mis en avant :", err);
         setLoading(false);
       });
-  }, []); // Exécuté une seule fois au chargement de la page
+  }, []);
 
   return (
     <div className="home">
@@ -96,6 +93,7 @@ function Home() {
               </Link>
             </p>
           </div>
+
           {/* LOGO */}
           <div className="col-12 col-md-4 text-center">
             <img

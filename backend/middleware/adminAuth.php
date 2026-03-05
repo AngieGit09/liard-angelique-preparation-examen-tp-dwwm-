@@ -17,8 +17,3 @@ if (!isset($_SESSION['admin_id'])) {
 
     exit;
 }
-
-echo json_encode([
-    "id" => $_SESSION['admin_id'],
-    "username" => $_SESSION['admin_username']
-]);

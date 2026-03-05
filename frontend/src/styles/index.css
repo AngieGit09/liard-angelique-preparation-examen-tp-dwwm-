@@ -1,0 +1,22 @@
+/* VARIABLES */
+@import "./variables.css";
+
+/* GLOBAL */
+@import "./global.css";
+
+/* UI */
+@import "./buttons.css";
+@import "./forms.css";
+@import "./modal.css";
+
+/* COMPONENTS */
+@import "./cards.css";
+@import "./products.css";
+@import "./best_seller.css";
+
+/* LAYOUT */
+@import "./header.css";
+@import "./footer.css";
+
+/* ADMIN */
+@import "./admin.css";

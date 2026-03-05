@@ -1,6 +1,5 @@
-// ========= COMPOSANT PRODUIT MIS EN AVANT =========
-
 import { Link } from "react-router-dom";
+import { BASE_IMAGE_URL } from "../services/api";
 
 function FeaturedProduct({
   product,
@@ -30,11 +29,10 @@ function FeaturedProduct({
       <h2 className="h5 fw-semibold mb-4">{label}</h2>
 
       <div className="row align-items-center justify-content-center g-4">
-        {/* Image secondaire gauche */}
         <div className="col-4 col-md-2">
           {product.images?.[1] && (
             <img
-              src={`http://localhost/renomeuble/backend/${product.images[1].image_path}`}
+              src={`${BASE_IMAGE_URL}/${product.images[1].image_path}`}
               alt={product.title}
               className="bestseller-small img-fluid"
               loading="lazy"
@@ -42,11 +40,10 @@ function FeaturedProduct({
           )}
         </div>
 
-        {/* Image principale */}
         <div className="col-6 col-md-4">
           {product.images?.[0] && (
             <img
-              src={`http://localhost/renomeuble/backend/${product.images[0].image_path}`}
+              src={`${BASE_IMAGE_URL}/${product.images[0].image_path}`}
               alt={product.title}
               className="bestseller-main img-fluid"
               loading="lazy"
@@ -54,11 +51,10 @@ function FeaturedProduct({
           )}
         </div>
 
-        {/* Image secondaire droite */}
         <div className="col-4 col-md-2">
           {product.images?.[2] && (
             <img
-              src={`http://localhost/renomeuble/backend/${product.images[2].image_path}`}
+              src={`${BASE_IMAGE_URL}/${product.images[2].image_path}`}
               alt={product.title}
               className="bestseller-small img-fluid"
               loading="lazy"
@@ -66,7 +62,6 @@ function FeaturedProduct({
           )}
         </div>
 
-        {/* Bouton */}
         <div className="col-12 col-md-2 d-flex justify-content-center justify-content-md-start">
           <Link
             to={`/produit/${product.id}`}

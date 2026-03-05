@@ -1,64 +1,40 @@
-// PAGE ADMIN - GESTION DES MESSAGES
-// Version simple avec modale suppression
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import ModalDelete from "../components/ModalDelete";
+import {
+  getAdminMessages,
+  deleteAdminMessage,
+} from "../services/messages.service";
 
 function AdminMessages() {
-  // STATES
-
   const [messages, setMessages] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [messageToDelete, setMessageToDelete] = useState(null);
 
-  // CHARGEMENT DES MESSAGES
-
+  // chargement messages
   useEffect(() => {
-    fetch("http://localhost/renomeuble/backend/api/admin/messages/index.php", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => setMessages(data));
+    getAdminMessages().then(setMessages);
   }, []);
 
-  // SUPPRESSION MESSAGE
+  // suppression message
+  const handleDelete = async () => {
+    await deleteAdminMessage(messageToDelete);
 
-  const deleteMessage = async () => {
-    const formData = new FormData();
-    formData.append("id", messageToDelete);
-
-    await fetch(
-      "http://localhost/renomeuble/backend/api/admin/messages/delete.php",
-      {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      },
-    );
-
-    // Mise à jour locale du state
     setMessages((prev) => prev.filter((m) => m.id !== messageToDelete));
 
-    // Fermeture modale
     setShowDeleteModal(false);
     setMessageToDelete(null);
   };
 
-  // RENDER
-
   return (
     <section className="container py-5">
-      {/* ==== HEADER ADMIN ==== */}
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <Link to="/admin" className="text-decoration-none">
-          Retour vers le dashboard
-        </Link>
+        <Link to="/admin">Retour vers le dashboard</Link>
       </div>
 
-      <h1 className="mb-5 text-center">Messages reçus</h1>
+      <h1 className="text-center mb-5">Messages reçus</h1>
 
-      {/* Liste des messages */}
       {messages.length === 0 && (
         <p className="text-center">Aucun message reçu.</p>
       )}
@@ -85,7 +61,6 @@ function AdminMessages() {
           <p>{msg.message}</p>
 
           <div className="d-flex gap-3 mt-3">
-            {/* Répondre via mailto */}
             <a
               href={`mailto:${msg.email}?subject=Réponse à votre message`}
               className="btn btn-primary"
@@ -93,7 +68,6 @@ function AdminMessages() {
               Répondre
             </a>
 
-            {/* Supprimer (ouvre modale) */}
             <button
               className="btn btn-danger"
               onClick={() => {
@@ -107,12 +81,10 @@ function AdminMessages() {
         </div>
       ))}
 
-      {/* ===== MODALE CONFIRMATIO ===== */}
-
       <ModalDelete
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
-        onConfirm={deleteMessage}
+        onConfirm={handleDelete}
       />
     </section>
   );

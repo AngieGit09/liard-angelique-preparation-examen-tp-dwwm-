@@ -3,35 +3,34 @@
 // ainsi qu’un produit mis en avant (best-seller).
 
 import { useEffect, useState } from "react";
+
 import FeaturedProduct from "../components/FeaturedProduct";
 import CategoryCard from "../components/CategoryCard";
 
+import { getCategories } from "../services/categories.service";
+import { getFeaturedProduct } from "../services/products.service";
+
 function Catalogue() {
+  // Etat des catégories
   const [categories, setCategories] = useState([]);
+
+  // Produit mis en avant
   const [featured, setFeatured] = useState(null);
+
+  // Etat chargement
   const [loading, setLoading] = useState(true);
 
-  const CATEGORIES_API =
-    "http://localhost/renomeuble/backend/api/public/categories/index.php";
-
-  const FEATURED_API =
-    "http://localhost/renomeuble/backend/api/public/products/featured.php";
-
+  // ==== RECUPERATION DES DONNEES ====
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Récupération des catégories
-        const catRes = await fetch(CATEGORIES_API);
-        if (!catRes.ok) throw new Error("Erreur API catégories");
-        const catData = await catRes.json();
+        // Catégories
+        const catData = await getCategories();
         setCategories(catData);
 
-        // Récupération du produit mis en avant
-        const featRes = await fetch(FEATURED_API);
-        if (featRes.ok) {
-          const featData = await featRes.json();
-          setFeatured(featData);
-        }
+        // Produit best seller
+        const featuredData = await getFeaturedProduct();
+        setFeatured(featuredData);
       } catch (error) {
         console.error("Erreur chargement catalogue :", error);
       } finally {
@@ -49,7 +48,7 @@ function Catalogue() {
         <h1 className="mb-2">Toutes nos catégories disponibles</h1>
       </section>
 
-      {/* ==== BEST SELLER VIA COMPOSANT REUTILISABLE ==== */}
+      {/* ==== PRODUIT MIS EN AVANT ==== */}
       <FeaturedProduct
         product={featured}
         loading={loading}
@@ -62,6 +61,7 @@ function Catalogue() {
           Retrouvez nos produits
         </h2>
 
+        {/* Loader */}
         {loading && (
           <div className="row g-4">
             {[...Array(6)].map((_, i) => (
@@ -77,9 +77,10 @@ function Catalogue() {
           </div>
         )}
 
+        {/* Catégories */}
         {!loading && (
           <div className="row g-4 align-items-stretch">
-            {/* Catégorie générique */}
+            {/* Catégorie globale */}
             <CategoryCard
               key="all"
               title="Tous nos meubles"

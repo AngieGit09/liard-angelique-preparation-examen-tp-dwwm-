@@ -11,27 +11,31 @@ import "../styles/footer.css";
 // LOGO
 import logo from "../assets/logo_renomeuble.png";
 
+// SERVICE API
+import { getCategories } from "../services/categories.service";
+
 function Footer() {
   // ==== ETAT DES CATEGORIES DYNAMIQUES ====
   const [categories, setCategories] = useState([]);
 
   // ==== RECUPERATION DES CATEGORIES ====
-  // Permet d'afficher automatiquement les nouvelles catégories
-  // ajoutées depuis le back-office admin
   useEffect(() => {
-    fetch("http://localhost/renomeuble/backend/api/public/categories/index.php")
-      .then((res) => res.json())
-      .then((data) => setCategories(data))
-      .catch((err) =>
-        console.error("Erreur chargement catégories footer :", err),
-      );
+    const loadCategories = async () => {
+      try {
+        const data = await getCategories();
+        setCategories(data);
+      } catch (err) {
+        console.error("Erreur chargement catégories footer :", err);
+      }
+    };
+
+    loadCategories();
   }, []);
 
   return (
     <footer className="footer">
       <div className="container footer-inner">
         {/* ==== LOGO ==== */}
-        {/* Le logo renvoie vers la page d’accueil */}
         <div className="text-center mb-4">
           <Link to="/">
             <img src={logo} alt="Logo RenoMeuble" className="footer-logo" />
@@ -41,7 +45,6 @@ function Footer() {
         <div className="row g-4 justify-content-center justify-content-md-between">
           {/* ================= MOBILE ================= */}
 
-          {/* Plan du site */}
           <div className="col-auto d-md-none">
             <p className="footer-title">Plan du site</p>
             <ul>
@@ -52,7 +55,6 @@ function Footer() {
                 <Link to="/catalogue">Tous nos produits</Link>
               </li>
 
-              {/* Catégories dynamiques */}
               {categories.map((category) => (
                 <li key={category.id}>
                   <Link to={`/categorie/${category.slug}`}>
@@ -63,7 +65,6 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Contact + Légal MOBILE */}
           <div className="col-auto d-md-none">
             <ul>
               <li>
@@ -76,7 +77,6 @@ function Footer() {
                 <Link to="/cgu">CGU</Link>
               </li>
 
-              {/* RGPD */}
               <li>
                 <Link to="/politique-confidentialite">
                   Politique de confidentialité
@@ -88,7 +88,6 @@ function Footer() {
               </li>
             </ul>
 
-            {/* Réseaux sociaux mobile */}
             <div className="footer-social mt-3">
               <a
                 href="https://www.facebook.com/"
@@ -97,6 +96,7 @@ function Footer() {
               >
                 <i className="bi bi-facebook"></i>
               </a>
+
               <a
                 href="https://www.instagram.com/"
                 target="_blank"
@@ -109,7 +109,6 @@ function Footer() {
 
           {/* ================= DESKTOP ================= */}
 
-          {/* Plan du site */}
           <div className="col-md-auto d-none d-md-block">
             <p className="footer-title">Plan du site</p>
             <ul>
@@ -122,7 +121,6 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Catégories dynamiques */}
           <div className="col-md-auto d-none d-md-block">
             <p className="footer-title">Catégories</p>
             <ul>
@@ -136,7 +134,6 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
           <div className="col-md-auto d-none d-md-block">
             <ul>
               <li>
@@ -145,7 +142,6 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Mentions légales */}
           <div className="col-md-auto d-none d-md-block">
             <ul>
               <li>
@@ -155,7 +151,6 @@ function Footer() {
                 <Link to="/cgu">CGU</Link>
               </li>
 
-              {/* RGPD */}
               <li>
                 <Link to="/politique-confidentialite">
                   Politique de confidentialité
@@ -164,7 +159,6 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Réseaux sociaux desktop */}
           <div className="col-md-auto d-none d-md-flex flex-column align-items-center">
             <div className="footer-social-desktop">
               <a
@@ -174,6 +168,7 @@ function Footer() {
               >
                 <i className="bi bi-facebook"></i>
               </a>
+
               <a
                 href="https://www.instagram.com/"
                 target="_blank"
@@ -184,7 +179,6 @@ function Footer() {
             </div>
           </div>
 
-          {/* Connexion admin */}
           <div className="col-md-auto d-none d-md-block text-center">
             <Link to="/admin/login">Connexion admin</Link>
           </div>

@@ -1,55 +1,52 @@
 // ========= PAGE DE CONNEXION ADMIN =========
-// Page d'authentification administrateur.
-// Envoie des identifiants au backend et gère la session via cookies (PHP session).
-// Redirection vers le tableau de bord en cas de succès.
+// Permet l'authentification de l'administrateur.
+// Les identifiants sont envoyés à l'API backend qui crée une session PHP.
+// En cas de succès, l'utilisateur est redirigé vers le dashboard admin.
 
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { loginAdmin } from "../services/auth.service";
 
 function AdminLogin() {
-  // Etats des champs du formulaire
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  // Etat global du formulaire
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
 
-  // Etat pour afficher/masquer le mot de passe (UX)
+  // Etats interface
   const [showPassword, setShowPassword] = useState(false);
-
-  // Gestion des messages d'erreur et du loader
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Hook de navigation programmatique (redirection après connexion)
   const navigate = useNavigate();
 
-  // Soumission du formulaire d'authentification
+  // Mise à jour des champs
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Soumission formulaire
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Empêche le rechargement de la page
+    e.preventDefault();
+
     setError("");
     setLoading(true);
 
     try {
-      const res = await fetch(
-        "http://localhost/renomeuble/backend/authentification/login.php",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          // Permet la conservation de la session PHP via cookie
-          credentials: "include",
-          body: JSON.stringify({ username, password }),
-        },
-      );
+      const data = await loginAdmin(formData);
 
-      const data = await res.json();
-
-      // Si authentification valide → redirection vers le dashboard admin
       if (data.success) {
         navigate("/admin");
-      } else {
-        setError(data.message || "Identifiants incorrects");
       }
     } catch (err) {
-      // Gestion d’erreur réseau ou serveur indisponible
-      setError("Erreur de connexion au serveur");
+      // affiche le vrai message serveur
+      setError(err.message || "Erreur de connexion");
     } finally {
       setLoading(false);
     }
@@ -57,68 +54,71 @@ function AdminLogin() {
 
   return (
     <section className="container text-center py-5">
-      {/* Titre de l’espace administrateur */}
       <h1 className="mb-4">Bienvenue sur l'espace administrateur</h1>
 
-      {/* Bloc formulaire centré et limité en largeur */}
       <div
         className="mx-auto p-4 rounded"
         style={{ maxWidth: "400px", backgroundColor: "var(--bs-light)" }}
       >
-        {/* Message d’erreur affiché dynamiquement */}
         {error && <div className="alert alert-danger py-2">{error}</div>}
 
         <form onSubmit={handleSubmit}>
-          {/* Champ identifiant */}
+          {/* Username */}
           <div className="mb-3 text-start">
             <label className="form-label">Nom d'utilisateur</label>
+
             <input
               type="text"
+              name="username"
               className="form-control"
               placeholder="Nom d'utilisateur"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={formData.username}
+              onChange={handleChange}
+              autoComplete="username"
               required
             />
           </div>
 
-          {/* Champ mot de passe avec option d'affichage */}
+          {/* Password */}
           <div className="mb-2 text-start">
             <label className="form-label">Mot de passe</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              className="form-control"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
 
-            {/* Icône bascule visibilité mot de passe */}
-            <span
-              onClick={() => setShowPassword(!showPassword)}
-              style={{ cursor: "pointer" }}
-            >
-              <i
-                className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
-              ></i>
-            </span>
+            <div className="input-group">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                className="form-control"
+                value={formData.password}
+                onChange={handleChange}
+                autoComplete="current-password"
+                required
+              />
+
+              <span
+                className="input-group-text"
+                style={{ cursor: "pointer" }}
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                <i
+                  className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
+                ></i>
+              </span>
+            </div>
           </div>
 
-          {/* Lien mot de passe oublié (placeholder UX) */}
+          {/* Lien reset password */}
           <div className="text-end mb-4">
             <Link to="/admin/forgot-password">Mot de passe oublié ?</Link>
           </div>
 
-          {/* Bouton de connexion avec état de chargement */}
-          <div className="text-center">
-            <button
-              type="submit"
-              className="btn btn-primary px-5 py-2 rounded-pill text-uppercase"
-              disabled={loading}
-            >
-              {loading ? "Connexion..." : "Connexion"}
-            </button>
-          </div>
+          {/* Bouton */}
+          <button
+            type="submit"
+            className="btn btn-primary w-100 rounded-pill text-uppercase"
+            disabled={loading}
+          >
+            {loading ? "Connexion..." : "Connexion"}
+          </button>
         </form>
       </div>
     </section>
