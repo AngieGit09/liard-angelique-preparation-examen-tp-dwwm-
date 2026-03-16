@@ -57,9 +57,7 @@ function Catalogue() {
 
       {/* ==== LISTE DES CATEGORIES ==== */}
       <section className="container py-2 text-center my-3">
-        <h2 className="text-center h5 fw-semibold mb-5">
-          Retrouvez nos produits
-        </h2>
+        <h2 className="text-center h5 fw-semibold mb-5">Tous nos produits</h2>
 
         {/* Loader */}
         {loading && (

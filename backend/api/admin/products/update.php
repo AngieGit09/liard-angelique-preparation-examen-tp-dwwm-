@@ -54,6 +54,32 @@ try {
         $id
     ]);
 
+    // ===== SUPPRESSION DES IMAGES =====
+
+if (!empty($_POST['deleted_images'])) {
+
+    $uploadDir = __DIR__ . "/../../../";
+
+    foreach ($_POST['deleted_images'] as $imageId) {
+
+        $stmt = $pdo->prepare("SELECT image_path FROM product_images WHERE id = ?");
+        $stmt->execute([$imageId]);
+        $img = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($img) {
+
+            $filePath = $uploadDir . $img['image_path'];
+
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+
+            $stmtDelete = $pdo->prepare("DELETE FROM product_images WHERE id = ?");
+            $stmtDelete->execute([$imageId]);
+        }
+    }
+}
+
     // ===== AJOUT DES NOUVELLES IMAGES =====
 
 if (!empty($_FILES['images']['name'][0])) {

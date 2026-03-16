@@ -28,7 +28,7 @@ function ProductCard({ id, name, price, image }) {
             <img
               src={image}
               alt={name}
-              className="img-fluid"
+              className="product-image"
               loading="lazy"
               onError={(e) => {
                 e.target.src = "/images/placeholder.png";

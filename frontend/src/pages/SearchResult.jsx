@@ -12,21 +12,26 @@ function SearchResult() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!query) {
-      setResults([]);
-      setLoading(false);
-      return;
-    }
+    async function fetchResults() {
+      try {
+        if (!query) {
+          setResults([]);
+          return;
+        }
 
-    setLoading(true);
+        setLoading(true);
 
-    searchProducts(query)
-      .then(setResults)
-      .catch((err) => {
+        const data = await searchProducts(query);
+        setResults(Array.isArray(data) ? data : []);
+      } catch (err) {
         console.error(err);
         setResults([]);
-      })
-      .finally(() => setLoading(false));
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchResults();
   }, [query]);
 
   return (

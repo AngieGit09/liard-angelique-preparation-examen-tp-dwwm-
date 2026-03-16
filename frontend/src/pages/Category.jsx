@@ -29,11 +29,13 @@ function Category() {
 
   // ==== RECUPERATION DES PRODUITS ====
   useEffect(() => {
-    setLoading(true);
-    setVisibleCount(6);
+    async function loadProducts() {
+      try {
+        setLoading(true);
+        setVisibleCount(6);
 
-    getProductsByCategory(slug)
-      .then((data) => {
+        const data = await getProductsByCategory(slug);
+
         if (Array.isArray(data)) {
           const uniqueProducts = [
             ...new Map(data.map((p) => [p.id, p])).values(),
@@ -43,14 +45,15 @@ function Category() {
         } else {
           setProducts([]);
         }
-
-        setLoading(false);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("Erreur chargement produits :", err);
         setProducts([]);
+      } finally {
         setLoading(false);
-      });
+      }
+    }
+
+    loadProducts();
   }, [slug]);
 
   // ==== TRI DES PRODUITS ====

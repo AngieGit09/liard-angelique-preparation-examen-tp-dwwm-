@@ -19,6 +19,7 @@ function ModalProduct({
   const [story, setStory] = useState("");
   const [isBestSeller, setIsBestSeller] = useState(false);
   const [images, setImages] = useState([]);
+  const [deletedImages, setDeletedImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -38,6 +39,7 @@ function ModalProduct({
         })) || [];
 
       setImages(imgs);
+      setDeletedImages([]);
     }
 
     if (mode === "add") resetForm();
@@ -51,6 +53,7 @@ function ModalProduct({
     setStory("");
     setIsBestSeller(false);
     setImages([]);
+    setDeletedImages([]);
   };
 
   const handleClose = () => {
@@ -68,6 +71,16 @@ function ModalProduct({
 
     setImages((prev) => [...prev, ...newImages]);
     e.target.value = null;
+  };
+
+  const removeImage = (index) => {
+    const img = images[index];
+
+    if (img.existing) {
+      setDeletedImages((prev) => [...prev, img.id]);
+    }
+
+    setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async () => {
@@ -88,15 +101,21 @@ function ModalProduct({
       formData.append("category_id", category);
       formData.append("is_featured", isBestSeller ? 1 : 0);
 
+      if (mode === "edit" && product?.id) {
+        formData.append("id", product.id);
+      }
+
+      // nouvelles images
       images.forEach((img) => {
         if (!img.existing && img.file) {
           formData.append("images[]", img.file);
         }
       });
 
-      if (mode === "edit" && product?.id) {
-        formData.append("id", product.id);
-      }
+      // images supprimées
+      deletedImages.forEach((id) => {
+        formData.append("deleted_images[]", id);
+      });
 
       const url =
         mode === "edit"
@@ -153,6 +172,7 @@ function ModalProduct({
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="">Sélectionner une catégorie</option>
+
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.name}
@@ -199,15 +219,11 @@ function ModalProduct({
             checked={isBestSeller}
             onChange={(e) => setIsBestSeller(e.target.checked)}
           />
+
           <label className="form-check-label">
             Définir comme article best-seller
           </label>
         </div>
-
-        <small className="admin-bestseller-info d-block mt-1">
-          Un seul produit peut être best-seller. Si vous cochez cette case,
-          l’ancien sera automatiquement remplacé.
-        </small>
       </div>
 
       <div className="mb-4">
@@ -225,9 +241,7 @@ function ModalProduct({
               <button
                 type="button"
                 className="admin-thumb-remove"
-                onClick={() =>
-                  setImages((prev) => prev.filter((_, index) => index !== i))
-                }
+                onClick={() => removeImage(i)}
               >
                 ✕
               </button>

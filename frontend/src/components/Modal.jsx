@@ -22,6 +22,7 @@ function Modal({ children, isOpen, onClose }) {
         backgroundColor: "rgba(0,0,0,0.35)",
         zIndex: 1050,
       }}
+      onClick={onClose}
     >
       <div
         className="p-4"
