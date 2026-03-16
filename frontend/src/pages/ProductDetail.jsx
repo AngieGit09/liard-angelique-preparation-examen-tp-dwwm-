@@ -141,6 +141,11 @@ function ProductDetail() {
         <p className="fw-bold">La petite histoire de ce meuble :</p>
         <p>{product.story}</p>
 
+        <p className="text-uppercase">
+          Derrière chaque meuble se cache une histoire, vous pouvez la continuer
+          ... On vous attend dans notre boutique
+        </p>
+
         <Link
           to={`/categorie/${categorySlug}`}
           className="btn btn-primary text-uppercase px-5 py-3 mt-3 rounded-pill"
