@@ -1,3 +1,7 @@
+// ===== COMPONENT MODAL CATEGORY =====
+// Formulaire modal pour ajouter une catégorie
+// Gère le nom, l’image et l’envoi au backend
+
 import { useRef, useState } from "react";
 import Modal from "./Modal";
 import { BASE_URL } from "../services/api";
@@ -5,6 +9,7 @@ import { BASE_URL } from "../services/api";
 function ModalCategory({ isOpen, onClose }) {
   const fileInputRef = useRef(null);
 
+  // États du formulaire
   const [name, setName] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -16,12 +21,14 @@ function ModalCategory({ isOpen, onClose }) {
     setPreview(null);
   }
 
+  // Empêche fermeture pendant envoi
   function handleClose() {
     if (loading) return;
     resetForm();
     onClose();
   }
 
+  // Gestion de l'image + preview côté front
   function handleImageChange(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -32,6 +39,7 @@ function ModalCategory({ isOpen, onClose }) {
 
   async function handleSubmit() {
     try {
+      // Validation simple
       if (!name.trim()) {
         alert("Veuillez renseigner le nom de la catégorie.");
         return;
@@ -44,6 +52,7 @@ function ModalCategory({ isOpen, onClose }) {
 
       setLoading(true);
 
+      // Utilisation de FormData pour envoyer un fichier
       const formData = new FormData();
       formData.append("name", name);
       formData.append("image", image);
@@ -65,6 +74,7 @@ function ModalCategory({ isOpen, onClose }) {
 
       resetForm();
       onClose();
+      // Recharge pour mettre à jour la liste
       window.location.reload();
     } catch (error) {
       alert(error.message);
@@ -83,6 +93,7 @@ function ModalCategory({ isOpen, onClose }) {
         </button>
       </div>
 
+      {/* Champ nom */}
       <div className="mb-4">
         <label className="form-label">Nom de la catégorie</label>
 
@@ -94,6 +105,7 @@ function ModalCategory({ isOpen, onClose }) {
         />
       </div>
 
+      {/* Upload image */}
       <div className="mb-4">
         <label className="form-label">Image de la catégorie</label>
 
@@ -107,6 +119,7 @@ function ModalCategory({ isOpen, onClose }) {
                 borderRadius: "8px",
                 cursor: "pointer",
               }}
+              // Permet de changer l’image en cliquant dessus
               onClick={() => fileInputRef.current.click()}
             />
           ) : (

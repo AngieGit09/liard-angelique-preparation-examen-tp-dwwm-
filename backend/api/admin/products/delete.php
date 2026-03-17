@@ -1,5 +1,8 @@
 <?php
 
+// ===== SUPPRESSION D’UN PRODUIT =====
+// Supprime un produit ainsi que toutes ses images associées (fichiers + base).
+
 require_once __DIR__ . '/../../../middleware/adminAuth.php';
 require_once __DIR__ . '/../../../config/database.php';
 
@@ -13,6 +16,7 @@ try {
         exit;
     }
 
+    // ==== RÉCUPÉRATION DES IMAGES ====
     $stmtImages = $pdo->prepare("
         SELECT image_path
         FROM product_images
@@ -22,6 +26,7 @@ try {
     $stmtImages->execute([$id]);
     $images = $stmtImages->fetchAll(PDO::FETCH_ASSOC);
 
+    // ==== SUPPRESSION DES FICHIERS ====
     foreach ($images as $img) {
 
         $filePath = __DIR__ . "/../../../" . $img['image_path'];
@@ -31,6 +36,7 @@ try {
         }
     }
 
+    // ==== SUPPRESSION DU PRODUIT ====
     $stmtDelete = $pdo->prepare("DELETE FROM products WHERE id = ?");
     $stmtDelete->execute([$id]);
 
@@ -46,3 +52,4 @@ try {
         'error' => 'Erreur serveur'
     ]);
 }
+?>

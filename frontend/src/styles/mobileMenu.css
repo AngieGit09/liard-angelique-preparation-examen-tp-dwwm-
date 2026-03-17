@@ -1,6 +1,4 @@
-/* ============================= */
-/* MOBILE MENU OVERLAY */
-/* ============================= */
+/* ==== MOBILE MENU OVERLAY ==== */
 
 .mobile-overlay {
   position: fixed;
@@ -27,7 +25,7 @@
 
   box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
 
-  /* ✅ autorise le scroll */
+  /* autorise le scroll */
   overflow-y: auto;
 
   /* scroll fluide mobile */
@@ -80,7 +78,7 @@
   background: #d8bea1;
 }
 
-/* ================= RECHERCHE MENU MOBILE ================= */
+/* ==== RECHERCHE MENU MOBILE ==== */
 
 .mobile-search {
   position: relative;

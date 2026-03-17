@@ -1,6 +1,6 @@
 // ========= PAGE CATALOGUE =========
 // Page présentant l’ensemble des catégories disponibles
-// ainsi qu’un produit mis en avant (best-seller).
+// ainsi qu’un produit mis en avant (best-seller)
 
 import { useEffect, useState } from "react";
 

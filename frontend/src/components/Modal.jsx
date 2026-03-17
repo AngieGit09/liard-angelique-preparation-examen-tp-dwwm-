@@ -1,7 +1,13 @@
+// ===== COMPONENT MODAL =====
+//
+// Composant générique de modale réutilisable
+// Gère l’affichage, le fond sombre et le blocage du scroll
+
 import { useEffect } from "react";
 
 function Modal({ children, isOpen, onClose }) {
   useEffect(() => {
+    // Bloque le scroll arrière-plan quand la modale est ouverte
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -13,6 +19,7 @@ function Modal({ children, isOpen, onClose }) {
     };
   }, [isOpen]);
 
+  // Ne rend rien si la modale est fermée
   if (!isOpen) return null;
 
   return (
@@ -22,6 +29,7 @@ function Modal({ children, isOpen, onClose }) {
         backgroundColor: "rgba(0,0,0,0.35)",
         zIndex: 1050,
       }}
+      // Ferme la modale si clic extérieur
       onClick={onClose}
     >
       <div
@@ -34,6 +42,7 @@ function Modal({ children, isOpen, onClose }) {
           overflowY: "auto",
           borderRadius: "12px",
         }}
+        // Empêche la fermeture si clic dans la modale
         onClick={(e) => e.stopPropagation()}
       >
         {children}

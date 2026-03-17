@@ -52,8 +52,8 @@ Renomeuble
 │
 ├── backend
 │ ├── api
-    ├── admin
-    ├── public 
+├── admin
+├── public
 │ ├── authentication
 │ ├── config
 │ ├── middleware
@@ -68,7 +68,6 @@ Renomeuble
 L’API est organisée en deux parties :
 API publique accessible aux visiteurs pour consulter les produits et envoyer des messages.
 API d’administration protégée et accessible uniquement aux administrateurs authentifiés pour gérer le catalogue.
-
 
 Le front-end React communique avec l'API PHP via des requêtes HTTP utilisant Fetch API.
 
@@ -93,6 +92,18 @@ Le front-end React communique avec l'API PHP via des requêtes HTTP utilisant Fe
 - gestion des catégories
 - consultation des messages envoyés par les visiteurs
 
+# Accès à l'administration
+
+Pour tester l'espace d'administration :
+
+**Compte administrateur**
+
+Identifiant : Emma  
+Mot de passe : Emma123!
+&
+Identifiant : Lucas
+Mot de passe : Lucas123!
+
 ---
 
 # Installation du projet
@@ -100,7 +111,6 @@ Le front-end React communique avec l'API PHP via des requêtes HTTP utilisant Fe
 ## 1. Cloner le projet
 
 git clone https://github.com/AngieGit09/liard-angelique-preparation-examen-tp-dwwm-
-
 
 ---
 
@@ -110,10 +120,8 @@ cd frontend
 npm install
 npm run dev
 
-
 Le front-end sera accessible sur :
 http://localhost:5173
-
 
 ---
 
@@ -124,14 +132,12 @@ Placer le dossier backend dans un serveur local tel que XAMPP, WAMP ou MAMP.
 Configurer la connexion à la base de données dans le fichier :
 backend/config/database.php
 
-
 ---
 
 ## 4. Création de la base de données
 
 Importer le fichier suivant dans votre serveur MySQL :
 backend/database.sql
-
 
 ---
 
@@ -145,7 +151,6 @@ Des tests unitaires ont été réalisés à l'aide de :
 Pour lancer les tests :
 npm run test
 
-
 ---
 
 # Auteur
@@ -156,5 +161,3 @@ Angélique Liard
 
 Dans le cadre de la préparation au  
 **Titre Professionnel Développeur Web et Web Mobile (DWWM)**.
-
-

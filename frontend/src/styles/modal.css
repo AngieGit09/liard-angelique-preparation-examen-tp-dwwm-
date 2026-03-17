@@ -1,9 +1,7 @@
-/* ======================= MODALES ====================== */
-/* Modales personnalisées (React - Admin & Front)        */
-/* Indépendantes de Bootstrap pour éviter les conflits   */
+/* ==== MODALES (GLOBAL) ==== */
+/* Structure réutilisable dans toute l'app */
 
-/* 1. OVERLAY (fond sombre derrière la modale)           */
-/* Bloque l'écran et centre la modale                   */
+/* Overlay (fond sombre + centrage) */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -14,27 +12,26 @@
   z-index: 1050;
 }
 
-/* 2. CONTENU PRINCIPAL DE LA MODALE                     */
-/* Boîte centrale avec scroll interne                   */
+/* Contenu principal */
 .modal-content {
   background-color: var(--bs-secondary);
   padding: 24px;
   width: 90%;
   max-width: 420px;
-  max-height: 90vh; /* essentiel pour les longues modales */
-  overflow-y: auto; /* scroll interne */
+  max-height: 90vh;
+  overflow-y: auto;
   box-shadow: 0 4px 20px var(--color-shadow-card);
   border-radius: 12px;
   box-sizing: border-box;
 }
 
-/* 3. TITRES DES MODALES                                 */
+/* Titre */
 .modal-title {
   font-weight: 500;
   color: var(--bs-dark);
 }
 
-/* 4. BOUTON FERMER (croix ou texte)                    */
+/* Bouton fermer */
 .modal-close {
   background: none;
   border: none;
@@ -48,15 +45,13 @@
   opacity: 0.7;
 }
 
-/* Supprime le focus bleu Bootstrap */
 .modal-close:focus,
 .modal-close:active {
   outline: none;
   box-shadow: none;
 }
 
-/* 5. ACTIONS MODALE (Confirmer / Annuler / Supprimer)  */
-/* Boutons texte utilisés dans l’admin                  */
+/* Actions (confirmer / annuler / supprimer) */
 .modal-action {
   color: var(--bs-dark);
   background: none;

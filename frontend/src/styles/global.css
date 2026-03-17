@@ -1,6 +1,5 @@
-/* ===================== GLOBAL ========================= */
+/* ==== GLOBAL ==== */
 /* Styles globaux du site (base typographique & couleurs)*/
-/* Fichier chargé sur TOUTES les pages                   */
 
 /* 1. BASE DU SITE (BODY)                                */
 /* Police, couleurs globales et lisibilité               */
@@ -14,8 +13,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* 2. TITRES GLOBAUX                                     */
-/* Harmonisation typographique du site                  */
+/* 2. TITRES GLOBAUX */
+/* Harmonisation typographique du site */
 
 /* Titre principal (pages, sections) */
 h1 {
@@ -34,8 +33,8 @@ h2 {
   margin-bottom: 0.75rem;
 }
 
-/* 3. LIENS & ICÔNES                                     */
-/* Héritent de la couleur du parent (design cohérent)    */
+/* 3. LIENS & ICÔNES */
+/* Héritent de la couleur du parent */
 a {
   color: inherit;
   text-decoration: none;

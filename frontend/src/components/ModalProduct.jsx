@@ -1,3 +1,7 @@
+// ===== COMPONENT MODAL PRODUCT =====
+// Formulaire modal permettant d’ajouter ou modifier un produit
+// Gère les champs, les images (upload / suppression) et l’envoi au backend
+
 import { useRef, useState, useEffect } from "react";
 import Modal from "./Modal";
 import { BASE_URL, BASE_IMAGE_URL } from "../services/api";
@@ -12,17 +16,20 @@ function ModalProduct({
 }) {
   const fileInputRef = useRef(null);
 
+  // États du formulaire
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [story, setStory] = useState("");
   const [isBestSeller, setIsBestSeller] = useState(false);
+  // Gestion des images (existantes + nouvelles + supprimées)
   const [images, setImages] = useState([]);
   const [deletedImages, setDeletedImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // Pré-remplit le formulaire en mode édition
     if (mode === "edit" && product) {
       setName(product.title || "");
       setCategory(product.category_id?.toString() || "");
@@ -31,6 +38,7 @@ function ModalProduct({
       setStory(product.story || "");
       setIsBestSeller(product.is_featured === 1);
 
+      // Transforme les images backend en objets exploitables côté front
       const imgs =
         product.images?.map((img) => ({
           id: img.id,
@@ -42,9 +50,11 @@ function ModalProduct({
       setDeletedImages([]);
     }
 
+    // Reset complet en mode ajout
     if (mode === "add") resetForm();
   }, [mode, product]);
 
+  // Réinitialise tous les champs
   const resetForm = () => {
     setName("");
     setCategory("");
@@ -56,12 +66,14 @@ function ModalProduct({
     setDeletedImages([]);
   };
 
+  // Empêche la fermeture pendant le chargement
   const handleClose = () => {
     if (loading) return;
     resetForm();
     onClose();
   };
 
+  // Ajout de nouvelles images (preview côté front)
   const handleAddImages = (e) => {
     const newImages = Array.from(e.target.files).map((file) => ({
       file,
@@ -73,6 +85,7 @@ function ModalProduct({
     e.target.value = null;
   };
 
+  // Suppression d'une image (frontend + backend si existante)
   const removeImage = (index) => {
     const img = images[index];
 
@@ -85,6 +98,7 @@ function ModalProduct({
 
   const handleSubmit = async () => {
     try {
+      // Validation simple côté front
       if (!name || !description || !price || !category || !story) {
         alert("Veuillez remplir tous les champs.");
         return;
@@ -94,6 +108,7 @@ function ModalProduct({
 
       const formData = new FormData();
 
+      // Données produit
       formData.append("title", name);
       formData.append("description", description);
       formData.append("story", story);
@@ -101,22 +116,24 @@ function ModalProduct({
       formData.append("category_id", category);
       formData.append("is_featured", isBestSeller ? 1 : 0);
 
+      // Ajout id si modification
       if (mode === "edit" && product?.id) {
         formData.append("id", product.id);
       }
 
-      // nouvelles images
+      // Ajout des nouvelles images
       images.forEach((img) => {
         if (!img.existing && img.file) {
           formData.append("images[]", img.file);
         }
       });
 
-      // images supprimées
+      // Envoi des images supprimées
       deletedImages.forEach((id) => {
         formData.append("deleted_images[]", id);
       });
 
+      // Choix endpoint (add ou edit)
       const url =
         mode === "edit"
           ? `${BASE_URL}/api/admin/products/update.php`
@@ -135,6 +152,7 @@ function ModalProduct({
       resetForm();
       onClose();
 
+      // Rafraîchit les données parent après succès
       if (onSuccess) onSuccess();
     } catch (error) {
       alert(error.message);
@@ -155,6 +173,7 @@ function ModalProduct({
         </button>
       </div>
 
+      {/* Champs du formulaire */}
       <div className="mb-3">
         <label className="form-label">Nom du produit</label>
         <input
@@ -224,6 +243,11 @@ function ModalProduct({
             Définir comme article best-seller
           </label>
         </div>
+        <small className="admin-bestseller-info d-block mt-1">
+          Un seul produit peut être best-seller. Si vous cochez cette case,
+          l’ancien sera automatiquement remplacé ! l’ancien sera automatiquement
+          remplacé.
+        </small>
       </div>
 
       <div className="mb-4">

@@ -1,8 +1,7 @@
-/* ===================== ADMIN UI ====================== */
-/* Styles spécifiques au back-office (dashboard admin)   */
+/* ==== ADMIN ==== */
+/* Styles spécifiques au back-office */
 
-/* 1. ACTIONS ADMIN (Modifier / Supprimer)               */
-/* Boutons texte sans style Bootstrap bleu              */
+/* 1. ACTIONS ADMIN */
 .admin-action {
   color: var(--bs-dark);
   text-decoration: none;
@@ -17,7 +16,6 @@
   opacity: 0.7;
 }
 
-/* Supprime les effets focus/active bleus de Bootstrap */
 .admin-action:focus,
 .admin-action:active,
 .admin-action:focus-visible {
@@ -27,84 +25,55 @@
   opacity: 0.7;
 }
 
-/* 2. TITRES & CARTES ADMIN                             */
-/* Cartes de gestion produits / catégories              */
-/* Titre des cartes admin */
+/* 2. CARTES ADMIN */
 .admin-card-title {
   color: var(--bs-dark);
 }
 
-/* Carte admin (shadow + structure) */
 .admin-card {
   box-shadow: 0 2px 8px var(--color-shadow-card);
   transition: none;
 }
 
-/* Désactive l'effet hover sur certaines cartes admin */
 .admin-no-hover:hover {
   transform: none !important;
   box-shadow: 0 2px 8px var(--color-shadow-card) !important;
 }
 
-/* 3. IMAGES DANS LES CARTES ADMIN                      */
-/* Uniformise la taille des photos produits             */
-/* (évite les images géantes ou désalignées)            */
-/* Conteneur image (taille fixe pour toutes les cartes) */
+/* 3. IMAGES */
 .admin-product-img-wrapper {
   width: 100%;
-  height: 150px; /* Idéal pour meubles et objets */
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.03); /* fond léger neutre */
+  background-color: rgba(0, 0, 0, 0.03);
   border-radius: 8px;
   overflow: hidden;
 }
 
-/* Image produit dans la carte admin */
 .admin-product-img {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* garde les proportions */
+  object-fit: contain;
   image-rendering: auto;
 }
 
-/* Images catégories (admin) */
 .admin-card-img {
   height: 150px;
   width: 100%;
   object-fit: contain;
 }
 
-/* 4. MODALES ADMIN (overlay + boîte)                   */
-/* Utilisées pour ajouter / modifier / supprimer        */
-/* Fond sombre derrière la modale */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
+/* 4. MODALES ADMIN (custom uniquement) */
 
-/* Boîte principale de la modale */
-.modal-box {
-  background-color: var(--bs-secondary);
-  padding: 24px;
-  width: 100%;
-  max-width: 420px;
-}
-
-/* 5. MODALES – TITRES & BOUTON FERMER                  */
-/* Titre des modales admin */
+/* Variante de titre admin */
 .admin-modal-title {
   font-weight: 600;
   color: var(--bs-dark);
 }
 
-/* Bouton "Fermer" (croix) */
+/* Bouton fermer admin */
 .admin-modal-close {
   background: none;
   border: none;
@@ -118,16 +87,13 @@
   opacity: 0.7;
 }
 
-/* Supprime l'effet focus bleu */
 .admin-modal-close:focus,
 .admin-modal-close:active {
   outline: none;
   box-shadow: none;
 }
 
-/* 6. MODALES – MINIATURES IMAGES PRODUIT               */
-/* Aperçu des images dans la modale d’édition produit   */
-/* Miniature image (petit carré) */
+/* 5. MINIATURES PRODUITS */
 .admin-product-thumb {
   width: 48px;
   height: 48px;
@@ -136,12 +102,10 @@
   border: 1px solid var(--bs-dark);
 }
 
-/* Wrapper pour positionner la croix de suppression */
 .admin-thumb-wrapper {
   position: relative;
 }
 
-/* Bouton suppression image (petite croix) */
 .admin-thumb-remove {
   position: absolute;
   top: -6px;

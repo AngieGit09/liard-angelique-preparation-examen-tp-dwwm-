@@ -1,7 +1,4 @@
-/* ===================================================== */
-/* ============ CARTES CATÉGORIES – CATALOGUE =========== */
-/* Reproduction fidèle de ton ancien design              */
-/* ===================================================== */
+/* ==== CARTES CATÉGORIES – CATALOGUE ==== */
 
 /* Carte */
 .category-card {
@@ -14,13 +11,13 @@
     box-shadow 0.2s ease;
 }
 
-/* Effet hover (comme ton ancien visuel) */
+/* Effet hover */
 .category-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 22px rgba(112, 68, 36, 0.35);
 }
 
-/* Titre catégorie (marron foncé comme avant) */
+/* Titre catégorie */
 .category-card-title {
   color: var(--bs-dark);
   font-weight: 600;
@@ -29,7 +26,7 @@
 
 /* Wrapper image (EMPÊCHE l'image d'exploser la carte) */
 .category-image-wrapper {
-  height: 120px; /* AUTEUR FIXE */
+  height: 120px; 
   display: flex;
   align-items: center;
   justify-content: center;

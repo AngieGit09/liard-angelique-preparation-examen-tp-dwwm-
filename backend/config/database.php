@@ -1,38 +1,48 @@
 <?php
-// ==== CONNEXION PDO ====
-// Fichier de configuration de la connexion à la base de données
 
-// Charger l'autoload de Composer (phpdotenv)
+// ===== CONNEXION À LA BASE DE DONNÉES =====
+// Initialise la connexion PDO en utilisant des variables d'environnement (.env).
+// Permet une connexion sécurisée et réutilisable dans toute l'application.
+
+// Charger l'autoload de Composer (nécessaire pour phpdotenv)
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Charger le fichier .env situé à la racine du projet
+// Charger les variables d'environnement depuis le fichier .env
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
-// Paramètres de connexion (sécurisés via .env)
+// ==== PARAMÈTRES DE CONNEXION ====
+// Récupérés depuis le .env avec valeurs par défaut si absentes
+
 $host     = $_ENV['DB_HOST'] ?? 'localhost';
 $dbname   = $_ENV['DB_NAME'] ?? 'renomeuble_db';
 $username = $_ENV['DB_USER'] ?? 'renomeuble_user';
 $password = $_ENV['DB_PASS'] ?? '';
 
 try {
-    // Création de la connexion PDO MySQL
+    // ==== CRÉATION DE LA CONNEXION PDO ====
     $pdo = new PDO(
         "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
         $username,
         $password
     );
 
-    // Mode erreur en exception (important pour les API)
+    // Active les erreurs sous forme d'exceptions (debug + sécurité)
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Retour en tableau associatif (parfait pour JSON)
+    // Retourne les résultats sous forme de tableaux associatifs (idéal pour JSON)
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
+
+    // ==== GESTION DES ERREURS DE CONNEXION ====
+
     http_response_code(500);
+
     echo json_encode([
         "error" => "Erreur de connexion : " . $e->getMessage()
     ]);
+
     exit;
 }
+?>

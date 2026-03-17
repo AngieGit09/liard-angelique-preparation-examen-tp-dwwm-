@@ -1,6 +1,6 @@
 // ========= PAGE ERREUR / 404 =========
-// Composant affiché lorsqu'aucune route ne correspond à l'URL.
-// Permet d'informer l'utilisateur et de proposer une redirection vers l'accueil.
+// Composant affiché lorsqu'aucune route ne correspond à l'URL
+// Permet d'informer l'utilisateur et de proposer une redirection vers l'accueil
 
 import { Link } from "react-router-dom";
 

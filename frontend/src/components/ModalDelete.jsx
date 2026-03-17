@@ -1,3 +1,7 @@
+// ===== COMPONENT MODAL DELETE =====
+// Modale de confirmation avant suppression
+// Permet d’éviter les actions irréversibles sans validation utilisateur
+
 import Modal from "./Modal";
 
 function ModalDelete({ isOpen, onClose, onConfirm }) {
@@ -8,6 +12,7 @@ function ModalDelete({ isOpen, onClose, onConfirm }) {
       </p>
 
       <div className="d-flex justify-content-around">
+        {/* Déclenche la suppression */}
         <button
           className="btn btn-link admin-action text-danger"
           onClick={onConfirm}
@@ -15,6 +20,7 @@ function ModalDelete({ isOpen, onClose, onConfirm }) {
           Confirmer
         </button>
 
+        {/* Ferme la modale sans action */}
         <button className="btn btn-link admin-action" onClick={onClose}>
           Annuler
         </button>

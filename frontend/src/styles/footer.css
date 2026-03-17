@@ -1,4 +1,4 @@
-/* Footer global du site (toutes les pages)              */
+/* Footer global du site (toutes les pages) */
 
 /* Conteneur principal du footer */
 .footer {
@@ -8,20 +8,20 @@
   line-height: 1.6; /* meilleure lisibilité du texte */
 }
 
-/* LOGO DU FOOTER                                       */
+/* LOGO DU FOOTER */
 .footer-logo {
   height: 80px; /* taille fixe pour cohérence visuelle */
   object-fit: contain; /* évite toute déformation */
 }
 
-/* TITRES DES COLONNES (Contact, Infos, etc.)           */
+/* TITRES DES COLONNES (Contact, Infos, etc.) */
 .footer-title {
   font-weight: 600;
   margin-bottom: 8px;
   color: var(--bs-dark);
 }
 
-/* LISTES (liens du footer)                             */
+/* LISTES (liens du footer) */
 .footer ul {
   list-style: none; /* supprime les puces */
   padding: 0;
@@ -32,7 +32,7 @@
   margin-bottom: 6px; /* espacement vertical entre liens */
 }
 
-/* LIENS DU FOOTER                                      */
+/* LIENS DU FOOTER */
 .footer a {
   color: inherit; /* hérite de la couleur du texte */
   text-decoration: none;
@@ -44,8 +44,8 @@
   opacity: 0.85; /* effet hover doux */
 }
 
-/* RÉSEAUX SOCIAUX                                      */
-/* Icônes réseaux (Facebook, Insta, etc.)               */
+/* RÉSEAUX SOCIAUX */
+/* Icônes réseaux (Facebook, Insta, etc.) */
 
 /* Base commune (desktop + mobile) */
 .footer-social,

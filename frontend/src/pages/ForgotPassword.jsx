@@ -1,10 +1,14 @@
+// ==== MOT DE PASSE OUBLIE ====
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { forgotPassword } from "../services/auth.service";
 
 function ForgotPassword() {
+  // Stocke l'email saisi par l'utilisateur
   const [email, setEmail] = useState("");
+  // Gestion de l'état de chargement et du retour utilisateur
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
 
@@ -15,12 +19,15 @@ function ForgotPassword() {
     setStatus(null);
 
     try {
+      // Envoi de la demande de réinitialisation au backend
       await forgotPassword(email);
 
+      // Succès : message affiché + reset du champ
       setStatus("success");
       setEmail("");
     } catch (error) {
       console.error(error);
+      // Erreur générique (on évite de donner trop d'infos côté sécurité)
       setStatus("error");
     }
 
@@ -57,6 +64,7 @@ function ForgotPassword() {
           </div>
 
           <div className="text-center">
+            {/* Bouton désactivé pendant l'envoi */}
             <button
               type="submit"
               disabled={loading}
@@ -66,6 +74,7 @@ function ForgotPassword() {
             </button>
           </div>
 
+          {/* Message volontairement vague pour éviter de révéler si l'email existe */}
           {status === "success" && (
             <p className="text-success text-center mt-3">
               Si cette adresse existe, un email a été envoyé.
@@ -80,6 +89,7 @@ function ForgotPassword() {
         </form>
 
         <div className="text-center mt-4">
+          {/* Lien de retour vers la page de connexion */}
           <Link to="/admin/login">Retour connexion</Link>
         </div>
       </div>

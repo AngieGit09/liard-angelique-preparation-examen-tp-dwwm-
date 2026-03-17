@@ -1,7 +1,7 @@
 // ========= PAGE DE CONNEXION ADMIN =========
 // Permet l'authentification de l'administrateur.
-// Les identifiants sont envoyés à l'API backend qui crée une session PHP.
-// En cas de succès, l'utilisateur est redirigé vers le dashboard admin.
+// Les identifiants sont envoyés à l'API backend qui crée une session PHP
+// En cas de succès, l'utilisateur est redirigé vers le dashboard admin
 
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";

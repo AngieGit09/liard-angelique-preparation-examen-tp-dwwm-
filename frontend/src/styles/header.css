@@ -1,4 +1,4 @@
-/* ======================= HEADER ======================= */
+/* ==== HEADER ==== */
 /* Header global du site (logo, navigation, search)      */
 
 /* 1. CONTENEUR PRINCIPAL DU HEADER                      */
@@ -9,7 +9,7 @@
   box-shadow: 0 4px 12px var(--color-shadow-card);
 }
 
-/* Conteneur centré (limite largeur du contenu) */
+/* Conteneur centré */
 .header-inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -20,7 +20,7 @@
   justify-content: space-between;
 }
 
-/* 2. LOGO                                               */
+/* 2. LOGO */
 .header-logo {
   display: flex;
   align-items: center;
@@ -33,7 +33,7 @@
   object-fit: contain; /* évite toute déformation */
 }
 
-/* 3. NAVIGATION PRINCIPALE                              */
+/* 3. NAVIGATION PRINCIPALE */
 .header-nav {
   gap: 60px; /* espacement entre les liens */
   display: flex;
@@ -53,19 +53,19 @@
   transition: background-color 0.2s ease;
 }
 
-/* Effet hover doux (sans déplacement) */
+/* Effet hover doux */
 .header-nav a:hover,
 .header-nav .nav-link:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
 
-/* 4. DROPDOWN (menu catégories par exemple)             */
+/* 4. DROPDOWN */
 .has-dropdown {
   position: relative;
   cursor: pointer;
 }
 
-/* 5. BARRE DE RECHERCHE                                 */
+/* 5. BARRE DE RECHERCHE */
 .header-search {
   position: relative;
 }
@@ -106,7 +106,7 @@
   color: var(--bs-dark);
 }
 
-/* 6. BURGER MENU (MOBILE)                               */
+/* 6. BURGER MENU (MOBILE) */
 .header-burger {
   display: flex;
   flex-direction: column;
@@ -121,7 +121,7 @@
   border-radius: 2px;
 }
 
-/* 7. MENU DROPDOWN PERSONNALISÉ                         */
+/* 7. MENU DROPDOWN PERSONNALISÉ */
 .dropdown-menu-custom {
   position: absolute;
   top: 100%;

@@ -1,10 +1,15 @@
 <?php
 
+// ===== CRÉATION D’UN PRODUIT =====
+// Permet d'ajouter un nouveau produit avec ses images.
+// Gère également le statut "featured".
+
 require_once __DIR__ . '/../../../middleware/adminAuth.php';
 require_once __DIR__ . '/../../../config/database.php';
 
 try {
 
+    // ==== RÉCUPÉRATION DES DONNÉES ====
     $title = $_POST['title'] ?? '';
     $description = $_POST['description'] ?? '';
     $story = $_POST['story'] ?? '';
@@ -13,6 +18,7 @@ try {
 
     $is_featured = isset($_POST['is_featured']) ? (int)$_POST['is_featured'] : 0;
 
+    // ==== VALIDATION ====
     if (!$title || !$description || !$price || !$category_id) {
 
         http_response_code(400);
@@ -24,10 +30,12 @@ try {
         exit;
     }
 
+    // Un seul produit featured
     if ($is_featured === 1) {
         $pdo->query("UPDATE products SET is_featured = 0");
     }
 
+    // ==== INSERTION DU PRODUIT ====
     $stmt = $pdo->prepare("
         INSERT INTO products (title, description, story, price, category_id, is_featured)
         VALUES (?, ?, ?, ?, ?, ?)
@@ -42,8 +50,10 @@ try {
         $is_featured
     ]);
 
+    // ID du produit créé
     $productId = $pdo->lastInsertId();
 
+    // ==== UPLOAD DES IMAGES ====
     if (!empty($_FILES['images']['name'][0])) {
 
         $uploadDir = __DIR__ . "/../../../uploads/products/";
@@ -90,3 +100,4 @@ try {
         "error" => "Erreur serveur"
     ]);
 }
+?>

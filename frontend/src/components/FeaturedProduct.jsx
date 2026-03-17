@@ -1,3 +1,7 @@
+// ===== COMPONENT FEATURED PRODUCT =====
+// Affiche le produit mis en avant sur la page d’accueil.
+// Gère les états de chargement et d’absence de données.
+
 import { Link } from "react-router-dom";
 import { BASE_IMAGE_URL } from "../services/api";
 
@@ -6,6 +10,7 @@ function FeaturedProduct({
   loading,
   label = "Notre article coup de cœur",
 }) {
+  // Affichage pendant le chargement
   if (loading) {
     return (
       <section className="container py-3 text-center my-5">
@@ -29,6 +34,7 @@ function FeaturedProduct({
       <h2 className="h5 fw-semibold mb-4">{label}</h2>
 
       <div className="row align-items-center justify-content-center g-4">
+        {/* Image secondaire gauche */}
         <div className="col-4 col-md-2">
           {product.images?.[1] && (
             <img
@@ -40,6 +46,7 @@ function FeaturedProduct({
           )}
         </div>
 
+        {/* Image principale */}
         <div className="col-6 col-md-4">
           {product.images?.[0] && (
             <img
@@ -51,6 +58,7 @@ function FeaturedProduct({
           )}
         </div>
 
+        {/* Image secondaire droite */}
         <div className="col-4 col-md-2">
           {product.images?.[2] && (
             <img
@@ -62,6 +70,7 @@ function FeaturedProduct({
           )}
         </div>
 
+        {/* Accès à la page produit */}
         <div className="col-12 col-md-2 d-flex justify-content-center justify-content-md-start">
           <Link
             to={`/produit/${product.id}`}

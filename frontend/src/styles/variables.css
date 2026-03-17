@@ -1,5 +1,5 @@
 :root {
-  /* ================== PALETTE PRINCIPALE ================= */
+  /* === PALETTE PRINCIPALE === */
   /* Couleurs globales du site (charte graphique)           */
   /* Thème : beige / bois / chaleureux                     */
 
@@ -19,18 +19,14 @@
   --bs-primary-rgb: 162, 132, 94;
   --bs-dark-rgb: 112, 68, 36;
 
-  /* =============== COMPOSANTS PERSONNALISÉS ============= */
-  /* Variables spécifiques à ton design (non Bootstrap)    */
-
+  /* === COMPOSANTS PERSONNALISÉS === */
   /* Couleur des boutons principaux */
   --color-button: #bb6c4e;
 
   /* Ombre douce des cartes (admin + catalogue) */
   --color-shadow-card: rgba(112, 68, 36, 0.38);
 
-  /* ===================== FORMULAIRES ==================== */
-  /* Variables UI (inputs, select, etc.)                   */
-
+  /* === FORMULAIRES === */
   /* Couleur de la flèche custom des select (SVG encodé) */
   --select-arrow-color: #a2845e;
 }

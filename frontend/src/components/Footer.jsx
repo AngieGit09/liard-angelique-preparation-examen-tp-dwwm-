@@ -1,8 +1,6 @@
-// ========= FOOTER =========
-// Pied de page du site.
-// Contient le plan du site, les liens légaux, les réseaux sociaux
-// ainsi qu’un accès rapide à l’accueil via le logo.
-// Les catégories sont récupérées dynamiquement depuis l’API.
+// ===== FOOTER =====
+// Pied de page du site contenant la navigation, les liens légaux et les réseaux sociaux.
+// Les catégories sont récupérées dynamiquement depuis l’API pour rester à jour.
 
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -15,10 +13,10 @@ import logo from "../assets/logo_renomeuble.png";
 import { getCategories } from "../services/categories.service";
 
 function Footer() {
-  // ==== ETAT DES CATEGORIES DYNAMIQUES ====
+  // Liste des catégories affichées dynamiquement
   const [categories, setCategories] = useState([]);
 
-  // ==== RECUPERATION DES CATEGORIES ====
+  // Chargement des catégories au montage du composant
   useEffect(() => {
     const loadCategories = async () => {
       try {
@@ -35,7 +33,7 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="container footer-inner">
-        {/* ==== LOGO ==== */}
+        {/* ==== LOGO avec lien vers l'accueil ==== */}
         <div className="text-center mb-4">
           <Link to="/">
             <img src={logo} alt="Logo RenoMeuble" className="footer-logo" />
@@ -43,7 +41,7 @@ function Footer() {
         </div>
 
         <div className="row g-4 justify-content-center justify-content-md-between">
-          {/* ================= MOBILE ================= */}
+          {/* ==== VERSION MOBILE ==== */}
 
           <div className="col-auto d-md-none">
             <p className="footer-title">Plan du site</p>
@@ -55,6 +53,7 @@ function Footer() {
                 <Link to="/catalogue">Tous nos produits</Link>
               </li>
 
+              {/* Catégories dynamiques */}
               {categories.map((category) => (
                 <li key={category.id}>
                   <Link to={`/categorie/${category.slug}`}>

@@ -1,4 +1,4 @@
-/* ===================== BOUTONS ======================== */
+/* ==== BOUTONS ==== */
 /* Remplace le bleu Bootstrap par la couleur du thème   */
 /* Conserve un indicateur de focus visible (accessibilité) */
 
@@ -22,7 +22,6 @@
 }
 
 /* 3. FOCUS — halo dans la couleur du thème (accessibilité clavier) */
-/* On ne supprime PAS l'outline, on le remplace par notre couleur   */
 .btn-primary:focus,
 .btn-primary:focus-visible {
   background-color: var(--color-button) !important;

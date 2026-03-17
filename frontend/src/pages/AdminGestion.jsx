@@ -1,3 +1,7 @@
+// ===== PAGE ADMIN - GESTION DES PRODUITS =====
+// Cette page permet à l’administrateur de gérer les produits (ajout, modification, suppression)
+// Les données sont récupérées depuis l’API backend et mises à jour dynamiquement sans rechargement
+
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -16,27 +20,34 @@ import { logoutAdmin } from "../services/auth.service";
 function AdminGestion() {
   const navigate = useNavigate();
 
+  // États principaux
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
+  // Gestion des modales (add / edit / delete)
   const [activeModal, setActiveModal] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  // Pagination simple (chargement progressif)
   const [visibleCount, setVisibleCount] = useState(4);
 
+  // Filtres et tri
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("date_desc");
 
+  // Chargement des produits (redirige si non authentifié)
   useEffect(() => {
     getAdminProducts()
       .then(setProducts)
       .catch(() => navigate("/admin/login"));
   }, [navigate]);
 
+  // Chargement des catégories pour les formulaires
   useEffect(() => {
     getAdminCategories().then(setCategories);
   }, []);
 
+  // Suppression produit (API + mise à jour du state)
   const handleDeleteProduct = async (id) => {
     await deleteAdminProduct(id);
 
@@ -46,6 +57,7 @@ function AdminGestion() {
     setSelectedProduct(null);
   };
 
+  // Filtrage + tri des produits
   const filteredProducts = products
     .filter((p) => p.title.toLowerCase().includes(searchTerm.toLowerCase()))
     .sort((a, b) => {
@@ -63,6 +75,7 @@ function AdminGestion() {
       }
     });
 
+  // Déconnexion admin
   const handleLogout = async () => {
     await logoutAdmin();
     navigate("/admin/login");
@@ -73,6 +86,7 @@ function AdminGestion() {
       <div className="d-flex justify-content-between mb-4">
         <Link to="/admin">Retour dashboard</Link>
 
+        {/* Bouton de déconnexion */}
         <button onClick={handleLogout} className="btn btn-primary rounded-pill">
           Déconnexion
         </button>
@@ -81,6 +95,7 @@ function AdminGestion() {
       <h1 className="text-center mb-5">Gestion des produits</h1>
 
       <div className="text-center mb-5">
+        {/* Ouverture modale ajout produit */}
         <button
           className="btn btn-primary rounded-pill px-5 py-3 mb-4"
           onClick={() => setActiveModal("add")}
@@ -88,6 +103,7 @@ function AdminGestion() {
           Ajouter un produit
         </button>
 
+        {/* Recherche + tri */}
         <div className="d-flex justify-content-center gap-3">
           <input
             className="form-control"
@@ -116,10 +132,12 @@ function AdminGestion() {
           <div key={product.id} className="col-md-6">
             <CardGestion
               product={product}
+              // Prépare la modification
               onEdit={() => {
                 setSelectedProduct(product);
                 setActiveModal("edit");
               }}
+              // Prépare la suppression
               onDelete={() => {
                 setSelectedProduct(product);
                 setActiveModal("delete");
@@ -129,17 +147,19 @@ function AdminGestion() {
         ))}
       </div>
 
+      {/* Bouton "voir plus" pour pagination simple */}
       {visibleCount < filteredProducts.length && (
         <div className="text-center mt-5">
           <button
-            className="btn btn-primary"
+            className="btn btn-primary rounded-pill px-5 py-2 border-0"
             onClick={() => setVisibleCount((v) => v + 4)}
           >
-            Voir +
+            VOIR +
           </button>
         </div>
       )}
 
+      {/* Modale ajout / édition produit */}
       <ModalProduct
         isOpen={activeModal === "add" || activeModal === "edit"}
         mode={activeModal}
@@ -149,11 +169,13 @@ function AdminGestion() {
           setActiveModal(null);
           setSelectedProduct(null);
         }}
+        // Recharge les produits après succès
         onSuccess={() => {
           getAdminProducts().then(setProducts);
         }}
       />
 
+      {/* Modale confirmation suppression */}
       <ModalDelete
         isOpen={activeModal === "delete"}
         onClose={() => setActiveModal(null)}

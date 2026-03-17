@@ -1,10 +1,15 @@
 <?php
 
+// ===== LISTE PRODUITS (ADMIN) =====
+// Retourne tous les produits avec leurs images.
+// Ajoute des infos utiles : image principale + nombre d’images.
+
 require_once __DIR__ . '/../../../middleware/adminAuth.php';
 require_once __DIR__ . '/../../../config/database.php';
 
 try {
 
+    // ==== RÉCUPÉRATION DES PRODUITS ====
     $stmt = $pdo->query("
         SELECT
             p.id,
@@ -21,6 +26,7 @@ try {
 
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    // ==== AJOUT DES IMAGES ====
     foreach ($products as &$product) {
 
         $stmtImages = $pdo->prepare("
@@ -35,7 +41,11 @@ try {
         $images = $stmtImages->fetchAll(PDO::FETCH_ASSOC);
 
         $product['images'] = $images;
+
+        // Image principale (première)
         $product['image'] = $images[0]['image_path'] ?? null;
+
+        // Nombre total d’images
         $product['photosCount'] = count($images);
     }
 
@@ -49,3 +59,4 @@ try {
         'error' => 'Erreur serveur'
     ]);
 }
+?>

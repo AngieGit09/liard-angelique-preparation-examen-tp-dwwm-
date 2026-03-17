@@ -1,7 +1,7 @@
 // ========= MENU BURGER MOBILE =========
-// Menu plein écran affiché sur mobile.
-// Les catégories sont récupérées dynamiquement.
-// Inclut une barre de recherche.
+// Menu plein écran affiché sur mobile
+// Les catégories sont récupérées dynamiquement
+// Inclut une barre de recherche
 
 import { Link } from "react-router-dom";
 import "../styles/mobileMenu.css";
